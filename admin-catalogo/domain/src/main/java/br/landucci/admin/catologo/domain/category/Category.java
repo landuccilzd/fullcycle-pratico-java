@@ -1,6 +1,7 @@
 package br.landucci.admin.catologo.domain.category;
 
 import br.landucci.admin.catologo.domain.AggregateRoot;
+import br.landucci.admin.catologo.domain.validation.ValidationHandler;
 
 import java.time.Instant;
 import java.util.UUID;
@@ -33,7 +34,13 @@ public class Category extends AggregateRoot<CategoryID> {
     public static Category newCategory(final String name, final String description, final boolean active) {
         final var id = CategoryID.unique();
         final var now  = Instant.now();
-        return new Category(id, name, description, active, now, now, null);
+        final var nowDeleted  = active ? null : now;
+        return new Category(id, name, description, active, now, now, nowDeleted);
+    }
+
+    @Override
+    public void validate(final ValidationHandler handler) {
+        new CategoryValidator(this, handler).validate();
     }
 
     public CategoryID getId() {
@@ -63,4 +70,34 @@ public class Category extends AggregateRoot<CategoryID> {
     public Instant getDeletedAt() {
         return deletedAt;
     }
+
+    public Category updateName(final String name) {
+        this.name = name;
+        this.updatedAt = Instant.now();
+        return this;
+    }
+
+    public Category updateDescription(final String description) {
+        this.description = description;
+        this.updatedAt = Instant.now();
+        return this;
+    }
+
+    public Category deactivate() {
+        if (this.deletedAt == null) {
+            this.deletedAt = Instant.now();
+        }
+
+        this.active = false;
+        this.updatedAt = Instant.now();
+        return this;
+    }
+
+    public Category activate() {
+        this.deletedAt = null;
+        this.active = true;
+        this.updatedAt = Instant.now();
+        return this;
+    }
+
 }
