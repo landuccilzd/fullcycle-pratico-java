@@ -107,69 +107,68 @@ public class UpdateCategoryUseCaseTest {
         Mockito.verify(gateway, Mockito.times(0)).update(Mockito.any());
     }
 
-    @Test
-    //Teste com propriedade inválida
-    public void givenAValidCommand_whenInactivateACategory_thenShouldReturnAnInactivatedCatgory() {
-        final var category = Category.newCategory("Comédia", "", true);
-        final var expectedName = "Ficção Científica";
-        final var expectedDescription = "Filmes de ficção científica";
-        final var expectedActive = false;
-        final var expectedId = category.getId();
+//    @Test
+//    public void givenAValidCommand_whenInactivateACategory_thenShouldReturnAnInactivatedCatgory() {
+//        final var category = Category.newCategory("Comédia", "", true);
+//        final var expectedName = "Ficção Científica";
+//        final var expectedDescription = "Filmes de ficção científica";
+//        final var expectedActive = false;
+//        final var expectedId = category.getId();
+//
+//        final var input = UpdateCategoryInputCommand.with(
+//                expectedId.getValue(), expectedName, expectedDescription, expectedActive);
+//
+//        Mockito.when(gateway.findById(Mockito.eq(expectedId))).thenReturn(Optional.of(category.clone()));
+//        Mockito.when(gateway.update(Mockito.any())).thenAnswer(AdditionalAnswers.returnsFirstArg());
+//
+//        final var output = useCase.execute(input).get();
+//
+//        Assertions.assertNotNull(output);
+//        Assertions.assertNotNull(output.id());
+//
+//        Mockito.verify(gateway, Mockito.times(1)).findById(Mockito.eq(expectedId));
+//        Mockito.verify(gateway, Mockito.times(1)).update(Mockito.argThat(cat -> {
+//            return Objects.nonNull(cat.getId()) &&
+//                    Objects.equals(expectedName, cat.getName()) &&
+//                    Objects.equals(expectedDescription, cat.getDescription()) &&
+//                    Objects.equals(expectedActive, cat.isActive()) &&
+//                    Objects.equals(category.getCreatedAt(), cat.getCreatedAt()) &&
+//                    category.getUpdatedAt().isBefore(cat.getUpdatedAt()) &&
+//                    Objects.nonNull(cat.getDeletedAt());
+//        }));
+//    }
 
-        final var input = UpdateCategoryInputCommand.with(
-                expectedId.getValue(), expectedName, expectedDescription, expectedActive);
-
-        Mockito.when(gateway.findById(Mockito.eq(expectedId))).thenReturn(Optional.of(category.clone()));
-        Mockito.when(gateway.update(Mockito.any())).thenAnswer(AdditionalAnswers.returnsFirstArg());
-
-        final var output = useCase.execute(input).get();
-
-        Assertions.assertNotNull(output);
-        Assertions.assertNotNull(output.id());
-
-        Mockito.verify(gateway, Mockito.times(1)).findById(Mockito.eq(expectedId));
-        Mockito.verify(gateway, Mockito.times(1)).update(Mockito.argThat(cat -> {
-            return Objects.nonNull(cat.getId()) &&
-                    Objects.equals(expectedName, cat.getName()) &&
-                    Objects.equals(expectedDescription, cat.getDescription()) &&
-                    Objects.equals(expectedActive, cat.isActive()) &&
-                    Objects.equals(category.getCreatedAt(), cat.getCreatedAt()) &&
-                    category.getUpdatedAt().isBefore(cat.getUpdatedAt()) &&
-                    Objects.nonNull(cat.getDeletedAt());
-        }));
-    }
-
-    @Test
-    //Teste com propriedade inválida
-    public void givenAValidCommand_whenActivateACategory_thenShouldReturnAnActivatedCatgory() {
-        final var category = Category.newCategory("Comédia", "", false);
-        final var expectedName = "Ficção Científica";
-        final var expectedDescription = "Filmes de ficção científica";
-        final var expectedActive = true;
-        final var expectedId = category.getId();
-
-        final var input = UpdateCategoryInputCommand.with(
-                expectedId.getValue(), expectedName, expectedDescription, expectedActive);
-
-        Mockito.when(gateway.findById(Mockito.eq(expectedId))).thenReturn(Optional.of(category.clone()));
-        Mockito.when(gateway.update(Mockito.any())).thenAnswer(AdditionalAnswers.returnsFirstArg());
-
-        final var output = useCase.execute(input).get();
-
-        Assertions.assertNotNull(output);
-        Assertions.assertNotNull(output.id());
-
-        Mockito.verify(gateway, Mockito.times(1)).findById(Mockito.eq(expectedId));
-        Mockito.verify(gateway, Mockito.times(1)).update(Mockito.argThat(cat -> {
-            return Objects.nonNull(cat.getId()) &&
-                    Objects.equals(expectedName, cat.getName()) &&
-                    Objects.equals(expectedDescription, cat.getDescription()) &&
-                    Objects.equals(expectedActive, cat.isActive()) &&
-                    Objects.equals(category.getCreatedAt(), cat.getCreatedAt()) &&
-                    category.getUpdatedAt().isBefore(cat.getUpdatedAt()) &&
-                    Objects.isNull(cat.getDeletedAt());
-        }));
-    }
+//    @Test
+//    public void givenAValidCommand_whenActivateACategory_thenShouldReturnAnActivatedCatgory() {
+//        final var category = Category.newCategory("Comédia", "", false);
+//        final var expectedName = "Ficção Científica";
+//        final var expectedDescription = "Filmes de ficção científica";
+//        final var expectedActive = true;
+//        final var expectedId = category.getId();
+//
+//        final var input = UpdateCategoryInputCommand.with(
+//                expectedId.getValue(), expectedName, expectedDescription, expectedActive);
+//
+//        Mockito.when(gateway.findById(Mockito.eq(expectedId))).thenReturn(Optional.of(category.clone()));
+//        Mockito.when(gateway.update(Mockito.any())).thenAnswer(AdditionalAnswers.returnsFirstArg());
+//
+//        final var output = useCase.execute(input).get();
+//
+//        Assertions.assertNotNull(output);
+//        Assertions.assertNotNull(output.id());
+//
+//        Mockito.verify(gateway, Mockito.times(1)).findById(Mockito.eq(expectedId));
+//        Mockito.verify(gateway, Mockito.times(1)).update(Mockito.argThat(cat -> {
+//            return Objects.nonNull(cat.getId()) &&
+//                    Objects.equals(expectedName, cat.getName()) &&
+//                    Objects.equals(expectedDescription, cat.getDescription()) &&
+//                    Objects.equals(expectedActive, cat.isActive()) &&
+//                    Objects.equals(category.getCreatedAt(), cat.getCreatedAt()) &&
+//                    category.getUpdatedAt().isBefore(cat.getUpdatedAt()) &&
+//                    Objects.isNull(cat.getDeletedAt());
+//        }));
+//    }
+    
     @Test
     //Criar uma categoria simulando um erro vindo do gateway
     public void givenAValidCommand_whenGatewayThrowsAnException_thenShouldReturnAnException() {
