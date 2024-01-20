@@ -6,7 +6,7 @@ import br.landucci.admin.catologo.domain.validation.ValidationHandler;
 import java.time.Instant;
 import java.util.UUID;
 
-public class Category extends AggregateRoot<CategoryID> {
+public class Category extends AggregateRoot<CategoryID> implements Cloneable {
     private String name;
     private String description;
     private boolean active;
@@ -100,4 +100,14 @@ public class Category extends AggregateRoot<CategoryID> {
         return this;
     }
 
+    @Override
+    public Category clone() {
+        try {
+            Category clone = (Category) super.clone();
+            // TODO: copy mutable state here, so the clone can't change the internals of the original
+            return clone;
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
+    }
 }
