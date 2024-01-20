@@ -17,5 +17,9 @@ public interface ValidationHandler {
         return (hasErrors()) ? getErrors().get(0) : null;
     }
 
+    default int getErrorCount() {
+        return !hasErrors() ? 0 : getErrors().size();
+    }
+
     List<ValidationError> getErrors();
 }
