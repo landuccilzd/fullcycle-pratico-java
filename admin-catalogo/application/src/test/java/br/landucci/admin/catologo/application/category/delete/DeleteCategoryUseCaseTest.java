@@ -1,6 +1,5 @@
 package br.landucci.admin.catologo.application.category.delete;
 
-import br.landucci.admin.catologo.application.category.create.CreateCategoryInputCommand;
 import br.landucci.admin.catologo.domain.category.Category;
 import br.landucci.admin.catologo.domain.category.CategoryGateway;
 import br.landucci.admin.catologo.domain.category.CategoryID;
@@ -9,13 +8,11 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.AdditionalAnswers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.Objects;
 import java.util.Optional;
 
 @ExtendWith(MockitoExtension.class)
