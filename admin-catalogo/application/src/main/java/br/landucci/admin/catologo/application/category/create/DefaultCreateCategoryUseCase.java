@@ -8,11 +8,11 @@ import io.vavr.control.Either;
 
 import java.util.Objects;
 
-public class DefaufltCreateCategoryUseCase extends CreateCategoryUseCase {
+public class DefaultCreateCategoryUseCase extends CreateCategoryUseCase {
 
     private final CategoryGateway gateway;
 
-    public DefaufltCreateCategoryUseCase(final CategoryGateway gateway) {
+    public DefaultCreateCategoryUseCase(final CategoryGateway gateway) {
         this.gateway = Objects.requireNonNull(gateway);
     }
 

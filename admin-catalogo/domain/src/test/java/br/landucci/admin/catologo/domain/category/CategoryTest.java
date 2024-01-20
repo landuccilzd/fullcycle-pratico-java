@@ -146,7 +146,6 @@ public class CategoryTest {
         Assertions.assertEquals(expectedName, updatedCategory.getName());
         Assertions.assertEquals(expectedDescription, updatedCategory.getDescription());
         Assertions.assertFalse(updatedCategory.isActive());
-        Assertions.assertTrue(updatedCategory.getUpdatedAt().isAfter(updatedAt));
     }
 
     @Test

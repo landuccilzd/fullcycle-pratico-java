@@ -1,8 +1,8 @@
 package br.landucci.admin.catologo.application.category.create;
 
 import br.landucci.admin.catologo.domain.category.CategoryGateway;
-import br.landucci.admin.catologo.domain.exception.DomainException;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.AdditionalAnswers;
@@ -17,9 +17,14 @@ import java.util.Objects;
 public class CreateCategoryUseCaseTest {
 
     @InjectMocks
-    private DefaufltCreateCategoryUseCase useCase;
+    private DefaultCreateCategoryUseCase useCase;
     @Mock
     private CategoryGateway gateway;
+
+    @BeforeEach
+    void cleanUp() {
+        Mockito.reset(gateway);
+    }
 
     //Caminho feliz
     @Test
