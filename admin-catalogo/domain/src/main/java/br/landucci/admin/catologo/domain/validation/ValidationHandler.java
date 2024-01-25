@@ -6,7 +6,6 @@ public interface ValidationHandler {
 
     ValidationHandler append(ValidationError error);
     ValidationHandler append(ValidationHandler handler);
-
     ValidationHandler validate(Validation validation);
 
     default boolean hasErrors() {

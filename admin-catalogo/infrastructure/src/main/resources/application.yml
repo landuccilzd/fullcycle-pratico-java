@@ -1,0 +1,86 @@
+spring:
+  application:
+    name: Admin Catalogo
+  jpa:
+    open-in-view: false
+    show-sql: false
+    database: MYSQL
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    hibernate:
+      ddl-auto: none
+    properties:
+      "[hibernate.generate_statistics]": false
+      "[hibernate.connection.provider_disabled_autocommit]": true
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://${DATABASE_MYSQL_URL}/${DATABASE_MYSQL_SCHEMA}_dev
+    username: ${DATABASE_MYSQL_USERNAME}
+    password: ${DATABASE_MYSQL_PASSWORD}
+  hikari:
+    auto-commit: false
+    connection-timeout: 250 #milisegundos
+    max-lifetome: 600000 #Tempo máximo que uma conexão fica aberta (10 minutos)
+    maximun-pool-size: 20 # Qunatidade de conexões para manter abertas
+    minimum-idle: 10
+    pool-name: master
+  profiles:
+    active: dev
+---
+springdoc:
+  swagger-ui:
+    path: /api-doc.html
+---
+server:
+  port: 8090
+  compression:
+    enabled: true
+    mime-types: text/html,text/xml,text/plain,text/css,text/javascript,application/javascript,application/json
+    min-response-size: 1024
+  undertow:
+    threads:
+      worker: 64
+      io: 4
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
+  jpa:
+    show-sql: false
+    hibernate:
+      ddl-auto: update
+  datasource:
+    url: jdbc:mysql://${DATABASE_MYSQL_URL}/${DATABASE_MYSQL_SCHEMA}_dev
+---
+spring:
+  config:
+    activate:
+      on-profile: tst
+  jpa:
+#    defer-datasource-inicialization: true
+    database-platform: org.hibernate.dialect.H2Dialect
+    show-sql: true
+    hibernate:
+#      ddl-auto: create-drop
+      ddl-auto: none
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:adm_videos_tst
+    username: root
+    password: 123456
+
+  h2:
+    console:
+      enabled: true
+      path: /h2
+---
+spring:
+  config:
+    activate:
+      on-profile: prd
+  jpa:
+    show-sql: false
+    hibernate:
+      ddl-auto: none
+  datasource:
+    url: jdbc:mysql://${DATABASE_MYSQL_URL}/${DATABASE_MYSQL_SCHEMA}
