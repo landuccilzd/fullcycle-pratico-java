@@ -1,9 +1,9 @@
 package br.landucci.admin.catologo.application.category.find;
 
+import br.landucci.admin.catologo.domain.category.Category;
 import br.landucci.admin.catologo.domain.category.CategoryGateway;
 import br.landucci.admin.catologo.domain.category.CategoryID;
-import br.landucci.admin.catologo.domain.exception.DomainException;
-import br.landucci.admin.catologo.domain.validation.ValidationError;
+import br.landucci.admin.catologo.domain.exception.NotFoundException;
 
 import java.util.Objects;
 import java.util.function.Supplier;
@@ -25,9 +25,7 @@ public class DefaultFindByIDCategoryUseCase extends FindByIDCategoryUseCase {
                 .orElseThrow(notFound(id));
     }
 
-    private Supplier<DomainException> notFound(final CategoryID id) {
-        return () -> DomainException.with(
-                new ValidationError("Category with ID %s was not found".formatted(id.getValue()))
-        );
+    private Supplier<NotFoundException> notFound(final CategoryID id) {
+        return () -> NotFoundException.with(Category.class, id);
     }
 }
