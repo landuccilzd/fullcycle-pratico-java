@@ -6,9 +6,9 @@ import java.util.List;
 
 public class DomainException extends NoStacktraceException {
 
-    private final List<ValidationError> errors;
+    protected final List<ValidationError> errors;
 
-    private DomainException(final String message, final List<ValidationError> errors) {
+    protected DomainException(final String message, final List<ValidationError> errors) {
         super(message);
         this.errors = errors;
     }

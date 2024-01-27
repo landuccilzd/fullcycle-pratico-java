@@ -4,6 +4,7 @@ import br.landucci.admin.catologo.domain.category.Category;
 import br.landucci.admin.catologo.domain.category.CategoryGateway;
 import br.landucci.admin.catologo.domain.category.CategoryID;
 import br.landucci.admin.catologo.domain.exception.DomainException;
+import br.landucci.admin.catologo.domain.exception.NotFoundException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -57,15 +58,13 @@ public class FindByIDCategoryUseCaseTest {
     public void givenAnInvalidID_whenDeletingACategory_thenShouldReturnNotFound() {
         final var expectedId = CategoryID.from("123");
         final var expectedErrorMessage = "Category with ID 123 was not found";
-        final var expectedErrorCount = 1;
 
         Mockito.when(gateway.findById(Mockito.eq(expectedId))).thenReturn(Optional.empty());
 
         final var input = FindByIDCategoryInputCommand.with(expectedId.getValue());
-        final var exception = Assertions.assertThrows(DomainException.class, () -> useCase.execute(input));
+        final var exception = Assertions.assertThrows(NotFoundException.class, () -> useCase.execute(input));
 
-        Assertions.assertEquals(expectedErrorCount, exception.getErrorCount());
-        Assertions.assertEquals(expectedErrorMessage, exception.firstError().message());
+        Assertions.assertEquals(expectedErrorMessage, exception.getMessage());
 
         Mockito.verify(gateway, Mockito.times(1)).findById(Mockito.eq(expectedId));
     }
