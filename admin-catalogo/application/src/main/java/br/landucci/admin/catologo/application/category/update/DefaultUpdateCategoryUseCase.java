@@ -30,6 +30,7 @@ public class DefaultUpdateCategoryUseCase extends UpdateCategoryUseCase {
         final var category = this.gateway.findById(id).orElseThrow(notFound(id));
 
         final var notification = Notification.create();
+
         category.updateName(name).updateDescription(description).validate(notification);
 
         if (!active) {
@@ -41,14 +42,14 @@ public class DefaultUpdateCategoryUseCase extends UpdateCategoryUseCase {
         return notification.hasErrors() ? API.Left(notification) : update(category);
     }
 
+    private Either<Notification, UpdateCategoryOutputCommand> update(final Category category) {
+        return API.Try(() -> this.gateway.update(category)).toEither()
+                .bimap(Notification::create, UpdateCategoryOutputCommand::from);
+    }
+
     private Supplier<DomainException> notFound(final CategoryID id) {
         return () -> DomainException.with(
                 new ValidationError("Category with ID %s was not found".formatted(id.getValue()))
         );
-    }
-
-    private Either<Notification,UpdateCategoryOutputCommand> update(final Category category) {
-        return API.Try(() -> this.gateway.update(category)).toEither()
-                .bimap(Notification::create, UpdateCategoryOutputCommand::from);
     }
 }

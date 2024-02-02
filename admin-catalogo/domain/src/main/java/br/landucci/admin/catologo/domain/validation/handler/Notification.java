@@ -12,7 +12,7 @@ public class Notification implements ValidationHandler {
 
     private final List<ValidationError> errors;
 
-    public Notification(List<ValidationError> errors) {
+    private Notification(List<ValidationError> errors) {
         this.errors = errors;
     }
 

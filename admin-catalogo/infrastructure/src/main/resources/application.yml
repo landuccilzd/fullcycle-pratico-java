@@ -13,9 +13,9 @@ spring:
       "[hibernate.connection.provider_disabled_autocommit]": true
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://${DATABASE_MYSQL_URL}/${DATABASE_MYSQL_SCHEMA}_dev
-    username: ${DATABASE_MYSQL_USERNAME}
-    password: ${DATABASE_MYSQL_PASSWORD}
+    url: jdbc:mysql://${DATABASE_MYSQL_URL}/${DATABASE_MYSQL_DB}_dev
+    username: ${DATABASE_MYSQL_USER}
+    password: ${DATABASE_MYSQL_PASS}
   hikari:
     auto-commit: false
     connection-timeout: 250 #milisegundos
@@ -32,6 +32,8 @@ springdoc:
 ---
 server:
   port: 8090
+  servlet:
+    context-path: /api
   compression:
     enabled: true
     mime-types: text/html,text/xml,text/plain,text/css,text/javascript,application/javascript,application/json
@@ -50,7 +52,7 @@ spring:
     hibernate:
       ddl-auto: update
   datasource:
-    url: jdbc:mysql://${DATABASE_MYSQL_URL}/${DATABASE_MYSQL_SCHEMA}_dev
+    url: jdbc:mysql://${DATABASE_MYSQL_URL}/${DATABASE_MYSQL_DB}_dev
 ---
 spring:
   config:
@@ -68,11 +70,42 @@ spring:
     url: jdbc:h2:mem:adm_videos_tst
     username: root
     password: 123456
-
   h2:
     console:
       enabled: true
       path: /h2
+---
+spring:
+  config:
+    activate:
+      on-profile: tst-int
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    show-sql: true
+    hibernate:
+      ddl-auto: none
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:adm_videos_tst
+    username: root
+    password: 123456
+  h2:
+    console:
+      enabled: true
+      path: /h2
+---
+spring:
+  flyway:
+    enabled: false
+  config:
+    activate:
+      on-profile: tst-e2e
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: create-drop
+  datasource:
+    url: jdbc:mysql://localhost:${E2E_MYSQL_PORT}/adm_videos_e2e
 ---
 spring:
   config:
@@ -83,4 +116,4 @@ spring:
     hibernate:
       ddl-auto: none
   datasource:
-    url: jdbc:mysql://${DATABASE_MYSQL_URL}/${DATABASE_MYSQL_SCHEMA}
+    url: jdbc:mysql://${DATABASE_MYSQL_URL}/${DATABASE_MYSQL_DB}

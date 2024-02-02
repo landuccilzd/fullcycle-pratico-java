@@ -11,7 +11,8 @@ import java.lang.annotation.*;
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 @Inherited
-@ActiveProfiles("tst")
+//@ActiveProfiles("tst")
+@ActiveProfiles("tst-int")
 @WebMvcTest
 @Import(ObjectMapperConfig.class)
 public @interface ControllerTest {
