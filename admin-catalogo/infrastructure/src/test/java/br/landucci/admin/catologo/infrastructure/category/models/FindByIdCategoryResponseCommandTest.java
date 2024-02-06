@@ -1,6 +1,7 @@
 package br.landucci.admin.catologo.infrastructure.category.models;
 
 import br.landucci.admin.catologo.JacksonTest;
+import br.landucci.admin.catologo.domain.utils.InstantUtils;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,9 +21,9 @@ public class FindByIdCategoryResponseCommandTest {
         final var expectedName = "Ficção Científica";
         final var expectedDescrition = "Filmes de ficção científica";
         final var expectedActive = true;
-        final var expectedCreatedAt = Instant.now();
-        final var expectedUpdatedAt = Instant.now();
-        final var expectedDeletedAt = Instant.now();
+        final var expectedCreatedAt = InstantUtils.now();
+        final var expectedUpdatedAt = InstantUtils.now();
+        final var expectedDeletedAt = InstantUtils.now();
 
         final var responseCommand = new FindByIdCategoryResponseCommand (expectedId, expectedName, expectedDescrition,
                 expectedActive, expectedCreatedAt, expectedUpdatedAt, expectedDeletedAt);
@@ -45,9 +46,9 @@ public class FindByIdCategoryResponseCommandTest {
         final var expectedName = "Ficção Científica";
         final var expectedDescrition = "Filmes de ficção científica";
         final var expectedActive = true;
-        final var expectedCreatedAt = Instant.now();
-        final var expectedUpdatedAt = Instant.now();
-        final var expectedDeletedAt = Instant.now();
+        final var expectedCreatedAt = InstantUtils.now();
+        final var expectedUpdatedAt = InstantUtils.now();
+        final var expectedDeletedAt = InstantUtils.now();
 
         final var strJson = """
             {
