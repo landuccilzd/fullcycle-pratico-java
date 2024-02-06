@@ -43,8 +43,8 @@ public class CategoryE2ETest {
         final var port = MY_SQL_CONTAINER.getMappedPort(3306);
         System.out.printf("Container is running on port %s \n", port);
         registry.add("E2E_MYSQL_PORT", () -> port);
-        registry.add("DATABASE_MYSQL_USERNAME", () -> "root");
-        registry.add("DATABASE_MYSQL_PASSWORD", () -> "123456");
+        registry.add("DATABASE_MYSQL_USER", () -> "root");
+        registry.add("DATABASE_MYSQL_PASS", () -> "123456");
     }
 
     @Test

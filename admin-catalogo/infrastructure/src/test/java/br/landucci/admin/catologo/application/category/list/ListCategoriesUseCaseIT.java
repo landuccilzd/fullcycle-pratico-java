@@ -2,13 +2,11 @@ package br.landucci.admin.catologo.application.category.list;
 
 import br.landucci.admin.catologo.IntegrationTest;
 import br.landucci.admin.catologo.domain.category.Category;
-import br.landucci.admin.catologo.domain.category.CategoryGateway;
-import br.landucci.admin.catologo.domain.category.CategorySearchQuery;
+import br.landucci.admin.catologo.domain.pagination.SearchQuery;
 import br.landucci.admin.catologo.domain.pagination.Pagination;
 import br.landucci.admin.catologo.infrastructure.category.persistence.CategoryJpaEntity;
 import br.landucci.admin.catologo.infrastructure.category.persistence.CategoryRepository;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -48,7 +46,7 @@ public class ListCategoriesUseCaseIT {
 
         Assertions.assertEquals(7, this.repository.count());
 
-        final var query = new CategorySearchQuery(expectedPage, expectedPerPage, expectedTerms, expectedSort, expectedDirection);
+        final var query = new SearchQuery(expectedPage, expectedPerPage, expectedTerms, expectedSort, expectedDirection);
         final var result = useCase.execute(query);
 
         Assertions.assertEquals(expectedItemsCount, result.items().size());

@@ -1,10 +1,8 @@
 package br.landucci.admin.catologo.application.category.list;
 
-import br.landucci.admin.catologo.application.category.find.DefaultFindByIDCategoryUseCase;
-import br.landucci.admin.catologo.application.category.find.FindByIDCategoryInputCommand;
 import br.landucci.admin.catologo.domain.category.Category;
 import br.landucci.admin.catologo.domain.category.CategoryGateway;
-import br.landucci.admin.catologo.domain.category.CategorySearchQuery;
+import br.landucci.admin.catologo.domain.pagination.SearchQuery;
 import br.landucci.admin.catologo.domain.pagination.Pagination;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -16,7 +14,6 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
-import java.util.Optional;
 
 @ExtendWith(MockitoExtension.class)
 public class ListCategoriesUseCaseTest {
@@ -52,7 +49,7 @@ public class ListCategoriesUseCaseTest {
         final var expectedPagination = new Pagination<>(expectedPage, expectedPerPage, categories.size(), categories);
         final var expectedResult = expectedPagination.map(ListCategoriesOutputCommand::from);
 
-        final var query = new CategorySearchQuery(expectedPage, expectedPerPage, expectedTerms, expectedSort, expectedDirection);
+        final var query = new SearchQuery(expectedPage, expectedPerPage, expectedTerms, expectedSort, expectedDirection);
         Mockito.when(gateway.findAll(Mockito.eq(query))).thenReturn(expectedPagination);
         final var result = useCase.execute(query);
 
@@ -76,7 +73,7 @@ public class ListCategoriesUseCaseTest {
         final var expectedPagination = new Pagination<>(expectedPage, expectedPerPage, categories.size(), categories);
         final var expectedResult = expectedPagination.map(ListCategoriesOutputCommand::from);
 
-        final var query = new CategorySearchQuery(expectedPage, expectedPerPage, expectedTerms, expectedSort, expectedDirection);
+        final var query = new SearchQuery(expectedPage, expectedPerPage, expectedTerms, expectedSort, expectedDirection);
         Mockito.when(gateway.findAll(Mockito.eq(query))).thenReturn(expectedPagination);
         final var result = useCase.execute(query);
 
@@ -97,7 +94,7 @@ public class ListCategoriesUseCaseTest {
         final var expectedItemsCount = 0;
         final var expectedErrorMessage = "Generic gateway error";
 
-        final var query = new CategorySearchQuery(expectedPage, expectedPerPage, expectedTerms, expectedSort, expectedDirection);
+        final var query = new SearchQuery(expectedPage, expectedPerPage, expectedTerms, expectedSort, expectedDirection);
         Mockito.when(gateway.findAll(Mockito.eq(query))).thenThrow(new IllegalStateException(expectedErrorMessage));
         final var exception = Assertions.assertThrows(IllegalStateException.class, () -> useCase.execute(query));
 
