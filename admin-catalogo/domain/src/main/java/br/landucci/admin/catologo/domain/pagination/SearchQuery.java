@@ -1,0 +1,3 @@
+package br.landucci.admin.catologo.domain.pagination;
+
+public record SearchQuery(int page, int perPage, String terms, String sort, String direction) {}

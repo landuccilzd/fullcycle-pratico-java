@@ -14,7 +14,7 @@ import br.landucci.admin.catologo.application.category.update.UpdateCategoryOutp
 import br.landucci.admin.catologo.application.category.update.UpdateCategoryUseCase;
 import br.landucci.admin.catologo.domain.category.Category;
 import br.landucci.admin.catologo.domain.category.CategoryID;
-import br.landucci.admin.catologo.domain.category.CategorySearchQuery;
+import br.landucci.admin.catologo.domain.pagination.SearchQuery;
 import br.landucci.admin.catologo.domain.exception.NotFoundException;
 import br.landucci.admin.catologo.domain.pagination.Pagination;
 import br.landucci.admin.catologo.domain.validation.ValidationError;
@@ -69,7 +69,7 @@ public class CategoryAPITest {
 
         final var expectedItems = List.of(ListCategoriesOutputCommand.from(category));
 
-        final var query = new CategorySearchQuery(expectedPage, expectedPerPage, expectedTerms, expectedSort,
+        final var query = new SearchQuery(expectedPage, expectedPerPage, expectedTerms, expectedSort,
                 expectedDirection);
 
         Mockito.when(listCategoriesUseCase.execute(Mockito.any()))

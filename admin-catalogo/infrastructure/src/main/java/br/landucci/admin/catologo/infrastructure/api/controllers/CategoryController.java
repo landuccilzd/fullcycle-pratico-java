@@ -11,7 +11,7 @@ import br.landucci.admin.catologo.application.category.list.ListCategoriesUseCas
 import br.landucci.admin.catologo.application.category.update.UpdateCategoryInputCommand;
 import br.landucci.admin.catologo.application.category.update.UpdateCategoryOutputCommand;
 import br.landucci.admin.catologo.application.category.update.UpdateCategoryUseCase;
-import br.landucci.admin.catologo.domain.category.CategorySearchQuery;
+import br.landucci.admin.catologo.domain.pagination.SearchQuery;
 import br.landucci.admin.catologo.domain.pagination.Pagination;
 import br.landucci.admin.catologo.domain.validation.handler.Notification;
 import br.landucci.admin.catologo.infrastructure.api.CategoryAPI;
@@ -50,7 +50,7 @@ public class CategoryController implements CategoryAPI {
 
     @Override
     public Pagination<ListCategoriesResponseCommand> list(String search, int page, int perPage, String sort, String direction) {
-        final var query = new CategorySearchQuery(page, perPage, search, sort, direction);
+        final var query = new SearchQuery(page, perPage, search, sort, direction);
         return listCategoryUseCase.execute(query).map(CategoryAPIPresenter::present);
     }
 

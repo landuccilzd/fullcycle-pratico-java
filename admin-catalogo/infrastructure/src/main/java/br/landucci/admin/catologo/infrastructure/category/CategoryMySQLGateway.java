@@ -3,7 +3,7 @@ package br.landucci.admin.catologo.infrastructure.category;
 import br.landucci.admin.catologo.domain.category.Category;
 import br.landucci.admin.catologo.domain.category.CategoryGateway;
 import br.landucci.admin.catologo.domain.category.CategoryID;
-import br.landucci.admin.catologo.domain.category.CategorySearchQuery;
+import br.landucci.admin.catologo.domain.pagination.SearchQuery;
 import br.landucci.admin.catologo.domain.pagination.Pagination;
 import br.landucci.admin.catologo.infrastructure.category.persistence.CategoryJpaEntity;
 import br.landucci.admin.catologo.infrastructure.category.persistence.CategoryRepository;
@@ -30,7 +30,7 @@ public class CategoryMySQLGateway implements CategoryGateway {
     }
 
     @Override
-    public Pagination<Category> findAll(final CategorySearchQuery query) {
+    public Pagination<Category> findAll(final SearchQuery query) {
         final var page = PageRequest.of(query.page(), query.perPage(),
                 Sort.by(Sort.Direction.fromString(query.direction()), query.sort()));
 
