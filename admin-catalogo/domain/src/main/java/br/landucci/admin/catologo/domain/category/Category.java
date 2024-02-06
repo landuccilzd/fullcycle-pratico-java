@@ -1,6 +1,7 @@
 package br.landucci.admin.catologo.domain.category;
 
 import br.landucci.admin.catologo.domain.AggregateRoot;
+import br.landucci.admin.catologo.domain.utils.InstantUtils;
 import br.landucci.admin.catologo.domain.validation.ValidationHandler;
 
 import java.time.Instant;
@@ -27,7 +28,7 @@ public class Category extends AggregateRoot<CategoryID> implements Cloneable {
 
     public static Category newCategory(final String name, final String description, final boolean active) {
         final var id = CategoryID.unique();
-        final var now  = Instant.now();
+        final var now  = InstantUtils.now();
         final var nowDeleted  = active ? null : now;
         return with(id, name, description, active, now, now, nowDeleted);
     }
@@ -72,30 +73,30 @@ public class Category extends AggregateRoot<CategoryID> implements Cloneable {
 
     public Category updateName(final String name) {
         this.name = name;
-        this.updatedAt = Instant.now();
+        this.updatedAt = InstantUtils.now();
         return this;
     }
 
     public Category updateDescription(final String description) {
         this.description = description;
-        this.updatedAt = Instant.now();
+        this.updatedAt = InstantUtils.now();
         return this;
     }
 
     public Category deactivate() {
         if (this.deletedAt == null) {
-            this.deletedAt = Instant.now();
+            this.deletedAt = InstantUtils.now();
         }
 
         this.active = false;
-        this.updatedAt = Instant.now();
+        this.updatedAt = InstantUtils.now();
         return this;
     }
 
     public Category activate() {
         this.deletedAt = null;
         this.active = true;
-        this.updatedAt = Instant.now();
+        this.updatedAt = InstantUtils.now();
         return this;
     }
 
