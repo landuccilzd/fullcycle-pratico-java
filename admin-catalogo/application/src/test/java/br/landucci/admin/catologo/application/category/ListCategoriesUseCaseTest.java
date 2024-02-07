@@ -1,5 +1,7 @@
-package br.landucci.admin.catologo.application.category.list;
+package br.landucci.admin.catologo.application.category;
 
+import br.landucci.admin.catologo.application.category.list.DefaultListCategoriesUseCase;
+import br.landucci.admin.catologo.application.category.list.ListCategoriesOutputCommand;
 import br.landucci.admin.catologo.domain.category.Category;
 import br.landucci.admin.catologo.domain.category.CategoryGateway;
 import br.landucci.admin.catologo.domain.pagination.SearchQuery;
