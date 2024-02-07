@@ -5,7 +5,7 @@ import br.landucci.admin.catologo.domain.pagination.SearchQuery;
 
 import java.util.Optional;
 
-public interface GenraGateway {
+public interface GenreGateway {
 
     Optional<Genre> findById(GenreID id);
     Pagination<Genre> findAll(SearchQuery query);

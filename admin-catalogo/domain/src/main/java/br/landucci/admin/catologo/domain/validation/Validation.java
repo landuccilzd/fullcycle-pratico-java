@@ -1,6 +1,6 @@
 package br.landucci.admin.catologo.domain.validation;
 
-public interface Validation {
+public interface Validation<T> {
 
-    void validate();
+    T validate();
 }

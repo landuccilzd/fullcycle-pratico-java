@@ -41,16 +41,16 @@ public class Notification implements ValidationHandler {
     }
 
     @Override
-    public Notification validate(final Validation validation) {
+    public <T> T validate(final Validation<T> validation) {
         try {
-
+            return validation.validate();
         } catch (DomainException e) {
             this.errors.addAll(e.getErrors());
         } catch (Throwable t) {
             this.errors.add(new ValidationError(t.getMessage()));
         }
 
-        return this;
+        return null;
     }
 
     @Override

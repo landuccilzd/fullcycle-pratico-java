@@ -1,5 +1,7 @@
-package br.landucci.admin.catologo.application.category.find;
+package br.landucci.admin.catologo.application.category;
 
+import br.landucci.admin.catologo.application.category.find.DefaultFindByIDCategoryUseCase;
+import br.landucci.admin.catologo.application.category.find.FindByIDCategoryInputCommand;
 import br.landucci.admin.catologo.domain.category.Category;
 import br.landucci.admin.catologo.domain.category.CategoryGateway;
 import br.landucci.admin.catologo.domain.category.CategoryID;

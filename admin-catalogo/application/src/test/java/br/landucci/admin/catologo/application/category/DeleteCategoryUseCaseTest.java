@@ -1,5 +1,7 @@
-package br.landucci.admin.catologo.application.category.delete;
+package br.landucci.admin.catologo.application.category;
 
+import br.landucci.admin.catologo.application.category.delete.DefaultDeleteCategoryUseCase;
+import br.landucci.admin.catologo.application.category.delete.DeleteCategoryInputCommand;
 import br.landucci.admin.catologo.domain.category.Category;
 import br.landucci.admin.catologo.domain.category.CategoryGateway;
 import br.landucci.admin.catologo.domain.category.CategoryID;
