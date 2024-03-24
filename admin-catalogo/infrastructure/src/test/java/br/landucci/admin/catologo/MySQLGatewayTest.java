@@ -14,9 +14,12 @@ import java.lang.annotation.*;
 //@ActiveProfiles("tst")
 @ActiveProfiles("tst-int")
 @DataJpaTest
-@ComponentScan(includeFilters = {
+@ComponentScan(
+    basePackages = "br.landucci.admin.catologo",
+    includeFilters = {
         @ComponentScan.Filter(type = FilterType.REGEX, pattern = ".[MySQLGateway]")
-})
+    }
+)
 @ExtendWith(MySQLCleanUpExtension.class)
 public @interface MySQLGatewayTest {
 }
