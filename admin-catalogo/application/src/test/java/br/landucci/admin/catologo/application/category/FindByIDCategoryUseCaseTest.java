@@ -1,25 +1,23 @@
 package br.landucci.admin.catologo.application.category;
 
+import br.landucci.admin.catologo.application.UseCaseTest;
 import br.landucci.admin.catologo.application.category.find.DefaultFindByIDCategoryUseCase;
 import br.landucci.admin.catologo.application.category.find.FindByIDCategoryInputCommand;
 import br.landucci.admin.catologo.domain.category.Category;
 import br.landucci.admin.catologo.domain.category.CategoryGateway;
 import br.landucci.admin.catologo.domain.category.CategoryID;
-import br.landucci.admin.catologo.domain.exception.DomainException;
 import br.landucci.admin.catologo.domain.exception.NotFoundException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.List;
 import java.util.Optional;
 
-@ExtendWith(MockitoExtension.class)
-public class FindByIDCategoryUseCaseTest {
+public class FindByIDCategoryUseCaseTest extends UseCaseTest {
 
     @InjectMocks
     private DefaultFindByIDCategoryUseCase useCase;
@@ -84,5 +82,10 @@ public class FindByIDCategoryUseCaseTest {
 
         Assertions.assertEquals(expectedErrorMessage, exception.getMessage());
     }
-}
 
+    @Override
+    protected List<Object> getMocks() {
+        return List.of(gateway);
+    }
+
+}

@@ -1,6 +1,5 @@
 package br.landucci.admin.catologo.application.genre.create;
 
-import br.landucci.admin.catologo.application.category.create.CreateCategoryOutputCommand;
 import br.landucci.admin.catologo.domain.category.CategoryGateway;
 import br.landucci.admin.catologo.domain.category.CategoryID;
 import br.landucci.admin.catologo.domain.exception.NotificationException;
@@ -37,9 +36,10 @@ public class DefaultCreateGenreUseCase extends CreateGenreUseCase {
         final var genre = notification.validate(() -> Genre.newGenre(name, active));
 
         if (notification.hasErrors()) {
-            throw new NotificationException("", notification);
+            throw new NotificationException("Could not create Aggregate Genre", notification);
         }
 
+        genre.adicionarCategorias(categories);
         final var output = this.gateway.create(genre);
         return CreateGenreOutputCommand.from(output);
     }

@@ -46,6 +46,11 @@ public class Genre extends AggregateRoot<GenreID> implements Cloneable {
         return with(id, name, active, now, now, nowDeleted);
     }
 
+    public static Genre from(Genre genre) {
+        return with(genre.getId(), genre.getName(), genre.isActive(), genre.getCreatedAt(), genre.getUpdatedAt(),
+                genre.getDeletedAt());
+    }
+
     public String getName() {
         return name;
     }
@@ -87,6 +92,10 @@ public class Genre extends AggregateRoot<GenreID> implements Cloneable {
     }
 
     public Genre adicionarCategorias(List<CategoryID> ids) {
+        if (ids == null || ids.isEmpty()) {
+            return this;
+        }
+
         for (CategoryID id: ids) {
             verificarDuplicidadeCategoria(id);
         }

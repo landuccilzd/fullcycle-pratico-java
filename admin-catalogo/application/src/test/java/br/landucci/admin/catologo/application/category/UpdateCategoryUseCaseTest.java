@@ -1,6 +1,6 @@
 package br.landucci.admin.catologo.application.category;
 
-import br.landucci.admin.catologo.application.category.create.CreateCategoryInputCommand;
+import br.landucci.admin.catologo.application.UseCaseTest;
 import br.landucci.admin.catologo.application.category.update.DefaultUpdateCategoryUseCase;
 import br.landucci.admin.catologo.application.category.update.UpdateCategoryInputCommand;
 import br.landucci.admin.catologo.domain.category.Category;
@@ -10,18 +10,16 @@ import br.landucci.admin.catologo.domain.exception.DomainException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.AdditionalAnswers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
-@ExtendWith(MockitoExtension.class)
-public class UpdateCategoryUseCaseTest {
+public class UpdateCategoryUseCaseTest extends UseCaseTest {
     @InjectMocks
     private DefaultUpdateCategoryUseCase useCase;
     @Mock
@@ -170,7 +168,7 @@ public class UpdateCategoryUseCaseTest {
 //                    Objects.isNull(cat.getDeletedAt());
 //        }));
 //    }
-    
+
     @Test
     //Criar uma categoria simulando um erro vindo do gateway
     public void givenAValidCommand_whenGatewayThrowsAnException_thenShouldReturnAnException() {
@@ -222,5 +220,10 @@ public class UpdateCategoryUseCaseTest {
 
         Mockito.verify(gateway, Mockito.times(1)).findById(Mockito.eq(CategoryID.from(expectedId)));
         Mockito.verify(gateway, Mockito.times(0)).update(Mockito.any());
+    }
+
+    @Override
+    protected List<Object> getMocks() {
+        return List.of(gateway);
     }
 }
