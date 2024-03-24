@@ -1,5 +1,6 @@
 package br.landucci.admin.catologo.application.category;
 
+import br.landucci.admin.catologo.application.UseCaseTest;
 import br.landucci.admin.catologo.application.category.list.DefaultListCategoriesUseCase;
 import br.landucci.admin.catologo.application.category.list.ListCategoriesOutputCommand;
 import br.landucci.admin.catologo.domain.category.Category;
@@ -9,16 +10,13 @@ import br.landucci.admin.catologo.domain.pagination.Pagination;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
 
-@ExtendWith(MockitoExtension.class)
-public class ListCategoriesUseCaseTest {
+public class ListCategoriesUseCaseTest extends UseCaseTest {
 
     @InjectMocks
     private DefaultListCategoriesUseCase useCase;
@@ -101,5 +99,10 @@ public class ListCategoriesUseCaseTest {
         final var exception = Assertions.assertThrows(IllegalStateException.class, () -> useCase.execute(query));
 
         Assertions.assertEquals(expectedErrorMessage, exception.getMessage());
+    }
+
+    @Override
+    protected List<Object> getMocks() {
+        return List.of(gateway);
     }
 }

@@ -1,5 +1,6 @@
 package br.landucci.admin.catologo.application.category;
 
+import br.landucci.admin.catologo.application.UseCaseTest;
 import br.landucci.admin.catologo.application.category.delete.DefaultDeleteCategoryUseCase;
 import br.landucci.admin.catologo.application.category.delete.DeleteCategoryInputCommand;
 import br.landucci.admin.catologo.domain.category.Category;
@@ -9,16 +10,14 @@ import br.landucci.admin.catologo.domain.exception.DomainException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.List;
 import java.util.Optional;
 
-@ExtendWith(MockitoExtension.class)
-public class DeleteCategoryUseCaseTest {
+public class DeleteCategoryUseCaseTest extends UseCaseTest {
     @InjectMocks
     private DefaultDeleteCategoryUseCase useCase;
     @Mock
@@ -67,4 +66,10 @@ public class DeleteCategoryUseCaseTest {
         final var input = DeleteCategoryInputCommand.with(expectedId.getValue());
         Assertions.assertThrows(DomainException.class, () -> useCase.execute(input));
     }
+
+    @Override
+    protected List<Object> getMocks() {
+        return List.of(gateway);
+    }
+
 }

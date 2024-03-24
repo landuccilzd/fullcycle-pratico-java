@@ -1,45 +1,36 @@
 package br.landucci.admin.catologo.application.genre;
 
+import br.landucci.admin.catologo.application.UseCaseTest;
 import br.landucci.admin.catologo.application.genre.create.CreateGenreInputCommand;
 import br.landucci.admin.catologo.application.genre.create.DefaultCreateGenreUseCase;
 import br.landucci.admin.catologo.domain.category.CategoryGateway;
 import br.landucci.admin.catologo.domain.category.CategoryID;
+import br.landucci.admin.catologo.domain.exception.NotificationException;
 import br.landucci.admin.catologo.domain.genre.GenreGateway;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.AdditionalAnswers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
 import java.util.Objects;
 
-@ExtendWith(MockitoExtension.class)
-public class CreateGenreUseCaseTest {
+public class CreateGenreUseCaseTest extends UseCaseTest {
 
     @InjectMocks
     private DefaultCreateGenreUseCase useCase;
     @Mock
     private GenreGateway gateway;
-
     @Mock
     private CategoryGateway categoryGateway;
-
-    @BeforeEach
-    void cleanUp() {
-        Mockito.reset(gateway);
-    }
 
     @Test
     public void givenAValidCommand_whenCreateAGenre_thenShouldReturnACreatedGenre() {
         final var expectedName = "Ação";
         final var expectedActive = true;
         final var expectedCategories = List.<CategoryID>of();
-
 
         Mockito.when(gateway.create(Mockito.any())).thenAnswer(AdditionalAnswers.returnsFirstArg());
 
@@ -63,79 +54,139 @@ public class CreateGenreUseCaseTest {
         }));
     }
 
-    /*
     @Test
-    public void givenAnInValidNameCommand_whenCreateAGenre_thenShouldReturnDomainException() {
-        final var expectedDescription = "Filmes de ficção científica";
+    public void givenAValidCommandWithCategoires_whenCreateAGenre_thenShouldReturnACreatedGenre() {
+        final var expectedName = "Ação";
         final var expectedActive = true;
-        final var expectedErrorMessage = "Name should not be null";
-        final var expectedErrorCount = 1;
+        final var expectedCategories = List.of(
+                CategoryID.from("123"),
+                CategoryID.from("456"),
+                CategoryID.from("789")
+        );
 
-        final var command = CreateGenreInputCommand.with(null, expectedDescription, expectedActive);
-        final var notification = useCase.execute(command).getLeft();
-
-        Assertions.assertEquals(expectedErrorCount, notification.getErrors().size());
-        Assertions.assertEquals(expectedErrorMessage, notification.firstError().message());
-
-        Mockito.verify(gateway, Mockito.times(0)).create(Mockito.any());
-    }
-
-    @Test
-    //Criar categoria inativa
-    public void givenAValidCommand_whenCreateAGenreInactivated_thenShouldReturnACreatedGenreInactivated() {
-        final var expectedName = "Ficção Científica";
-        final var expectedDescription = "Filmes de ficção científica";
-        final var expectedActive = false;
+        Mockito.when(categoryGateway.existsByIds(Mockito.any())).thenReturn(expectedCategories);
 
         Mockito.when(gateway.create(Mockito.any())).thenAnswer(AdditionalAnswers.returnsFirstArg());
 
-        final var command = CreateGenreInputCommand.with(expectedName, expectedDescription, expectedActive);
-        final var output = useCase.execute(command).get();
+        final var command = CreateGenreInputCommand.with(expectedName, expectedActive, asString(expectedCategories));
+
+        Mockito.when(gateway.create(Mockito.any())).thenAnswer(AdditionalAnswers.returnsFirstArg());
+
+        final var output = useCase.execute(command);
 
         Assertions.assertNotNull(output);
         Assertions.assertNotNull(output.id());
 
+        Mockito.verify(categoryGateway, Mockito.times(1)).existsByIds(expectedCategories);
+
         Mockito.verify(gateway, Mockito.times(1)).create(Mockito.argThat(genre -> {
-            return Objects.equals(expectedName, genre.getName()) &&
-                    Objects.equals(expectedDescription, genre.getDescription()) &&
+            return Objects.nonNull(genre.getId()) &&
+                    Objects.equals(expectedName, genre.getName()) &&
                     Objects.equals(expectedActive, genre.isActive()) &&
-                    Objects.nonNull(genre.getId()) &&
+                    Objects.equals(expectedCategories, genre.getCategories()) &&
                     Objects.nonNull(genre.getCreatedAt()) &&
                     Objects.nonNull(genre.getUpdatedAt()) &&
-                    Objects.nonNull(genre.getDeletedAt());
+                    Objects.isNull(genre.getDeletedAt());
         }));
     }
 
     @Test
-    //Criar uma categoria simulando um erro vindo do gateway
-    public void givenAValidCommand_whenGatewayThrowsAnException_thenShouldReturnAnException() {
-        final var expectedName = "Ficção Científica";
-        final var expectedDescription = "Filmes de ficção científica";
-        final var expectedActive = false;
-        final var expectedErrorMessage = "Gateway Generic Error";
+    public void givenAnInValidNullNameCommand_whenCreateAGenre_thenShouldReturnDomainException() {
+        final var expectedActive = true;
+        final var expectedCategories = List.<CategoryID>of();
+        final var expectedErrorMessage = "Name should not be null";
         final var expectedErrorCount = 1;
 
-        Mockito.when(gateway.create(Mockito.any())).thenThrow(new IllegalStateException(expectedErrorMessage));
+        final var command = CreateGenreInputCommand.with(null, expectedActive, asString(expectedCategories));
+        final var exception = Assertions.assertThrows(NotificationException.class, () -> {
+            useCase.execute(command);
+        });
 
-        final var command = CreateGenreInputCommand.with(expectedName, expectedDescription, expectedActive);
-        final var notification = useCase.execute(command).getLeft();
+        Assertions.assertEquals(expectedErrorCount, exception.getErrors().size());
+        Assertions.assertEquals(expectedErrorMessage, exception.firstError().message());
 
-        Assertions.assertEquals(expectedErrorCount, notification.getErrors().size());
-        Assertions.assertEquals(expectedErrorMessage, notification.firstError().message());
-
-        Mockito.verify(gateway, Mockito.times(1)).create(Mockito.argThat(genre -> {
-            return Objects.equals(expectedName, genre.getName()) &&
-                    Objects.equals(expectedDescription, genre.getDescription()) &&
-                    Objects.equals(expectedActive, genre.isActive()) &&
-                    Objects.nonNull(genre.getId()) &&
-                    Objects.nonNull(genre.getCreatedAt()) &&
-                    Objects.nonNull(genre.getUpdatedAt()) &&
-                    Objects.nonNull(genre.getDeletedAt());
-        }));
-    }
-*/
-    private List<String> asString(final List<CategoryID> ids) {
-        return ids.stream().map(CategoryID::getValue).toList();
+        Mockito.verify(categoryGateway, Mockito.times(0)).existsByIds(Mockito.any());
+        Mockito.verify(gateway, Mockito.times(0)).create(Mockito.any());
     }
 
+    @Test
+    public void givenAnInValidEmptyNameCommand_whenCreateAGenre_thenShouldReturnDomainException() {
+        final var expectedActive = true;
+        final var expectedCategories = List.<CategoryID>of();
+        final var expectedErrorMessage = "Name should not be empty";
+        final var expectedErrorCount = 1;
+
+        final var command = CreateGenreInputCommand.with("", expectedActive, asString(expectedCategories));
+        final var exception = Assertions.assertThrows(NotificationException.class, () -> {
+            useCase.execute(command);
+        });
+
+        Assertions.assertEquals(expectedErrorCount, exception.getErrors().size());
+        Assertions.assertEquals(expectedErrorMessage, exception.firstError().message());
+
+        Mockito.verify(categoryGateway, Mockito.times(0)).existsByIds(Mockito.any());
+        Mockito.verify(gateway, Mockito.times(0)).create(Mockito.any());
+    }
+
+    @Test
+    public void givenAnInvalidCommandWithCategoriesNotExisting_whenCratingAGenre_thenShouldReturnNotificationException() {
+        final var filmes = CategoryID.from("123");
+        final var series = CategoryID.from("456");
+        final var documentarios = CategoryID.from("789");
+
+        final var expectedName = "Ação";
+        final var expectedActive = true;
+        final var expectedCategories = List.of(filmes, series, documentarios);
+
+        final var expectedErrorMessage = "Some categories were not found: %s, %s"
+                .formatted(series.getValue(), documentarios.getValue());
+
+        final var expectedErrorCount = 1;
+
+        Mockito.when(categoryGateway.existsByIds(Mockito.any())).thenReturn(List.of(filmes));
+
+        final var command = CreateGenreInputCommand.with(expectedName, expectedActive, asString(expectedCategories));
+        final var exception = Assertions.assertThrows(NotificationException.class, () -> {
+            useCase.execute(command);
+        });
+
+        Assertions.assertEquals(expectedErrorCount, exception.getErrors().size());
+        Assertions.assertEquals(expectedErrorMessage, exception.firstError().message());
+
+        Mockito.verify(categoryGateway, Mockito.times(1)).existsByIds(Mockito.any());
+        Mockito.verify(gateway, Mockito.times(0)).create(Mockito.any());
+    }
+
+    @Test
+    public void givenAnInvalidCommandWithNullNameAndCategoriesNotExisting_whenCratingAGenre_thenShouldReturnNotificationException() {
+        final var filmes = CategoryID.from("123");
+        final var series = CategoryID.from("456");
+        final var documentarios = CategoryID.from("789");
+        final var expectedActive = true;
+        final var expectedCategories = List.of(filmes, series, documentarios);
+        final var expectedErrorCount = 2;
+        final var expectedErrorMessageName = "Name should not be null";
+        final var expectedErrorMessageCategories = "Some categories were not found: %s, %s"
+                .formatted(series.getValue(), documentarios.getValue());
+
+
+        Mockito.when(categoryGateway.existsByIds(Mockito.any())).thenReturn(List.of(filmes));
+
+        final var command = CreateGenreInputCommand.with(null, expectedActive, asString(expectedCategories));
+        final var exception = Assertions.assertThrows(NotificationException.class, () -> {
+            useCase.execute(command);
+        });
+
+        Assertions.assertEquals(expectedErrorCount, exception.getErrors().size());
+        Assertions.assertEquals(expectedErrorMessageCategories, exception.firstError().message());
+        Assertions.assertEquals(expectedErrorMessageName, exception.getErrors().get(1).message());
+
+        Mockito.verify(categoryGateway, Mockito.times(1)).existsByIds(Mockito.any());
+        Mockito.verify(gateway, Mockito.times(0)).create(Mockito.any());
+    }
+
+    @Override
+    protected List<Object> getMocks() {
+        return List.of(gateway, categoryGateway);
+    }
 }
