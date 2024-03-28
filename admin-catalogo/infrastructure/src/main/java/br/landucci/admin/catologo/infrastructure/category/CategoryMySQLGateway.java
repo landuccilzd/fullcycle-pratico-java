@@ -75,7 +75,7 @@ public class CategoryMySQLGateway implements CategoryGateway {
         return Collections.emptyList();
     }
 
-    private Category save(Category category) {
+    private Category save(final Category category) {
         final var entity = CategoryJpaEntity.from(category);
         return this.repository.save(entity).toAggregate();
     }

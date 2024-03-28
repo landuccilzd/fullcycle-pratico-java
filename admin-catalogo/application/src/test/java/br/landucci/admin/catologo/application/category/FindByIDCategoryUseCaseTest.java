@@ -1,7 +1,7 @@
 package br.landucci.admin.catologo.application.category;
 
 import br.landucci.admin.catologo.application.UseCaseTest;
-import br.landucci.admin.catologo.application.category.find.DefaultFindByIDCategoryUseCase;
+import br.landucci.admin.catologo.application.category.find.DefaultFindCategoryByIDUseCase;
 import br.landucci.admin.catologo.application.category.find.FindByIDCategoryInputCommand;
 import br.landucci.admin.catologo.domain.category.Category;
 import br.landucci.admin.catologo.domain.category.CategoryGateway;
@@ -20,7 +20,7 @@ import java.util.Optional;
 public class FindByIDCategoryUseCaseTest extends UseCaseTest {
 
     @InjectMocks
-    private DefaultFindByIDCategoryUseCase useCase;
+    private DefaultFindCategoryByIDUseCase useCase;
     @Mock
     private CategoryGateway gateway;
 

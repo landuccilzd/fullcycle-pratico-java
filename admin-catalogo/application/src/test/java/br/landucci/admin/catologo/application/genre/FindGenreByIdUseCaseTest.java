@@ -1,7 +1,7 @@
 package br.landucci.admin.catologo.application.genre;
 
 import br.landucci.admin.catologo.application.UseCaseTest;
-import br.landucci.admin.catologo.application.genre.find.DefaultFindGenreByIdUseCase;
+import br.landucci.admin.catologo.application.genre.find.DefaultFindGenreByIDUseCase;
 import br.landucci.admin.catologo.domain.category.CategoryID;
 import br.landucci.admin.catologo.domain.exception.NotFoundException;
 import br.landucci.admin.catologo.domain.genre.Genre;
@@ -24,7 +24,7 @@ import static org.mockito.Mockito.when;
 public class FindGenreByIdUseCaseTest extends UseCaseTest {
 
     @InjectMocks
-    private DefaultFindGenreByIdUseCase useCase;
+    private DefaultFindGenreByIDUseCase useCase;
 
     @Mock
     private GenreGateway genreGateway;

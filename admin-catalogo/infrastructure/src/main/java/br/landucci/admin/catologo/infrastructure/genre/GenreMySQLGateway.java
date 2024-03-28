@@ -1,39 +1,74 @@
 package br.landucci.admin.catologo.infrastructure.genre;
 
+import br.landucci.admin.catologo.domain.category.Category;
 import br.landucci.admin.catologo.domain.genre.Genre;
 import br.landucci.admin.catologo.domain.genre.GenreGateway;
 import br.landucci.admin.catologo.domain.genre.GenreID;
 import br.landucci.admin.catologo.domain.pagination.Pagination;
 import br.landucci.admin.catologo.domain.pagination.SearchQuery;
+import br.landucci.admin.catologo.infrastructure.category.persistence.CategoryJpaEntity;
+import br.landucci.admin.catologo.infrastructure.genre.persistence.GenreJpaEntity;
+import br.landucci.admin.catologo.infrastructure.genre.persistence.GenreRepository;
+import br.landucci.admin.catologo.infrastructure.utils.SpecificationUtils;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 
+import java.util.Objects;
 import java.util.Optional;
 
 @Component
 public class GenreMySQLGateway implements GenreGateway {
-    @Override
-    public Optional<Genre> findById(GenreID id) {
-        return Optional.empty();
+    private final GenreRepository repository;
+
+    public GenreMySQLGateway(GenreRepository repository) {
+        this.repository = Objects.requireNonNull(repository);
     }
 
     @Override
-    public Pagination<Genre> findAll(SearchQuery query) {
-        return null;
+    public Optional<Genre> findById(final GenreID id) {
+        return this.repository.findById(id.getValue()).map(GenreJpaEntity::toAggregate);
     }
 
     @Override
-    public Genre create(Genre genre) {
-        return null;
+    public Pagination<Genre> findAll(final SearchQuery query) {
+        final var page = PageRequest.of(query.page(), query.perPage(),
+                Sort.by(Sort.Direction.fromString(query.direction()), query.sort()));
+
+        final var specifications = Optional.ofNullable(query.terms()).filter(str -> !str.isBlank())
+                .map(str -> {
+                    final var nameLike = SpecificationUtils.<GenreJpaEntity>like("name", str);
+                    return nameLike;
+                }).orElse(null);
+
+        final var pageResult = this.repository.findAll(Specification.where(specifications), page);
+        return new Pagination<>(pageResult.getNumber(), pageResult.getSize(), pageResult.getTotalElements(),
+                pageResult.map(GenreJpaEntity::toAggregate).stream().toList()
+        );
     }
 
     @Override
-    public Genre update(Genre genre) {
-        return null;
+    public Genre create(final Genre genre) {
+        return this.save(genre);
     }
 
     @Override
-    public void deleteById(GenreID id) {
-
+    public Genre update(final Genre genre) {
+        return this.save(genre);
     }
 
+    @Override
+    public void deleteById(final GenreID id) {
+        final var idValue = id.getValue();
+        if (!this.repository.existsById(idValue)) {
+            throw new IllegalArgumentException("Genre with ID %s was not found".formatted(id.getValue()));
+        }
+        this.repository.deleteById(idValue);
+    }
+
+    private Genre save(final Genre genre) {
+        final var entity = GenreJpaEntity.from(genre);
+        return this.repository.save(entity).toAggregate();
+    }
 }

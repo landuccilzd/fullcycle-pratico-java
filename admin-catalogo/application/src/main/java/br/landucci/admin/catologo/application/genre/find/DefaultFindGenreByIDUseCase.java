@@ -7,11 +7,11 @@ import br.landucci.admin.catologo.domain.genre.GenreID;
 
 import java.util.Objects;
 
-public class DefaultFindGenreByIdUseCase extends FindGenreByIdUseCase{
+public class DefaultFindGenreByIDUseCase extends FindGenreByIDUseCase {
 
     private final GenreGateway genreGateway;
 
-    public DefaultFindGenreByIdUseCase(final GenreGateway genreGateway) {
+    public DefaultFindGenreByIDUseCase(final GenreGateway genreGateway) {
         this.genreGateway = Objects.requireNonNull(genreGateway);
     }
 

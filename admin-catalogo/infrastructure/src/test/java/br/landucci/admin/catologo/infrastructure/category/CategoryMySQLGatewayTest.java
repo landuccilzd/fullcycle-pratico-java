@@ -203,7 +203,7 @@ public class CategoryMySQLGatewayTest {
     }
 
     @Test
-    public void givenFollowPagination_whenFindingAllOnPage1_thenShouldReturnPaginated   () {
+    public void givenFollowPagination_whenFindingAllOnPage1_thenShouldReturnPaginated() {
         var expectedPage = 0;
         final var expectedPerPage = 1;
         final var expectedTotal = 3;

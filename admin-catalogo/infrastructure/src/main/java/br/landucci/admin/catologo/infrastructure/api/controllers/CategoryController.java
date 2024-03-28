@@ -6,8 +6,8 @@ import br.landucci.admin.catologo.application.category.create.CreateCategoryUseC
 import br.landucci.admin.catologo.application.category.delete.DeleteCategoryInputCommand;
 import br.landucci.admin.catologo.application.category.delete.DeleteCategoryUseCase;
 import br.landucci.admin.catologo.application.category.find.FindByIDCategoryInputCommand;
-import br.landucci.admin.catologo.application.category.find.FindByIDCategoryUseCase;
-import br.landucci.admin.catologo.application.category.list.ListCategoriesUseCase;
+import br.landucci.admin.catologo.application.category.find.FindCategoryByIDUseCase;
+import br.landucci.admin.catologo.application.category.list.ListCategoryUseCase;
 import br.landucci.admin.catologo.application.category.update.UpdateCategoryInputCommand;
 import br.landucci.admin.catologo.application.category.update.UpdateCategoryOutputCommand;
 import br.landucci.admin.catologo.application.category.update.UpdateCategoryUseCase;
@@ -30,14 +30,14 @@ import java.util.function.Function;
 @RestController
 public class CategoryController implements CategoryAPI {
 
-    private final ListCategoriesUseCase listCategoryUseCase;
-    private final FindByIDCategoryUseCase findByIDCategoryUseCase;
+    private final ListCategoryUseCase listCategoryUseCase;
+    private final FindCategoryByIDUseCase findByIDCategoryUseCase;
     private final CreateCategoryUseCase createCategoryUseCase;
     private final UpdateCategoryUseCase updateCategoryUseCase;
     private final DeleteCategoryUseCase deleteCategoryUseCase;
 
-    public CategoryController(final ListCategoriesUseCase listCategoryUseCase,
-                              final FindByIDCategoryUseCase findByIDCategoryUseCase,
+    public CategoryController(final ListCategoryUseCase listCategoryUseCase,
+                              final FindCategoryByIDUseCase findByIDCategoryUseCase,
                               final CreateCategoryUseCase createCategoryUseCase,
                               final UpdateCategoryUseCase updateCategoryUseCase,
                               final DeleteCategoryUseCase deleteCategoryUseCase) {

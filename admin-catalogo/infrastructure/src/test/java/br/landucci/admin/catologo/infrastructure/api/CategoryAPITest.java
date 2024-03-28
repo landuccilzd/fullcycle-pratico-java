@@ -7,9 +7,9 @@ import br.landucci.admin.catologo.application.category.delete.DeleteCategoryInpu
 import br.landucci.admin.catologo.application.category.delete.DeleteCategoryUseCase;
 import br.landucci.admin.catologo.application.category.find.FindByIDCategoryInputCommand;
 import br.landucci.admin.catologo.application.category.find.FindByIDCategoryOutputCommand;
-import br.landucci.admin.catologo.application.category.find.FindByIDCategoryUseCase;
+import br.landucci.admin.catologo.application.category.find.FindCategoryByIDUseCase;
 import br.landucci.admin.catologo.application.category.list.ListCategoriesOutputCommand;
-import br.landucci.admin.catologo.application.category.list.ListCategoriesUseCase;
+import br.landucci.admin.catologo.application.category.list.ListCategoryUseCase;
 import br.landucci.admin.catologo.application.category.update.UpdateCategoryOutputCommand;
 import br.landucci.admin.catologo.application.category.update.UpdateCategoryUseCase;
 import br.landucci.admin.catologo.domain.category.Category;
@@ -45,9 +45,9 @@ public class CategoryAPITest {
     @Autowired
     private ObjectMapper mapper;
     @MockBean
-    private ListCategoriesUseCase listCategoriesUseCase;
+    private ListCategoryUseCase listCategoriesUseCase;
     @MockBean
-    private FindByIDCategoryUseCase findByIDCategoryUseCase;
+    private FindCategoryByIDUseCase findByIDCategoryUseCase;
     @MockBean
     private CreateCategoryUseCase createCategoryUseCase;
     @MockBean
