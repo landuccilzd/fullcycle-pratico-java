@@ -8,11 +8,11 @@ import br.landucci.admin.catologo.domain.exception.NotFoundException;
 import java.util.Objects;
 import java.util.function.Supplier;
 
-public class DefaultFindByIDCategoryUseCase extends FindByIDCategoryUseCase {
+public class DefaultFindCategoryByIDUseCase extends FindCategoryByIDUseCase {
 
     private final CategoryGateway gateway;
 
-    public DefaultFindByIDCategoryUseCase(final CategoryGateway gateway) {
+    public DefaultFindCategoryByIDUseCase(final CategoryGateway gateway) {
         this.gateway = Objects.requireNonNull(gateway);
     }
 

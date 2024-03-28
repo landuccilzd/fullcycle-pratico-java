@@ -15,20 +15,13 @@ public class GenreCategoryID implements Serializable {
 
     private GenreCategoryID() {}
 
-    public GenreCategoryID(GenreCategoryIDBuilder builder) {
-        this.genreId = builder.genreId;
-        this.categoryId = builder.categoryId;
-    }
-    private GenreCategoryID(final String genreId, final String categoryId) {
-        this.genreId = genreId;
-        this.categoryId = categoryId;
+    protected GenreCategoryID(GenreCategoryIDBuilder builder) {
+        this.genreId = builder.getGenreId();
+        this.categoryId = builder.getCategoryId();
     }
 
     public static GenreCategoryID with(final String genreId, final String categoryId) {
-        var builder = new GenreCategoryIDBuilder();
-        builder.withGenreId(genreId);
-        builder.withCategoryId(categoryId);
-        return builder.build();
+        return new GenreCategoryIDBuilder().withGenreId(genreId).withCategoryId(categoryId).build();
     }
 
     public String getGenreId() {
@@ -57,22 +50,4 @@ public class GenreCategoryID implements Serializable {
         return genreId + " - " + categoryId;
     }
 
-    public static class GenreCategoryIDBuilder {
-        private String genreId;
-        private String categoryId;
-
-        public GenreCategoryIDBuilder withGenreId(String genreId) {
-            this.genreId = genreId;
-            return this;
-        }
-
-        public GenreCategoryIDBuilder withCategoryId(String categoryId) {
-            this.categoryId = categoryId;
-            return this;
-        }
-
-        public GenreCategoryID build() {
-            return new GenreCategoryID(this);
-        }
-    }
 }

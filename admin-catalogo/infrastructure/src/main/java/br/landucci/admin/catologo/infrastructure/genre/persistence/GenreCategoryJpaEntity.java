@@ -17,19 +17,10 @@ public class GenreCategoryJpaEntity {
 
     public GenreCategoryJpaEntity() {}
 
-    private GenreCategoryJpaEntity(final CategoryID categoryID, final GenreJpaEntity genre) {
-        this.id = GenreCategoryID.with(genre.getId(), categoryID.getValue());
-        this.genre = genre;
-    }
-
-    public GenreCategoryJpaEntity(GenreCategoryJpaEntityBuilder builder) {
+    protected GenreCategoryJpaEntity(GenreCategoryJpaEntityBuilder builder) {
         var categoryID = CategoryID.from(builder.getId().getCategoryId());
         this.id = GenreCategoryID.with(builder.getGenre().getId(), categoryID.getValue());
-        this.genre = genre;
-    }
-
-    public static GenreCategoryJpaEntity with(final CategoryID categoryID, final GenreJpaEntity genre) {
-        return new GenreCategoryJpaEntity(categoryID, genre);
+        this.genre = builder.getGenre();
     }
 
     public GenreCategoryID getId() {

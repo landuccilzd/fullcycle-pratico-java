@@ -6,13 +6,12 @@ import br.landucci.admin.catologo.domain.genre.GenreID;
 import jakarta.persistence.*;
 
 import java.time.Instant;
-import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
 @Table(name = "genre")
 public class GenreJpaEntity {
-
     @Id
     @Column(name = "id", nullable = false)
     private String id;
@@ -32,23 +31,27 @@ public class GenreJpaEntity {
 
     public GenreJpaEntity() {}
 
-    public GenreJpaEntity(final String id, final String name, final boolean active, final Instant createdAt,
-            final Instant updatedAt, final Instant deletedAt) {
-        this.id = id;
-        this.name = name;
-        this.active = active;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
-        this.deletedAt = deletedAt;
-        this.categories = new HashSet<>();
+    protected GenreJpaEntity(GenreJpaEntityBuilder builder) {
+        this.id = builder.getId();
+        this.name = builder.getName();
+        this.active = builder.isActive();
+        this.createdAt = builder.getCreatedAt();
+        this.updatedAt = builder.getUpdatedAt();
+        this.deletedAt = builder.getDeletedAt();
+        this.categories = builder.getCategories();
     }
 
     public static GenreJpaEntity from(final Genre genre) {
-        var genreJpa = new GenreJpaEntity(genre.getId().getValue(), genre.getName(), genre.isActive(),
-                genre.getCreatedAt(), genre.getUpdatedAt(), genre.getDeletedAt());
-
-        genre.getCategories().forEach(genreJpa::adicionarCategoria);
-        return genreJpa;
+        var builder = new GenreJpaEntityBuilder();
+        var entity = builder.withId(genre.getId().getValue())
+                .withName(genre.getName())
+                .withActive(genre.isActive())
+                .withCreatedAt(genre.getCreatedAt())
+                .withUpdatedAt(genre.getUpdatedAt())
+                .withDeletedAt(genre.getDeletedAt())
+                .build();
+        genre.getCategories().forEach(entity::adicionarCategoria);
+        return entity;
     }
 
     public Genre toAggregate() {
@@ -81,6 +84,12 @@ public class GenreJpaEntity {
         return categories;
     }
 
+    public List<CategoryID> getCategoriesAsList() {
+        return this.categories.stream().map(it ->
+                CategoryID.from(it.getId().getCategoryId())
+        ).toList();
+    }
+
     public GenreJpaEntity setId(String id) {
         this.id = id;
         return this;
@@ -109,10 +118,27 @@ public class GenreJpaEntity {
         this.categories = categories;
         return this;
     }
+
     public void adicionarCategoria(final CategoryID id) {
-        this.categories.add(GenreCategoryJpaEntity.with(id, this));
+        this.categories.add(criarEntity(id));
     }
+
     public void removerCategoria(final CategoryID id) {
-        this.categories.remove(GenreCategoryJpaEntity.with(id, this));
+        this.categories.remove(criarEntity(id));
     }
+
+    public int categoriesCount() {
+        if (this.categories == null) {
+            return 0;
+        }
+        return this.categories.size();
+    }
+
+    private GenreCategoryJpaEntity criarEntity(CategoryID id) {
+        return new GenreCategoryJpaEntityBuilder()
+                .withId(GenreCategoryID.with(getId(), id.getValue()))
+                .withGenre(this)
+                .build();
+    }
+
 }

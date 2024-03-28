@@ -8,13 +8,11 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.Optional;
-
 @IntegrationTest
 public class FindByIDCategoryUseCaseIT {
 
     @Autowired
-    private FindByIDCategoryUseCase useCase;
+    private FindCategoryByIDUseCase useCase;
     @Autowired
     private CategoryRepository repository;
 

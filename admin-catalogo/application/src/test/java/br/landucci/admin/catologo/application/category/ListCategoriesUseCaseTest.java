@@ -1,7 +1,7 @@
 package br.landucci.admin.catologo.application.category;
 
 import br.landucci.admin.catologo.application.UseCaseTest;
-import br.landucci.admin.catologo.application.category.list.DefaultListCategoriesUseCase;
+import br.landucci.admin.catologo.application.category.list.DefaultListCategoryUseCase;
 import br.landucci.admin.catologo.application.category.list.ListCategoriesOutputCommand;
 import br.landucci.admin.catologo.domain.category.Category;
 import br.landucci.admin.catologo.domain.category.CategoryGateway;
@@ -19,7 +19,7 @@ import java.util.List;
 public class ListCategoriesUseCaseTest extends UseCaseTest {
 
     @InjectMocks
-    private DefaultListCategoriesUseCase useCase;
+    private DefaultListCategoryUseCase useCase;
     @Mock
     private CategoryGateway gateway;
 

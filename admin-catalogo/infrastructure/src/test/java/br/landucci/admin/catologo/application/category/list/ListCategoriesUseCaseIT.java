@@ -16,7 +16,7 @@ import java.util.List;
 public class ListCategoriesUseCaseIT {
 
     @Autowired
-    private ListCategoriesUseCase useCase;
+    private ListCategoryUseCase useCase;
     @Autowired
     private CategoryRepository repository;
 

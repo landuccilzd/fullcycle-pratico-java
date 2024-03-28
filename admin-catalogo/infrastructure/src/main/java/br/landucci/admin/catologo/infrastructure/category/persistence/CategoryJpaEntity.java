@@ -7,6 +7,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import java.time.Instant;
+import java.util.Objects;
 
 @Entity
 @Table(name = "category")
@@ -28,20 +29,21 @@ public class CategoryJpaEntity {
 
     public CategoryJpaEntity() {}
 
-    private CategoryJpaEntity(final String id, final String name, final String description, final boolean active,
-                              final Instant createdAt, final Instant updatedAt, final Instant deletedAt) {
-        this.id = id;
-        this.name = name;
-        this.description = description;
-        this.active = active;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
-        this.deletedAt = deletedAt;
+    protected CategoryJpaEntity(final CategoryJpaEntityBuilder builder) {
+        this.id = builder.getId();
+        this.name = builder.getName();
+        this.description = builder.getDescription();
+        this.active = builder.isActive();
+        this.createdAt = builder.getCreatedAt();
+        this.updatedAt = builder.getUpdatedAt();
+        this.deletedAt = builder.getDeletedAt();
     }
 
     public static CategoryJpaEntity from(final Category category) {
-        return new CategoryJpaEntity(category.getId().getValue(), category.getName(), category.getDescription(),
-                category.isActive(), category.getCreatedAt(), category.getUpdatedAt(), category.getDeletedAt());
+        return new CategoryJpaEntityBuilder().withId(category.getId().getValue())
+                .withName(category.getName()).withDescription(category.getDescription())
+                .withActive(category.isActive()).withCreatedAt(category.getCreatedAt())
+                .withUpdatedAt(category.getUpdatedAt()).withDeletedAt(category.getDeletedAt()).build();
     }
 
     public Category toAggregate() {
@@ -100,5 +102,21 @@ public class CategoryJpaEntity {
         return this;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        CategoryJpaEntity that = (CategoryJpaEntity) o;
+        return Objects.equals(getId(), that.getId());
+    }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId());
+    }
+
+    @Override
+    public String toString() {
+        return name;
+    }
 }

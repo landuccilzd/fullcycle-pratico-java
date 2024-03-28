@@ -1,7 +1,6 @@
 package br.landucci.admin.catologo.infrastructure.genre.persistence;
 
 public class GenreCategoryJpaEntityBuilder {
-
     private GenreCategoryID id;
     private GenreJpaEntity genre;
 
