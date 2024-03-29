@@ -1,6 +1,8 @@
-package br.landucci.admin.catologo.application.category.delete;
+package br.landucci.admin.catologo.application.category;
 
 import br.landucci.admin.catologo.IntegrationTest;
+import br.landucci.admin.catologo.application.category.delete.DeleteCategoryInputCommand;
+import br.landucci.admin.catologo.application.category.delete.DeleteCategoryUseCase;
 import br.landucci.admin.catologo.domain.category.Category;
 import br.landucci.admin.catologo.infrastructure.category.persistence.CategoryJpaEntity;
 import br.landucci.admin.catologo.infrastructure.category.persistence.CategoryRepository;

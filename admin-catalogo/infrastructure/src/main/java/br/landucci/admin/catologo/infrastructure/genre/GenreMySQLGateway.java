@@ -1,12 +1,10 @@
 package br.landucci.admin.catologo.infrastructure.genre;
 
-import br.landucci.admin.catologo.domain.category.Category;
 import br.landucci.admin.catologo.domain.genre.Genre;
 import br.landucci.admin.catologo.domain.genre.GenreGateway;
 import br.landucci.admin.catologo.domain.genre.GenreID;
 import br.landucci.admin.catologo.domain.pagination.Pagination;
 import br.landucci.admin.catologo.domain.pagination.SearchQuery;
-import br.landucci.admin.catologo.infrastructure.category.persistence.CategoryJpaEntity;
 import br.landucci.admin.catologo.infrastructure.genre.persistence.GenreJpaEntity;
 import br.landucci.admin.catologo.infrastructure.genre.persistence.GenreRepository;
 import br.landucci.admin.catologo.infrastructure.utils.SpecificationUtils;

@@ -1,6 +1,8 @@
-package br.landucci.admin.catologo.application.category.find;
+package br.landucci.admin.catologo.application.category;
 
 import br.landucci.admin.catologo.IntegrationTest;
+import br.landucci.admin.catologo.application.category.find.FindByIDCategoryInputCommand;
+import br.landucci.admin.catologo.application.category.find.FindCategoryByIDUseCase;
 import br.landucci.admin.catologo.domain.category.Category;
 import br.landucci.admin.catologo.infrastructure.category.persistence.CategoryJpaEntity;
 import br.landucci.admin.catologo.infrastructure.category.persistence.CategoryRepository;
@@ -9,7 +11,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @IntegrationTest
-public class FindByIDCategoryUseCaseIT {
+public class FindCategoryByIDUseCaseIT {
 
     @Autowired
     private FindCategoryByIDUseCase useCase;
