@@ -37,7 +37,7 @@ public class GenreTest {
                 () -> Genre.newGenre(null, true));
 
         Assertions.assertNotNull(exception);
-        Assertions.assertEquals(expectedErrorCount, exception.getErrorCount());
+        Assertions.assertEquals(expectedErrorCount, exception.errorCount());
         Assertions.assertEquals(expectedErrorMessage, exception.firstError().message());
     }
 
@@ -50,7 +50,7 @@ public class GenreTest {
                 () -> Genre.newGenre("", true));
 
         Assertions.assertNotNull(exception);
-        Assertions.assertEquals(expectedErrorCount, exception.getErrorCount());
+        Assertions.assertEquals(expectedErrorCount, exception.errorCount());
         Assertions.assertEquals(expectedErrorMessage, exception.firstError().message());
     }
 
@@ -63,7 +63,7 @@ public class GenreTest {
                 () -> Genre.newGenre("ab", true));
 
         Assertions.assertNotNull(exception);
-        Assertions.assertEquals(expectedErrorCount, exception.getErrorCount());
+        Assertions.assertEquals(expectedErrorCount, exception.errorCount());
         Assertions.assertEquals(expectedErrorMessage, exception.firstError().message());
     }
 
@@ -88,7 +88,7 @@ public class GenreTest {
                 () -> Genre.newGenre(expectedName, true));
 
         Assertions.assertNotNull(exception);
-        Assertions.assertEquals(expectedErrorCount, exception.getErrorCount());
+        Assertions.assertEquals(expectedErrorCount, exception.errorCount());
         Assertions.assertEquals(expectedErrorMessage, exception.firstError().message());
     }
 
@@ -183,7 +183,7 @@ public class GenreTest {
                 () -> genre.updateName(null));
 
         Assertions.assertNotNull(exception);
-        Assertions.assertEquals(expectedErrorCount, exception.getErrorCount());
+        Assertions.assertEquals(expectedErrorCount, exception.errorCount());
         Assertions.assertEquals(expectedErrorMessage, exception.firstError().message());
     }
 
@@ -200,7 +200,7 @@ public class GenreTest {
                 () -> genre.updateName(""));
 
         Assertions.assertNotNull(exception);
-        Assertions.assertEquals(expectedErrorCount, exception.getErrorCount());
+        Assertions.assertEquals(expectedErrorCount, exception.errorCount());
         Assertions.assertEquals(expectedErrorMessage, exception.firstError().message());
     }
 
@@ -217,7 +217,7 @@ public class GenreTest {
                 () -> genre.updateName("ab"));
 
         Assertions.assertNotNull(exception);
-        Assertions.assertEquals(expectedErrorCount, exception.getErrorCount());
+        Assertions.assertEquals(expectedErrorCount, exception.errorCount());
         Assertions.assertEquals(expectedErrorMessage, exception.firstError().message());
     }
 
@@ -245,7 +245,7 @@ public class GenreTest {
                 () -> genre.updateName(newName));
 
         Assertions.assertNotNull(exception);
-        Assertions.assertEquals(expectedErrorCount, exception.getErrorCount());
+        Assertions.assertEquals(expectedErrorCount, exception.errorCount());
         Assertions.assertEquals(expectedErrorMessage, exception.firstError().message());
     }
 
@@ -290,7 +290,7 @@ public class GenreTest {
                 () -> genre.adicionarCategoria(expectedCategoryID));
 
         Assertions.assertNotNull(exception);
-        Assertions.assertEquals(expectedErrorCount, exception.getErrorCount());
+        Assertions.assertEquals(expectedErrorCount, exception.errorCount());
         Assertions.assertEquals(expectedErrorMessage, exception.firstError().message());
     }
 
@@ -342,7 +342,7 @@ public class GenreTest {
                 () -> genre.adicionarCategorias(categories));
 
         Assertions.assertNotNull(exception);
-        Assertions.assertEquals(expectedErrorCount, exception.getErrorCount());
+        Assertions.assertEquals(expectedErrorCount, exception.errorCount());
         Assertions.assertEquals(expectedErrorMessage, exception.firstError().message());
     }
 
@@ -389,7 +389,7 @@ public class GenreTest {
                 () -> genre.removerCategoria(expectedCategoryID));
 
         Assertions.assertNotNull(exception);
-        Assertions.assertEquals(expectedErrorCount, exception.getErrorCount());
+        Assertions.assertEquals(expectedErrorCount, exception.errorCount());
         Assertions.assertEquals(expectedErrorMessage, exception.firstError().message());
     }
 
@@ -446,7 +446,7 @@ public class GenreTest {
                 () -> genre.removerCategorias(categories));
 
         Assertions.assertNotNull(exception);
-        Assertions.assertEquals(expectedErrorCount, exception.getErrorCount());
+        Assertions.assertEquals(expectedErrorCount, exception.errorCount());
         Assertions.assertEquals(expectedErrorMessage, exception.firstError().message());
     }
 

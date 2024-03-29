@@ -19,7 +19,6 @@ import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 public class DefaultUpdateGenreUseCase extends UpdateGenreUseCase {
-
     private final GenreGateway gateway;
     private final CategoryGateway categoryGateway;
 
@@ -42,7 +41,7 @@ public class DefaultUpdateGenreUseCase extends UpdateGenreUseCase {
         notification.validate(() -> {
             genre.updateName(name);
 
-            if (active ) {
+            if (active) {
                 genre.activate();
             } else {
                 genre.deactivate();
@@ -52,7 +51,7 @@ public class DefaultUpdateGenreUseCase extends UpdateGenreUseCase {
         });
 
         if (notification.hasErrors()) {
-            throw new NotificationException("Could not update Aggregate Genre", notification);
+            throw new NotificationException("Could not update Aggregate Genre %s".formatted(input.id()), notification);
         }
 
         final var output = this.gateway.update(genre);

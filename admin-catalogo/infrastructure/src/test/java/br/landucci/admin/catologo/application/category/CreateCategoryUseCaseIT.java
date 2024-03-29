@@ -1,6 +1,8 @@
-package br.landucci.admin.catologo.application.category.create;
+package br.landucci.admin.catologo.application.category;
 
 import br.landucci.admin.catologo.IntegrationTest;
+import br.landucci.admin.catologo.application.category.create.CreateCategoryInputCommand;
+import br.landucci.admin.catologo.application.category.create.CreateCategoryUseCase;
 import br.landucci.admin.catologo.domain.category.CategoryGateway;
 import br.landucci.admin.catologo.infrastructure.category.persistence.CategoryRepository;
 import org.junit.jupiter.api.Assertions;

@@ -22,7 +22,7 @@ public abstract class NoStacktraceException extends RuntimeException {
         return getErrors().get(0);
     }
 
-    public int getErrorCount() {
+    public int errorCount() {
         return !hasErrors() ? 0 : getErrors().size();
     }
 

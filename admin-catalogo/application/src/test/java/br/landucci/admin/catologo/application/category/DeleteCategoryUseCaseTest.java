@@ -50,7 +50,7 @@ public class DeleteCategoryUseCaseTest extends UseCaseTest {
         final var input = DeleteCategoryInputCommand.with(expectedId.getValue());
         final var exception = Assertions.assertThrows(DomainException.class, () -> useCase.execute(input));
 
-        Assertions.assertEquals(expectedErrorCount, exception.getErrorCount());
+        Assertions.assertEquals(expectedErrorCount, exception.errorCount());
         Assertions.assertEquals(expectedErrorMessage, exception.firstError().message());
 
         Mockito.verify(gateway, Mockito.times(0)).deleteById(Mockito.eq(expectedId));

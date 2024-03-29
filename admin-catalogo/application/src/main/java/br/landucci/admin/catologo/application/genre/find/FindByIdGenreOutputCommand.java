@@ -21,4 +21,11 @@ public record FindByIdGenreOutputCommand(
                 categorias, genre.getCreatedAt(), genre.getUpdatedAt(), genre.getDeletedAt()
         );
     }
+
+    public int categoriesCount() {
+        if (categories == null || categories.isEmpty()) {
+            return 0;
+        }
+        return categories.size();
+    }
 }

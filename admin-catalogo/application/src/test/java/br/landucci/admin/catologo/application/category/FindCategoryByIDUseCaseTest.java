@@ -17,7 +17,7 @@ import org.mockito.Mockito;
 import java.util.List;
 import java.util.Optional;
 
-public class FindByIDCategoryUseCaseTest extends UseCaseTest {
+public class FindCategoryByIDUseCaseTest extends UseCaseTest {
 
     @InjectMocks
     private DefaultFindCategoryByIDUseCase useCase;

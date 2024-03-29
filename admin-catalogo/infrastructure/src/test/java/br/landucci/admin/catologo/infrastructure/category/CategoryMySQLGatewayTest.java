@@ -312,4 +312,28 @@ public class CategoryMySQLGatewayTest {
         Assertions.assertEquals(categorySuspense.getId(), foundCategories.items().get(0).getId());
     }
 
+    @Test
+    public void givenSomeExistingCategories_whenCallsExistsByIds_shouldReturnIds() {
+        final var filmes = Category.newCategory("Filmes", "A categoria mais assistida", true);
+        final var series = Category.newCategory("Séries", "Uma categoria assistida", true);
+        final var documentarios = Category.newCategory("Documentários", "A categoria menos assistida", true);
+
+        Assertions.assertEquals(0, repository.count());
+
+        repository.saveAll(List.of(
+                CategoryJpaEntity.from(filmes),
+                CategoryJpaEntity.from(series),
+                CategoryJpaEntity.from(documentarios)
+        ));
+
+        Assertions.assertEquals(3, repository.count());
+
+        final var expectedIds = List.of(filmes.getId(), series.getId());
+        final var ids = List.of(filmes.getId(), series.getId(), CategoryID.from("123"));
+
+        final var result = gateway.existsByIds(ids);
+
+        Assertions.assertEquals(expectedIds.size(), result.size());
+        Assertions.assertTrue(expectedIds.containsAll(result));
+    }
 }

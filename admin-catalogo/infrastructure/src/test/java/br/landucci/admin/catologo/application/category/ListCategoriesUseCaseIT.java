@@ -1,6 +1,7 @@
-package br.landucci.admin.catologo.application.category.list;
+package br.landucci.admin.catologo.application.category;
 
 import br.landucci.admin.catologo.IntegrationTest;
+import br.landucci.admin.catologo.application.category.list.ListCategoryUseCase;
 import br.landucci.admin.catologo.domain.category.Category;
 import br.landucci.admin.catologo.domain.pagination.SearchQuery;
 import br.landucci.admin.catologo.domain.pagination.Pagination;

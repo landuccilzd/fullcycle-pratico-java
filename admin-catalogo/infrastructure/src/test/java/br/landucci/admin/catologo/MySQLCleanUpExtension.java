@@ -16,15 +16,10 @@ public class MySQLCleanUpExtension implements BeforeEachCallback {
     @Override
     public void beforeEach(ExtensionContext context) throws Exception {
         final var appContext = SpringExtension.getApplicationContext(context);
-
         cleanUp(List.of(
             appContext.getBean(GenreRepository.class),
             appContext.getBean(CategoryRepository.class)
         ));
-
-//        final var em = appContext.getBean(TestEntityManager.class);
-//        em.flush();
-//        em.clear();
     }
 
     private void cleanUp(final Collection<CrudRepository> repositories) {
