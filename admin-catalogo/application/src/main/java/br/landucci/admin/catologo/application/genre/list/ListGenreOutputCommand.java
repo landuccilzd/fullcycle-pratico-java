@@ -13,13 +13,14 @@ public record ListGenreOutputCommand(
         boolean isActive,
         List<String> categories,
         Instant createdAt,
+        Instant updatedAt,
         Instant deletedAt
 ) {
 
     public static ListGenreOutputCommand from(final Genre genre) {
         var categories = genre.getCategories().stream().map(CategoryID::getValue).toList();
         return new ListGenreOutputCommand(genre.getId().getValue(), genre.getName(), genre.isActive(),
-                categories, genre.getCreatedAt(), genre.getDeletedAt()
+                categories, genre.getCreatedAt(), genre.getUpdatedAt(), genre.getDeletedAt()
         );
     }
 }

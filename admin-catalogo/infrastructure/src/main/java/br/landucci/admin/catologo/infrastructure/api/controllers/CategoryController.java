@@ -29,7 +29,6 @@ import java.util.function.Function;
 
 @RestController
 public class CategoryController implements CategoryAPI {
-
     private final ListCategoryUseCase listCategoryUseCase;
     private final FindCategoryByIDUseCase findByIDCategoryUseCase;
     private final CreateCategoryUseCase createCategoryUseCase;

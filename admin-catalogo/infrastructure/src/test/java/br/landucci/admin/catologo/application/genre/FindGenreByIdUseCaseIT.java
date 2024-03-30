@@ -1,6 +1,8 @@
 package br.landucci.admin.catologo.application.genre;
 
 import br.landucci.admin.catologo.IntegrationTest;
+import br.landucci.admin.catologo.application.genre.create.CreateGenreInputCommand;
+import br.landucci.admin.catologo.application.genre.find.FindByIDGenreInputCommand;
 import br.landucci.admin.catologo.application.genre.find.FindGenreByIDUseCase;
 import br.landucci.admin.catologo.domain.category.Category;
 import br.landucci.admin.catologo.domain.category.CategoryGateway;
@@ -40,7 +42,8 @@ public class FindGenreByIdUseCaseIT {
         );
         final var expectedId = genre.getId();
 
-        final var foundGenre = useCase.execute(expectedId.getValue());
+        final var input = FindByIDGenreInputCommand.with(expectedId.getValue());
+        final var foundGenre = useCase.execute(input);
 
         Assertions.assertEquals(expectedId.getValue(), foundGenre.id());
         Assertions.assertEquals(expectedName, foundGenre.name());
@@ -58,7 +61,8 @@ public class FindGenreByIdUseCaseIT {
         final var expectedId = GenreID.from("123");
 
         final var actualException = Assertions.assertThrows(NotFoundException.class, () -> {
-            useCase.execute(expectedId.getValue());
+            final var input = FindByIDGenreInputCommand.with(expectedId.getValue());
+            useCase.execute(input);
         });
 
         Assertions.assertEquals(expectedErrorMessage, actualException.getMessage());

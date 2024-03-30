@@ -16,10 +16,11 @@ public class DefaultFindGenreByIDUseCase extends FindGenreByIDUseCase {
     }
 
     @Override
-    public FindByIdGenreOutputCommand execute(final String anIn) {
-        final var aGenreId = GenreID.from(anIn);
+    public FindByIdGenreOutputCommand execute(final FindByIDGenreInputCommand command) {
+        final var aGenreId = GenreID.from(command.id());
         return this.genreGateway.findById(aGenreId)
                 .map(FindByIdGenreOutputCommand::from)
                 .orElseThrow(() -> NotFoundException.with(Genre.class, aGenreId));
     }
+
 }

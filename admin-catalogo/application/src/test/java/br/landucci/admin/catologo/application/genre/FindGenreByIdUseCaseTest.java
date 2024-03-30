@@ -2,6 +2,7 @@ package br.landucci.admin.catologo.application.genre;
 
 import br.landucci.admin.catologo.application.UseCaseTest;
 import br.landucci.admin.catologo.application.genre.find.DefaultFindGenreByIDUseCase;
+import br.landucci.admin.catologo.application.genre.find.FindByIDGenreInputCommand;
 import br.landucci.admin.catologo.domain.category.CategoryID;
 import br.landucci.admin.catologo.domain.exception.NotFoundException;
 import br.landucci.admin.catologo.domain.genre.Genre;
@@ -47,7 +48,8 @@ public class FindGenreByIdUseCaseTest extends UseCaseTest {
 
         when(genreGateway.findById(any())).thenReturn(Optional.of(genre));
 
-        final var actualGenre = useCase.execute(expectedId.getValue());
+        final var input = FindByIDGenreInputCommand.with(expectedId.getValue());
+        final var actualGenre = useCase.execute(input);
 
         Assertions.assertEquals(expectedId.getValue(), actualGenre.id());
         Assertions.assertEquals(expectedName, actualGenre.name());
@@ -68,7 +70,8 @@ public class FindGenreByIdUseCaseTest extends UseCaseTest {
         when(genreGateway.findById(eq(expectedId))).thenReturn(Optional.empty());
 
         final var actualException = Assertions.assertThrows(NotFoundException.class, () -> {
-            useCase.execute(expectedId.getValue());
+            final var input = FindByIDGenreInputCommand.with(expectedId.getValue());
+            useCase.execute(input);
         });
 
         Assertions.assertEquals(expectedErrorMessage, actualException.getMessage());
