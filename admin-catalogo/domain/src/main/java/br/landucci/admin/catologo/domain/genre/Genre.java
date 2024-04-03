@@ -13,7 +13,6 @@ import java.time.Instant;
 import java.util.*;
 
 public class Genre extends AggregateRoot<GenreID> implements Cloneable {
-
     private String name;
     private boolean active;
     private final Instant createdAt;
@@ -155,7 +154,7 @@ public class Genre extends AggregateRoot<GenreID> implements Cloneable {
         final var notification = Notification.create();
         validate(notification);
         if (notification.hasErrors()) {
-            throw new NotificationException("An avlidation error has ocurred", notification);
+            throw new NotificationException("An validation error has ocurred: ", notification);
         }
     }
 
