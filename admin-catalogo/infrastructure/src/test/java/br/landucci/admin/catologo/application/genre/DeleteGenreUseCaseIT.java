@@ -3,8 +3,6 @@ package br.landucci.admin.catologo.application.genre;
 import br.landucci.admin.catologo.IntegrationTest;
 import br.landucci.admin.catologo.application.genre.delete.DeleteGenreInputCommand;
 import br.landucci.admin.catologo.application.genre.delete.DeleteGenreUseCase;
-import br.landucci.admin.catologo.domain.exception.NotFoundException;
-import br.landucci.admin.catologo.domain.exception.NotificationException;
 import br.landucci.admin.catologo.domain.genre.Genre;
 import br.landucci.admin.catologo.domain.genre.GenreGateway;
 import br.landucci.admin.catologo.domain.genre.GenreID;

@@ -1,7 +1,6 @@
 package br.landucci.admin.catologo.application.genre;
 
 import br.landucci.admin.catologo.IntegrationTest;
-import br.landucci.admin.catologo.application.genre.create.CreateGenreInputCommand;
 import br.landucci.admin.catologo.application.genre.find.FindByIDGenreInputCommand;
 import br.landucci.admin.catologo.application.genre.find.FindGenreByIDUseCase;
 import br.landucci.admin.catologo.domain.category.Category;
