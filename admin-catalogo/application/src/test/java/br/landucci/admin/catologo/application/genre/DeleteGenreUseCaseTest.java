@@ -1,7 +1,6 @@
 package br.landucci.admin.catologo.application.genre;
 
 import br.landucci.admin.catologo.application.UseCaseTest;
-import br.landucci.admin.catologo.application.category.delete.DeleteCategoryInputCommand;
 import br.landucci.admin.catologo.application.genre.delete.DefaultDeleteGenreUseCase;
 import br.landucci.admin.catologo.application.genre.delete.DeleteGenreInputCommand;
 import br.landucci.admin.catologo.domain.genre.Genre;
