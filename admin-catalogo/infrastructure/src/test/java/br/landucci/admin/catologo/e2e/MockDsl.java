@@ -1,11 +1,18 @@
 package br.landucci.admin.catologo.e2e;
 
+import br.landucci.admin.catologo.application.castmember.create.CreateCastMemberOutputCommand;
+import br.landucci.admin.catologo.application.castmember.update.UpdateCastMemberOutputCommand;
 import br.landucci.admin.catologo.application.category.create.CreateCategoryOutputCommand;
 import br.landucci.admin.catologo.application.category.update.UpdateCategoryOutputCommand;
 import br.landucci.admin.catologo.application.genre.create.CreateGenreOutputCommand;
 import br.landucci.admin.catologo.application.genre.update.UpdateGenreOutputCommand;
+import br.landucci.admin.catologo.domain.castmember.CastMemberID;
+import br.landucci.admin.catologo.domain.castmember.CastMemberType;
 import br.landucci.admin.catologo.domain.category.CategoryID;
 import br.landucci.admin.catologo.domain.genre.GenreID;
+import br.landucci.admin.catologo.infrastructure.castmember.model.CreateCastMemberRequestCommand;
+import br.landucci.admin.catologo.infrastructure.castmember.model.FindCastMemberByIDResponseCommand;
+import br.landucci.admin.catologo.infrastructure.castmember.model.UpdateCastMemberRequestCommand;
 import br.landucci.admin.catologo.infrastructure.category.models.CreateCategoryRequestCommand;
 import br.landucci.admin.catologo.infrastructure.category.models.FindByIdCategoryResponseCommand;
 import br.landucci.admin.catologo.infrastructure.category.models.UpdateCategoryRequestCommand;
@@ -89,6 +96,38 @@ public interface MockDsl {
         this.delete(url);
     }
 
+    default ResultActions listCastMembers(final int page, final int perPage, final String search,
+                                         final String sort, final String direction) throws Exception {
+        return this.list("/castmember", page, perPage, search, sort, direction);
+    }
+
+    default FindCastMemberByIDResponseCommand retrieveCastMember(final String id) throws Exception {
+        final var url = "/castmember/%s".formatted(id);
+        final var json = this.retrieve(url);
+        return Json.readValue(json, FindCastMemberByIDResponseCommand.class);
+    }
+
+    default CreateCastMemberOutputCommand createCastMember(final String name, final CastMemberType type)
+            throws Exception {
+        final var body = new CreateCastMemberRequestCommand(name, type);
+        final var url = "/castmember";
+        final var json = this.create(url, body);
+        return Json.readValue(json, CreateCastMemberOutputCommand.class);
+    }
+
+    default UpdateCastMemberOutputCommand updateCastMember(final CastMemberID id, final String name,
+            final CastMemberType type) throws Exception {
+        final var body = new UpdateCastMemberRequestCommand(name, type);
+        final var url = "/castmember/%s".formatted(id.getValue());
+        final var json = this.update(url, body);
+        return Json.readValue(json, UpdateCastMemberOutputCommand.class);
+    }
+
+    default void deleteCastMember(final CastMemberID id) throws Exception {
+        final var url = "/castmember/%s".formatted(id.getValue());
+        this.delete(url);
+    }
+
     private ResultActions list(final String url, final int page, final int perPage, final String search,
                                          final String sort, final String direction) throws Exception {
         final var request = MockMvcRequestBuilders.get(url)
@@ -142,4 +181,6 @@ public interface MockDsl {
     default <S, D> List<D> mapTo(final List<S> source, final Function<S, D> mapper) {
         return source.stream().map(mapper).toList();
     }
+
+
 }
