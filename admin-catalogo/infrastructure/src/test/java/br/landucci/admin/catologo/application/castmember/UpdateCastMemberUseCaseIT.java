@@ -18,7 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.SpyBean;
 
 @IntegrationTest
-public class UpdateCastMemberUseCaseIT {
+class UpdateCastMemberUseCaseIT {
 
     @Autowired
     private UpdateCastMemberUseCase useCase;
@@ -30,7 +30,7 @@ public class UpdateCastMemberUseCaseIT {
     private CastMemberGateway gateway;
 
     @Test
-    public void givenAValidCommand_whenUpdatingACastMember_thenShouldReturnItsIdentifier() {
+    void givenAValidCommand_whenUpdatingACastMember_thenShouldReturnItsIdentifier() {
         final var castMember = CastMember.newCastMember("Zelda", CastMemberType.DIRECTOR);
         final var expectedId = castMember.getId();
         final var expectedName = "Peach";
@@ -56,7 +56,7 @@ public class UpdateCastMemberUseCaseIT {
     }
 
     @Test
-    public void givenAnInvalidNullName_whenUpdatingACastMember_thenShouldThrowsNotificationException() {
+    void givenAnInvalidNullName_whenUpdatingACastMember_thenShouldThrowsNotificationException() {
         final var castMember = CastMember.newCastMember("Zelda", CastMemberType.DIRECTOR);
         final var expectedId = castMember.getId();
         final var expectedType = CastMemberType.ACTOR;
@@ -77,7 +77,7 @@ public class UpdateCastMemberUseCaseIT {
     }
 
     @Test
-    public void givenAnInvalidNullType_whenUpdatingACastMember_thenShouldThrowsNotificationException() {
+    void givenAnInvalidNullType_whenUpdatingACastMember_thenShouldThrowsNotificationException() {
         final var castMember = CastMember.newCastMember("Zelda", CastMemberType.DIRECTOR);
         final var expectedId = castMember.getId();
         final var expectedName = "Peach";
@@ -99,7 +99,7 @@ public class UpdateCastMemberUseCaseIT {
     }
 
     @Test
-    public void givenAnInvalidId_whenUpdatingACastMember_thenShouldThrowsNotFoundException() {
+    void givenAnInvalidId_whenUpdatingACastMember_thenShouldThrowsNotFoundException() {
         final var expectedId = CastMemberID.with("123");
         final var expectedName = "Zelda";
         final var expectedType = CastMemberType.ACTOR;

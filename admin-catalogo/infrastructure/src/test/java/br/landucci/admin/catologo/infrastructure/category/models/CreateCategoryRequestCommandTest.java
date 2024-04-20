@@ -7,13 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.json.JacksonTester;
 
 @JacksonTest
-public class CreateCategoryRequestCommandTest {
+class CreateCategoryRequestCommandTest {
 
     @Autowired
     private JacksonTester<CreateCategoryRequestCommand> json;
 
     @Test
-    public void testMarshall() throws Exception {
+    void testMarshall() throws Exception {
         final var expectedName = "Ficção Científica";
         final var expectedDescription = "Filmes de ficção científica";
         final var expectedActive = true;
@@ -28,7 +28,7 @@ public class CreateCategoryRequestCommandTest {
     }
 
     @Test
-    public void testUnmarshall() throws Exception {
+    void testUnmarshall() throws Exception {
         final var expectedName = "Ficção Científica";
         final var expectedDescrition = "Filmes de ficção científica";
         final var expectedActive = true;

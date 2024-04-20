@@ -17,7 +17,7 @@ import org.mockito.Mockito;
 
 import java.util.List;
 
-public class ListCastMembersUseCaseTest extends UseCaseTest {
+class ListCastMembersUseCaseTest extends UseCaseTest {
 
     @InjectMocks
     private DefaultListCastMemberUseCase useCase;
@@ -25,7 +25,7 @@ public class ListCastMembersUseCaseTest extends UseCaseTest {
     private CastMemberGateway gateway;
 
     @Test
-    public void givenAValidQuery_whenListingCastMembers_thenShouldReturnAll() {
+    void givenAValidQuery_whenListingCastMembers_thenShouldReturnAll() {
         final var members = List.of(
                 CastMember.newCastMember(Fixture.name(), Fixture.CastMembers.type()),
                 CastMember.newCastMember(Fixture.name(), Fixture.CastMembers.type())
@@ -53,11 +53,11 @@ public class ListCastMembersUseCaseTest extends UseCaseTest {
         Assertions.assertEquals(expectedPerPage, output.perPage());
         Assertions.assertEquals(expectedTotal, output.total());
         Assertions.assertEquals(expectedItems, output.items());
-        Mockito.verify(gateway).findAll(ArgumentMatchers.eq(query));
+        Mockito.verify(gateway).findAll(query);
     }
 
     @Test
-    public void givenAValidQuery_whenListingCastMembersAndIsEmpty_thenShouldReturn() {
+    void givenAValidQuery_whenListingCastMembersAndIsEmpty_thenShouldReturn() {
         final var expectedPage = 0;
         final var expectedPerPage = 10;
         final var expectedTerms = "Algo";
@@ -77,11 +77,11 @@ public class ListCastMembersUseCaseTest extends UseCaseTest {
         Assertions.assertEquals(expectedPerPage, output.perPage());
         Assertions.assertEquals(expectedTotal, output.total());
         Assertions.assertEquals(expectedItems, output.items());
-        Mockito.verify(gateway).findAll(ArgumentMatchers.eq(query));
+        Mockito.verify(gateway).findAll(query);
     }
 
     @Test
-    public void givenAValidQuery_whenListingCastMembersAndGatewayThrowsRandomException_thenShouldReturnAnException() {
+    void givenAValidQuery_whenListingCastMembersAndGatewayThrowsRandomException_thenShouldReturnAnException() {
         final var expectedPage = 0;
         final var expectedPerPage = 10;
         final var expectedTerms = "Algo";
@@ -95,7 +95,7 @@ public class ListCastMembersUseCaseTest extends UseCaseTest {
         final var exception = Assertions.assertThrows(IllegalStateException.class, () -> useCase.execute(query));
 
         Assertions.assertEquals(expectedErrorMessage, exception.getMessage());
-        Mockito.verify(gateway).findAll(ArgumentMatchers.eq(query));
+        Mockito.verify(gateway).findAll(query);
     }
 
     @Override

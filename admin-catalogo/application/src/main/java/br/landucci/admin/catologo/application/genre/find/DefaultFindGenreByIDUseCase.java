@@ -1,6 +1,5 @@
 package br.landucci.admin.catologo.application.genre.find;
 
-import br.landucci.admin.catologo.application.castmember.find.FindCastMemberByIDOutputCommand;
 import br.landucci.admin.catologo.domain.exception.NotFoundException;
 import br.landucci.admin.catologo.domain.genre.Genre;
 import br.landucci.admin.catologo.domain.genre.GenreGateway;

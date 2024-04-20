@@ -42,7 +42,7 @@ public class CastMemberE2ETest implements MockDsl {
     }
 
     @Test
-    public void asACatalogAdminIShouldBeAbleToNavigateInAllCastMembers() throws Exception {
+    void asACatalogAdminIShouldBeAbleToNavigateInAllCastMembers() throws Exception {
         Assertions.assertTrue(MY_SQL_CONTAINER.isRunning());
         Assertions.assertEquals(0, repository.count());
 
@@ -85,7 +85,7 @@ public class CastMemberE2ETest implements MockDsl {
     }
 
     @Test
-    public void asACatalogAdminIShouldBeAbleToFilterCastMembersByName() throws Exception {
+    void asACatalogAdminIShouldBeAbleToFilterCastMembersByName() throws Exception {
         Assertions.assertTrue(MY_SQL_CONTAINER.isRunning());
         Assertions.assertEquals(0, repository.count());
 
@@ -105,7 +105,7 @@ public class CastMemberE2ETest implements MockDsl {
     }
 
     @Test
-    public void asACatalogAdminIShouldBeAbleTSortCastMembersByNameDesc() throws Exception {
+    void asACatalogAdminIShouldBeAbleTSortCastMembersByNameDesc() throws Exception {
         Assertions.assertTrue(MY_SQL_CONTAINER.isRunning());
         Assertions.assertEquals(0, repository.count());
 
@@ -127,7 +127,7 @@ public class CastMemberE2ETest implements MockDsl {
     }
 
     @Test
-    public void asACatalogAdminIShouldBeAbleToCreateAndRetrieveANewCastMember() throws Exception {
+    void asACatalogAdminIShouldBeAbleToCreateAndRetrieveANewCastMember() throws Exception {
         final var expectedName = "Zelda";
         final var expectedType = CastMemberType.ACTOR;
 
@@ -145,7 +145,7 @@ public class CastMemberE2ETest implements MockDsl {
     }
 
     @Test
-    public void asACatalogAdminIShouldReceiveANotFoundErrorWhenFindingACastMemberByAnInexistingID() throws Exception {
+    void asACatalogAdminIShouldReceiveANotFoundErrorWhenFindingACastMemberByAnInexistingID() throws Exception {
         Assertions.assertTrue(MY_SQL_CONTAINER.isRunning());
         Assertions.assertEquals(0, repository.count());
 
@@ -160,7 +160,7 @@ public class CastMemberE2ETest implements MockDsl {
     }
 
     @Test
-    public void asACatalogAdminIShouldBeAbleToUpdateAnExistingCastMember() throws Exception {
+    void asACatalogAdminIShouldBeAbleToUpdateAnExistingCastMember() throws Exception {
         final var expectedName = "Zelda";
         final var expectedType = CastMemberType.ACTOR;
 
@@ -181,7 +181,7 @@ public class CastMemberE2ETest implements MockDsl {
     }
 
     @Test
-    public void asACatalogAdminIShouldBeAbleToDeleteAnExistingCastMember() throws Exception {
+    void asACatalogAdminIShouldBeAbleToDeleteAnExistingCastMember() throws Exception {
         Assertions.assertTrue(MY_SQL_CONTAINER.isRunning());
         Assertions.assertEquals(0, repository.count());
 

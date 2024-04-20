@@ -1,7 +1,6 @@
 package br.landucci.admin.catologo.application.category.update;
 
 import br.landucci.admin.catologo.domain.category.Category;
-import br.landucci.admin.catologo.domain.category.CategoryID;
 
 public record UpdateCategoryOutputCommand(String id) {
 

@@ -18,7 +18,7 @@ import org.springframework.boot.test.mock.mockito.SpyBean;
 import java.util.List;
 
 @IntegrationTest
-public class ListCastMembersUseCaseIT {
+class ListCastMembersUseCaseIT {
 
     @Autowired
     private ListCastMemberUseCase useCase;
@@ -30,7 +30,7 @@ public class ListCastMembersUseCaseIT {
     private CastMemberGateway gateway;
 
     @Test
-    public void givenAValidQuery_whenListingCastMembers_thenShouldReturnAll() {
+    void givenAValidQuery_whenListingCastMembers_thenShouldReturnAll() {
         final var expectedPage = 0;
         final var expectedPerPage = 10;
         final var expectedTerms = "";
@@ -67,7 +67,7 @@ public class ListCastMembersUseCaseIT {
     }
 
     @Test
-    public void givenAnInexistingCastMembers_whenListing_thenShouldReturnNothing() {
+    void givenAnInexistingCastMembers_whenListing_thenShouldReturnNothing() {
         final var expectedPage = 0;
         final var expectedPerPage = 10;
         final var expectedTerms = "";
@@ -90,7 +90,7 @@ public class ListCastMembersUseCaseIT {
     }
 
     @Test
-    public void givenAValidQuery_whenListingCastMembersAndGatewayThrowsAnException_thenShouldReturnAnException() {
+    void givenAValidQuery_whenListingCastMembersAndGatewayThrowsAnException_thenShouldReturnAnException() {
         final var expectedPage = 0;
         final var expectedPerPage = 10;
         final var expectedTerms = "";

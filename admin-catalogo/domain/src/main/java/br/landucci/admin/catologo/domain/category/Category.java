@@ -7,7 +7,7 @@ import br.landucci.admin.catologo.domain.validation.ValidationHandler;
 import java.time.Instant;
 import java.util.Objects;
 
-public class Category extends AggregateRoot<CategoryID> implements Cloneable {
+public class Category extends AggregateRoot<CategoryID> {
     private String name;
     private String description;
     private boolean active;
@@ -38,35 +38,31 @@ public class Category extends AggregateRoot<CategoryID> implements Cloneable {
         return new Category(id, name, description, active, createdAt, updatedAt, deletedAt);
     }
 
+    public static Category clone(final Category category) {
+        return with(category.getId(), category.getName(), category.getDescription(), category.isActive(),
+                category.getCreatedAt(), category.getUpdatedAt(), category.getDeletedAt());
+    }
+
     @Override
     public void validate(final ValidationHandler handler) {
         new CategoryValidator(this, handler).validate();
     }
 
-    public CategoryID getId() {
-        return id;
-    }
-
     public String getName() {
         return name;
     }
-
     public String getDescription() {
         return description;
     }
-
     public boolean isActive() {
         return active;
     }
-
     public Instant getCreatedAt() {
         return createdAt;
     }
-
     public Instant getUpdatedAt() {
         return updatedAt;
     }
-
     public Instant getDeletedAt() {
         return deletedAt;
     }
@@ -100,13 +96,4 @@ public class Category extends AggregateRoot<CategoryID> implements Cloneable {
         return this;
     }
 
-    @Override
-    public Category clone() {
-        try {
-            Category clone = (Category) super.clone();
-            return clone;
-        } catch (CloneNotSupportedException e) {
-            throw new AssertionError();
-        }
-    }
 }

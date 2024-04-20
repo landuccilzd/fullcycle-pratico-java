@@ -23,7 +23,7 @@ import java.util.List;
 
 @E2ETest
 @Testcontainers
-public class GenreE2ETest implements MockDsl {
+class GenreE2ETest implements MockDsl {
     @Autowired
     private MockMvc mvc;
     @Autowired
@@ -35,7 +35,7 @@ public class GenreE2ETest implements MockDsl {
             .withDatabaseName("adm_videos_e2e");
 
     @DynamicPropertySource
-    public static void setDatasourceProperties(final DynamicPropertyRegistry registry) {
+    static void setDatasourceProperties(final DynamicPropertyRegistry registry) {
         final var port = MY_SQL_CONTAINER.getMappedPort(3306);
         System.out.printf("Container is running on port %s \n", port);
         registry.add("E2E_MYSQL_PORT", () -> port);
@@ -44,7 +44,7 @@ public class GenreE2ETest implements MockDsl {
     }
 
     @Test
-    public void asACatalogAdminIShouldBeAbleToNavigateInAllGenres() throws Exception {
+    void asACatalogAdminIShouldBeAbleToNavigateInAllGenres() throws Exception {
         Assertions.assertTrue(MY_SQL_CONTAINER.isRunning());
         Assertions.assertEquals(0, this.repository.count());
 
@@ -87,7 +87,7 @@ public class GenreE2ETest implements MockDsl {
     }
 
     @Test
-    public void asACatalogAdminIShouldBeAbleToFilterGenresByName() throws Exception {
+    void asACatalogAdminIShouldBeAbleToFilterGenresByName() throws Exception {
         Assertions.assertTrue(MY_SQL_CONTAINER.isRunning());
         Assertions.assertEquals(0, this.repository.count());
 
@@ -107,7 +107,7 @@ public class GenreE2ETest implements MockDsl {
     }
 
     @Test
-    public void asACatalogAdminIShouldBeAbleTSortTerrorByDescriptionDesc() throws Exception {
+    void asACatalogAdminIShouldBeAbleTSortTerrorByDescriptionDesc() throws Exception {
         Assertions.assertTrue(MY_SQL_CONTAINER.isRunning());
         Assertions.assertEquals(0, repository.count());
 
@@ -129,7 +129,7 @@ public class GenreE2ETest implements MockDsl {
     }
 
     @Test
-    public void asACatalogAdminIShouldBeAbleToRetrieveACategory() throws Exception {
+    void asACatalogAdminIShouldBeAbleToRetrieveACategory() throws Exception {
         final var filmes = createCategory("Filmes", null, true);
         final var expectedName = "Ficcao Cientifica";
         final var expectedActive = true;
@@ -156,7 +156,7 @@ public class GenreE2ETest implements MockDsl {
      * PARA que seja possível classificar as categorias
      */
     @Test
-    public void asAGenreAdmin_iNeedToCreateANewGenreWithCategories_toClassifyCategories() throws Exception {
+    void asAGenreAdmin_iNeedToCreateANewGenreWithCategories_toClassifyCategories() throws Exception {
         Assertions.assertTrue(MY_SQL_CONTAINER.isRunning());
         Assertions.assertEquals(0, this.repository.count());
 
@@ -185,7 +185,7 @@ public class GenreE2ETest implements MockDsl {
     }
 
     @Test
-    public void asACatalogAdminIShouldBeAbleToUpdateAnExistingGenre() throws Exception {
+    void asACatalogAdminIShouldBeAbleToUpdateAnExistingGenre() throws Exception {
         final var filmes = createCategory("Filmes", null, true);
         final var expectedName = "Suspense";
         final var expectedActive = true;
@@ -211,7 +211,7 @@ public class GenreE2ETest implements MockDsl {
     }
 
     @Test
-    public void asACatalogAdminIShouldBeAbleToDeleteAnExistingGenre() throws Exception {
+    void asACatalogAdminIShouldBeAbleToDeleteAnExistingGenre() throws Exception {
         Assertions.assertTrue(MY_SQL_CONTAINER.isRunning());
         Assertions.assertEquals(0, repository.count());
 

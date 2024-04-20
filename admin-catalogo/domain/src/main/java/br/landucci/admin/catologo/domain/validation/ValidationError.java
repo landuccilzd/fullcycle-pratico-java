@@ -1,4 +1,7 @@
 package br.landucci.admin.catologo.domain.validation;
 
-public record ValidationError(String message) {
+import java.io.Serializable;
+
+public record ValidationError(String message) implements Serializable {
+
 }

@@ -5,10 +5,10 @@ import br.landucci.admin.catologo.domain.validation.handler.ThrowsValidationHand
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-public class CategoryTest {
+class CategoryTest {
 
     @Test
-    public void givenAValidParams_whenCallNewCategory_thenInstantiateACategory() {
+    void givenAValidParams_whenCallNewCategory_thenInstantiateACategory() {
         final var expectedName = "Ficção Científica";
         final var expectedDescription = "Filmes que abordam ficções científicas";
         final var expectedIsActive = true;
@@ -25,20 +25,23 @@ public class CategoryTest {
     }
 
     @Test
-    public void givenAnInvalidNullName_whenValidateNewCatewgory_thenShouldReceiveError() {
+    void givenAnInvalidNullName_whenValidateNewCatewgory_thenShouldReceiveError() {
         final var expectedDescription = "Filmes que abordam ficções científicas";
         final var expectedIsActive = true;
         final var expectedErrorMessage = "Name should not be null";
         final var expectedErrorCount = 1;
 
         final var category = Category.newCategory(null, expectedDescription, expectedIsActive);
-        final var exception = Assertions.assertThrows(DomainException.class, () -> category.validate(new ThrowsValidationHandler()));
+
+        final var handler =  new ThrowsValidationHandler();
+        final var exception = Assertions.assertThrows(DomainException.class, () -> category.validate(handler));
+
         Assertions.assertEquals(expectedErrorCount, exception.getErrors().size());
         Assertions.assertEquals(expectedErrorMessage, exception.getErrors().get(0).message());
     }
 
     @Test
-    public void givenAnInvalidEmptyName_whenValidateNewCatewgory_thenShouldReceiveError() {
+    void givenAnInvalidEmptyName_whenValidateNewCatewgory_thenShouldReceiveError() {
         final String expectedName = "";
         final var expectedDescription = "Filmes que abordam ficções científicas";
         final var expectedIsActive = true;
@@ -46,13 +49,15 @@ public class CategoryTest {
         final var expectedErrorCount = 1;
 
         final var category = Category.newCategory(expectedName, expectedDescription, expectedIsActive);
-        final var exception = Assertions.assertThrows(DomainException.class, () -> category.validate(new ThrowsValidationHandler()));
+        final var handler = new ThrowsValidationHandler();
+        final var exception = Assertions.assertThrows(DomainException.class, () -> category.validate(handler));
+
         Assertions.assertEquals(expectedErrorCount, exception.getErrors().size());
         Assertions.assertEquals(expectedErrorMessage, exception.getErrors().get(0).message());
     }
 
     @Test
-    public void givenAnInvalidNameLengthLessThan3_whenValidateNewCatewgory_thenShouldReceiveError() {
+    void givenAnInvalidNameLengthLessThan3_whenValidateNewCatewgory_thenShouldReceiveError() {
         final String expectedName = "12 ";
         final var expectedDescription = "Filmes que abordam ficções científicas";
         final var expectedIsActive = true;
@@ -60,13 +65,15 @@ public class CategoryTest {
         final var expectedErrorCount = 1;
 
         final var category = Category.newCategory(expectedName, expectedDescription, expectedIsActive);
-        final var exception = Assertions.assertThrows(DomainException.class, () -> category.validate(new ThrowsValidationHandler()));
+
+        final var handler = new ThrowsValidationHandler();
+        final var exception = Assertions.assertThrows(DomainException.class, () -> category.validate(handler));
         Assertions.assertEquals(expectedErrorCount, exception.getErrors().size());
         Assertions.assertEquals(expectedErrorMessage, exception.getErrors().get(0).message());
     }
 
     @Test
-    public void givenAnInvalidNameLengthMoreThan255_whenValidateNewCatewgory_thenShouldReceiveError() {
+    void givenAnInvalidNameLengthMoreThan255_whenValidateNewCatewgory_thenShouldReceiveError() {
         final String expectedName = "123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890";
         final var expectedDescription = "Filmes que abordam ficções científicas";
         final var expectedIsActive = true;
@@ -74,13 +81,15 @@ public class CategoryTest {
         final var expectedErrorCount = 1;
 
         final var category = Category.newCategory(expectedName, expectedDescription, expectedIsActive);
-        final var exception = Assertions.assertThrows(DomainException.class, () -> category.validate(new ThrowsValidationHandler()));
+        final var handler = new ThrowsValidationHandler();
+        final var exception = Assertions.assertThrows(DomainException.class, () -> category.validate(handler));
+
         Assertions.assertEquals(expectedErrorCount, exception.getErrors().size());
         Assertions.assertEquals(expectedErrorMessage, exception.getErrors().get(0).message());
     }
 
     @Test
-    public void givenAValidBlankDescription_whenValidateNewCatewgory_thenShouldNotReceiveError() {
+    void givenAValidBlankDescription_whenValidateNewCatewgory_thenShouldNotReceiveError() {
         final String expectedName = "Ficção Científica";
         final var expectedDescription = "";
         final var expectedIsActive = true;
@@ -98,7 +107,7 @@ public class CategoryTest {
     }
 
     @Test
-    public void givenAValidFalseActive_whenValidateNewCatewgory_thenShouldNotReceiveError() {
+    void givenAValidFalseActive_whenValidateNewCatewgory_thenShouldNotReceiveError() {
         final String expectedName = "Ficção Científica";
         final var expectedDescription = "Filmes de ficção científica";
         final var expectedIsActive = false;
@@ -116,7 +125,7 @@ public class CategoryTest {
     }
 
     @Test
-    public void givenAValidActiveCategory_whenDeactivate_thenReturnCategoryInactivated() {
+    void givenAValidActiveCategory_whenDeactivate_thenReturnCategoryInactivated() {
         final String expectedName = "Ficção Científica";
         final var expectedDescription = "Filmes de ficção científica";
         final var expectedIsActive = true;
@@ -149,7 +158,7 @@ public class CategoryTest {
     }
 
     @Test
-    public void givenAValidInactiveCategory_whenActivate_thenReturnCategoryActivated() {
+    void givenAValidInactiveCategory_whenActivate_thenReturnCategoryActivated() {
         final String expectedName = "Ficção Científica";
         final var expectedDescription = "Filmes de ficção científica";
         final var expectedIsActive = false;
@@ -180,7 +189,7 @@ public class CategoryTest {
     }
 
     @Test
-    public void givenAValidCategory_whenUpdateName_thenReturnCategoryUpdatedName() {
+    void givenAValidCategory_whenUpdateName_thenReturnCategoryUpdatedName() {
         final String expectedName = "Ficção Científica";
         final var expectedDescription = "Filmes de ficção científica";
         final var expectedIsActive = true;
@@ -210,7 +219,7 @@ public class CategoryTest {
     }
 
     @Test
-    public void givenAValidCategory_whenUpdateDescription_thenReturnCategoryUpdatedDescription() {
+    void givenAValidCategory_whenUpdateDescription_thenReturnCategoryUpdatedDescription() {
         final String expectedName = "Ficção Científica";
         final var expectedDescription = "Filmes de ficção científica";
         final var expectedIsActive = true;

@@ -16,7 +16,7 @@ import org.mockito.Mockito;
 
 import java.util.List;
 
-public class ListCategoriesUseCaseTest extends UseCaseTest {
+class ListCategoriesUseCaseTest extends UseCaseTest {
 
     @InjectMocks
     private DefaultListCategoryUseCase useCase;
@@ -29,7 +29,7 @@ public class ListCategoriesUseCaseTest extends UseCaseTest {
     }
 
     @Test
-    public void givenAValidInput_whenListingCategories_thenShouldReturnAListOfCategories() {
+    void givenAValidInput_whenListingCategories_thenShouldReturnAListOfCategories() {
         final var categories = List.of(
                 Category.newCategory("Ficção científica", "Filmes de ficção científica", true),
                 Category.newCategory("Comédia", "Filmes de comédia", true),
@@ -50,7 +50,7 @@ public class ListCategoriesUseCaseTest extends UseCaseTest {
         final var expectedResult = expectedPagination.map(ListCategoriesOutputCommand::from);
 
         final var query = new SearchQuery(expectedPage, expectedPerPage, expectedTerms, expectedSort, expectedDirection);
-        Mockito.when(gateway.findAll(Mockito.eq(query))).thenReturn(expectedPagination);
+        Mockito.when(gateway.findAll(query)).thenReturn(expectedPagination);
         final var result = useCase.execute(query);
 
         Assertions.assertEquals(expectedItemsCount, result.items().size());
@@ -61,7 +61,7 @@ public class ListCategoriesUseCaseTest extends UseCaseTest {
     }
 
     @Test
-    public void givenAValidInput_whenListingCategoriesWithNoResoults_thenShouldReturnAnEmptyListOfCategories() {
+    void givenAValidInput_whenListingCategoriesWithNoResoults_thenShouldReturnAnEmptyListOfCategories() {
         final var categories = List.<Category>of();
 
         final var expectedPage = 0;
@@ -74,7 +74,7 @@ public class ListCategoriesUseCaseTest extends UseCaseTest {
         final var expectedResult = expectedPagination.map(ListCategoriesOutputCommand::from);
 
         final var query = new SearchQuery(expectedPage, expectedPerPage, expectedTerms, expectedSort, expectedDirection);
-        Mockito.when(gateway.findAll(Mockito.eq(query))).thenReturn(expectedPagination);
+        Mockito.when(gateway.findAll(query)).thenReturn(expectedPagination);
         final var result = useCase.execute(query);
 
         Assertions.assertEquals(expectedItemsCount, result.items().size());
@@ -85,7 +85,7 @@ public class ListCategoriesUseCaseTest extends UseCaseTest {
     }
 
     @Test
-    public void givenAValidInput_whenGatewayThrowsAnException_thenShouldReturnAnException() {
+    void givenAValidInput_whenGatewayThrowsAnException_thenShouldReturnAnException() {
         final var expectedPage = 0;
         final var expectedPerPage = 10;
         final var expectedTerms = "";
@@ -95,7 +95,7 @@ public class ListCategoriesUseCaseTest extends UseCaseTest {
         final var expectedErrorMessage = "Generic gateway error";
 
         final var query = new SearchQuery(expectedPage, expectedPerPage, expectedTerms, expectedSort, expectedDirection);
-        Mockito.when(gateway.findAll(Mockito.eq(query))).thenThrow(new IllegalStateException(expectedErrorMessage));
+        Mockito.when(gateway.findAll(query)).thenThrow(new IllegalStateException(expectedErrorMessage));
         final var exception = Assertions.assertThrows(IllegalStateException.class, () -> useCase.execute(query));
 
         Assertions.assertEquals(expectedErrorMessage, exception.getMessage());

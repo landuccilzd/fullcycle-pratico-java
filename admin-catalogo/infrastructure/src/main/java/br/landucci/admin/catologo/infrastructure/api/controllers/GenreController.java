@@ -1,8 +1,6 @@
 package br.landucci.admin.catologo.infrastructure.api.controllers;
 
-import br.landucci.admin.catologo.application.category.create.CreateCategoryOutputCommand;
 import br.landucci.admin.catologo.application.genre.create.CreateGenreInputCommand;
-import br.landucci.admin.catologo.application.genre.create.CreateGenreOutputCommand;
 import br.landucci.admin.catologo.application.genre.create.CreateGenreUseCase;
 import br.landucci.admin.catologo.application.genre.delete.DeleteGenreInputCommand;
 import br.landucci.admin.catologo.application.genre.delete.DeleteGenreUseCase;
@@ -13,7 +11,6 @@ import br.landucci.admin.catologo.application.genre.update.UpdateGenreInputComma
 import br.landucci.admin.catologo.application.genre.update.UpdateGenreUseCase;
 import br.landucci.admin.catologo.domain.pagination.Pagination;
 import br.landucci.admin.catologo.domain.pagination.SearchQuery;
-import br.landucci.admin.catologo.domain.validation.handler.Notification;
 import br.landucci.admin.catologo.infrastructure.api.GenreAPI;
 import br.landucci.admin.catologo.infrastructure.genre.models.CreateGenreRequestCommand;
 import br.landucci.admin.catologo.infrastructure.genre.models.FindGenreByIdResponseCommand;
@@ -24,7 +21,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.net.URI;
-import java.util.function.Function;
 
 @RestController
 public class GenreController implements GenreAPI {

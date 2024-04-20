@@ -9,13 +9,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 
 @MySQLGatewayTest
-public class CategoryRepositoryTest {
+class CategoryRepositoryTest {
 
     @Autowired
     private CategoryRepository repository;
 
     @Test
-    public void givenAnInvalidNullName_whenCreatingACategory_thenShouldReturnAnError() {
+    void givenAnInvalidNullName_whenCreatingACategory_thenShouldReturnAnError() {
         final var expectedPropertyName = "name";
         final var expectedErrorMessage = "not-null property references a null or transient value : br.landucci.admin.catologo.infrastructure.category.persistence.CategoryJpaEntity.name";
 
@@ -31,7 +31,7 @@ public class CategoryRepositoryTest {
     }
 
     @Test
-    public void givenAnInvalidNullCreatedAt_whenCreatingACategory_thenShouldReturnAnError() {
+    void givenAnInvalidNullCreatedAt_whenCreatingACategory_thenShouldReturnAnError() {
         final var expectedPropertyName = "createdAt";
         final var expectedErrorMessage = "not-null property references a null or transient value : br.landucci.admin.catologo.infrastructure.category.persistence.CategoryJpaEntity.createdAt";
 
@@ -47,7 +47,7 @@ public class CategoryRepositoryTest {
     }
 
     @Test
-    public void givenAnInvalidNullUpdatedAt_whenCreatingACategory_thenShouldReturnAnError() {
+    void givenAnInvalidNullUpdatedAt_whenCreatingACategory_thenShouldReturnAnError() {
         final var expectedPropertyName = "updatedAt";
         final var expectedErrorMessage = "not-null property references a null or transient value : br.landucci.admin.catologo.infrastructure.category.persistence.CategoryJpaEntity.updatedAt";
 

@@ -10,10 +10,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.Optional;
-
 @IntegrationTest
-public class DeleteCategoryUseCaseIT {
+class DeleteCategoryUseCaseIT {
 
     @Autowired
     private DeleteCategoryUseCase useCase;
@@ -21,7 +19,7 @@ public class DeleteCategoryUseCaseIT {
     private CategoryRepository repository;
 
     @Test
-    public void givenAValidInput_whenDeletingACategory_thenShouldDelete() {
+    void givenAValidInput_whenDeletingACategory_thenShouldDelete() {
         final var expectedName = "Ficção Científica";
         final var expectedDescription = "Filmes de ficção científica";
         final var expectedActive = true;

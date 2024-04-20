@@ -11,10 +11,8 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.SpyBean;
 
-import java.util.Objects;
-
 @IntegrationTest
-public class CreateCategoryUseCaseIT {
+class CreateCategoryUseCaseIT {
 
     @Autowired
     private CreateCategoryUseCase useCase;
@@ -24,7 +22,7 @@ public class CreateCategoryUseCaseIT {
     private CategoryGateway gateway;
 
     @Test
-    public void givenAValidCommand_whenCreateACategory_thenShouldReturnACreatedCategory() {
+    void givenAValidCommand_whenCreateACategory_thenShouldReturnACreatedCategory() {
         final var expectedName = "Ficção Científica";
         final var expectedDescription = "Filmes de ficção científica";
         final var expectedActive = true;
@@ -51,7 +49,7 @@ public class CreateCategoryUseCaseIT {
     }
 
     @Test
-    public void givenAnInValidNameCommand_whenCreateACategory_thenShouldReturnDomainException() {
+    void givenAnInValidNameCommand_whenCreateACategory_thenShouldReturnDomainException() {
         final var expectedDescription = "Filmes de ficção científica";
         final var expectedActive = true;
         final var expectedErrorMessage = "Name should not be null";
@@ -71,7 +69,7 @@ public class CreateCategoryUseCaseIT {
     }
 
     @Test
-    public void givenAValidCommand_whenCreateACategoryInactivated_thenShouldReturnACreatedCategoryInactivated() {
+    void givenAValidCommand_whenCreateACategoryInactivated_thenShouldReturnACreatedCategoryInactivated() {
         final var expectedName = "Ficção Científica";
         final var expectedDescription = "Filmes de ficção científica";
         final var expectedActive = false;
@@ -98,7 +96,7 @@ public class CreateCategoryUseCaseIT {
     }
 
     @Test
-    public void givenAValidCommand_whenGatewayThrowsAnException_thenShouldReturnAnException() {
+    void givenAValidCommand_whenGatewayThrowsAnException_thenShouldReturnAnException() {
         final var expectedName = "Ficção Científica";
         final var expectedDescription = "Filmes de ficção científica";
         final var expectedActive = false;

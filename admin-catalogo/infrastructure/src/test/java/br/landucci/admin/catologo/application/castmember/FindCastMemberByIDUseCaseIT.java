@@ -19,7 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.SpyBean;
 
 @IntegrationTest
-public class FindCastMemberByIDUseCaseIT {
+class FindCastMemberByIDUseCaseIT {
 
     @Autowired
     private FindCastMemberByIDUseCase useCase;
@@ -31,7 +31,7 @@ public class FindCastMemberByIDUseCaseIT {
     private CastMemberGateway gateway;
 
     @Test
-    public void givenAValidId_whenFindingCastMemberByID_thenShouldReturnTheFoundCastMember() {
+    void givenAValidId_whenFindingCastMemberByID_thenShouldReturnTheFoundCastMember() {
         final var expectedName = "Zelda";
         final var expectedType = CastMemberType.DIRECTOR;
         final var castMember = CastMember.newCastMember(expectedName, expectedType);
@@ -55,7 +55,7 @@ public class FindCastMemberByIDUseCaseIT {
     }
 
     @Test
-    public void givenAnInvalidId_whenFindingCastMember_thenShouldReturnNotFoundException() {
+    void givenAnInvalidId_whenFindingCastMember_thenShouldReturnNotFoundException() {
         final var expectedId = CastMemberID.with("123");
         final var expectedErrorMessage = "CastMember with ID 123 was not found";
 
@@ -66,6 +66,6 @@ public class FindCastMemberByIDUseCaseIT {
         Assertions.assertNotNull(output);
         Assertions.assertEquals(expectedErrorMessage, output.getMessage());
 
-        Mockito.verify(this.gateway).findById(ArgumentMatchers.eq(expectedId));
+        Mockito.verify(this.gateway).findById(expectedId);
     }
 }

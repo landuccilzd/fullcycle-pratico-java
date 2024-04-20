@@ -11,14 +11,14 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @IntegrationTest
-public class UpdateCategoryUseCaseIT {
+class UpdateCategoryUseCaseIT {
     @Autowired
     private UpdateCategoryUseCase useCase;
     @Autowired
     private CategoryRepository repository;
 
     @Test
-    public void givenAValidCommand_whenUpdateACategory_thenShouldReturnAnUpdatedCategory() {
+    void givenAValidCommand_whenUpdateACategory_thenShouldReturnAnUpdatedCategory() {
         final var expectedName = "Ficção Científica";
         final var expectedDescription = "Filmes de ficção científica";
         final var expectedActive = true;

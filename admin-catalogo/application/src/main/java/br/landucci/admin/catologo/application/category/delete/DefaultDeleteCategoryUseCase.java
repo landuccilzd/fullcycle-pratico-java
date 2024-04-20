@@ -4,7 +4,6 @@ import br.landucci.admin.catologo.domain.category.CategoryGateway;
 import br.landucci.admin.catologo.domain.category.CategoryID;
 import br.landucci.admin.catologo.domain.exception.DomainException;
 import br.landucci.admin.catologo.domain.validation.ValidationError;
-import br.landucci.admin.catologo.domain.validation.handler.Notification;
 
 import java.util.Objects;
 import java.util.function.Supplier;

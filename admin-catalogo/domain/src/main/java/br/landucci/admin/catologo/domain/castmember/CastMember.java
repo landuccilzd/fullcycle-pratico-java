@@ -9,7 +9,7 @@ import br.landucci.admin.catologo.domain.validation.handler.Notification;
 import java.time.Instant;
 import java.util.Objects;
 
-public class CastMember extends AggregateRoot<CastMemberID> implements Cloneable  {
+public class CastMember extends AggregateRoot<CastMemberID>  {
     private String name;
     private CastMemberType type;
     private Instant createdAt;
@@ -33,6 +33,11 @@ public class CastMember extends AggregateRoot<CastMemberID> implements Cloneable
         final var id = CastMemberID.unique();
         final var now  = InstantUtils.now();
         return with(id, name, type, now, now);
+    }
+
+    public static CastMember clone(final CastMember castMember) {
+        return with(castMember.getId(), castMember.getName(), castMember.getType(), castMember.getCreatedAt(),
+                castMember.getUpdatedAt());
     }
 
     public String getName() {
@@ -75,13 +80,4 @@ public class CastMember extends AggregateRoot<CastMemberID> implements Cloneable
         validator.validate();
     }
 
-    @Override
-    public CastMember clone() {
-        try {
-            CastMember clone = (CastMember) super.clone();
-            return clone;
-        } catch (CloneNotSupportedException e) {
-            throw new AssertionError();
-        }
-    }
 }

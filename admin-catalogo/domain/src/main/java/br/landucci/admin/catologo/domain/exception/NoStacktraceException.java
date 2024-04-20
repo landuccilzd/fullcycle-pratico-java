@@ -6,11 +6,11 @@ import java.util.List;
 
 public abstract class NoStacktraceException extends RuntimeException {
 
-    public NoStacktraceException(final String message) {
+    protected NoStacktraceException(final String message) {
         super(message, null);
     }
 
-    public NoStacktraceException(final String message, final Throwable cause) {
+    protected NoStacktraceException(final String message, final Throwable cause) {
         super(message, cause, true, false);
     }
 

@@ -13,7 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
 
 @MySQLGatewayTest
-public class CategoryMySQLGatewayTest {
+class CategoryMySQLGatewayTest {
 
     @Autowired
     private CategoryMySQLGateway gateway;
@@ -21,7 +21,7 @@ public class CategoryMySQLGatewayTest {
     private CategoryRepository repository;
 
     @Test
-    public void givenAValidCategory_whenCreating_thenShouldReturnANewCategory() {
+    void givenAValidCategory_whenCreating_thenShouldReturnANewCategory() {
         final var expectedName = "Ficção Científia";
         final var expectedDescription = "Filmes de ficção Científia";
         final var expectedActive = true;
@@ -55,7 +55,7 @@ public class CategoryMySQLGatewayTest {
     }
 
     @Test
-    public void givenAValidCategory_whenUpdating_thenShouldReturnAnUpdatedCategory() {
+    void givenAValidCategory_whenUpdating_thenShouldReturnAnUpdatedCategory() {
         final var expectedName = "Ficção Científia";
         final var expectedDescription = "Filmes de ficção Científia";
         final var expectedActive = true;
@@ -68,8 +68,8 @@ public class CategoryMySQLGatewayTest {
 
         Assertions.assertEquals(1, repository.count());
 
-        final var categoryUpdate = category.clone()
-                        .updateName(expectedName).updateDescription(expectedDescription).activate();
+        final var categoryUpdate = Category.clone(category);
+        categoryUpdate.updateName(expectedName).updateDescription(expectedDescription).activate();
         final var updatedCategory = this.gateway.update(categoryUpdate);
 
         Assertions.assertEquals(1, repository.count());
@@ -96,7 +96,7 @@ public class CategoryMySQLGatewayTest {
     }
 
     @Test
-    public void givenAnExistingCategory_whenDeleting_thenShouldDeleteCategory() {
+    void givenAnExistingCategory_whenDeleting_thenShouldDeleteCategory() {
         final var category = Category.newCategory("Comédia", "Filmes de comédia", true);
 
         Assertions.assertEquals(0, repository.count());
@@ -112,20 +112,20 @@ public class CategoryMySQLGatewayTest {
     }
 
     @Test
-    public void givenAnExistingCategory_whenDeletingAnInvalidId_thenShouldReturnAnError() {
+    void givenAnExistingCategory_whenDeletingAnInvalidId_thenShouldReturnAnError() {
         final var expectedErrorMessage = "Category with ID 123 was not found";
         Assertions.assertEquals(0, repository.count());
 
-        final var exception = Assertions.assertThrows(IllegalArgumentException.class,
-                () -> this.gateway.deleteById(CategoryID.from("123"))
-        );
+        final var id = CategoryID.from("123");
+        final var exception = Assertions.assertThrows(IllegalArgumentException.class, () ->
+                this.gateway.deleteById(id));
 
         Assertions.assertEquals(0, repository.count());
         Assertions.assertEquals(expectedErrorMessage, exception.getMessage());
     }
 
     @Test
-    public void givenAnExistingCategory_whenFindingById_thenShouldReturnTheFoundCategory() {
+    void givenAnExistingCategory_whenFindingById_thenShouldReturnTheFoundCategory() {
         final var expectedName = "Ficção Científia";
         final var expectedDescription = "Filmes de ficção Científia";
         final var expectedActive = true;
@@ -151,13 +151,13 @@ public class CategoryMySQLGatewayTest {
     }
 
     @Test
-    public void givenAnNonExistingCategory_whenFindingAnInvalidId_thenShouldReturnEmpty() {
+    void givenAnNonExistingCategory_whenFindingAnInvalidId_thenShouldReturnEmpty() {
         final var optional = this.gateway.findById(CategoryID.from("123"));
         Assertions.assertTrue(optional.isEmpty());
     }
 
     @Test
-    public void givenExistingCategories_whenListing_thenShouldReturnAListOfCategories() {
+    void givenExistingCategories_whenListing_thenShouldReturnAListOfCategories() {
         final var expectedPage = 0;
         final var expectedPerPage = 1;
         final var expectedTotal = 3;
@@ -187,7 +187,7 @@ public class CategoryMySQLGatewayTest {
     }
 
     @Test
-    public void givenNonExistingCategories_whenListing_thenShouldReturnAnEmptyList() {
+    void givenNonExistingCategories_whenListing_thenShouldReturnAnEmptyList() {
         final var expectedPage = 0;
         final var expectedPerPage = 1;
         final var expectedTotal = 0;
@@ -203,7 +203,7 @@ public class CategoryMySQLGatewayTest {
     }
 
     @Test
-    public void givenFollowPagination_whenFindingAllOnPage1_thenShouldReturnPaginated() {
+    void givenFollowPagination_whenFindingAllOnPage1_thenShouldReturnPaginated() {
         var expectedPage = 0;
         final var expectedPerPage = 1;
         final var expectedTotal = 3;
@@ -253,7 +253,7 @@ public class CategoryMySQLGatewayTest {
     }
 
     @Test
-    public void givenExistingCategories_whenFilteringName_thenShouldReturnAFilteredListOfCategories() {
+    void givenExistingCategories_whenFilteringName_thenShouldReturnAFilteredListOfCategories() {
         final var expectedPage = 0;
         final var expectedPerPage = 1;
         final var expectedTotal = 1;
@@ -283,7 +283,7 @@ public class CategoryMySQLGatewayTest {
     }
 
     @Test
-    public void givenExistingCategories_whenFilteringDescription_thenShouldReturnAFilteredListOfCategories() {
+    void givenExistingCategories_whenFilteringDescription_thenShouldReturnAFilteredListOfCategories() {
         final var expectedPage = 0;
         final var expectedPerPage = 1;
         final var expectedTotal = 1;
@@ -313,7 +313,7 @@ public class CategoryMySQLGatewayTest {
     }
 
     @Test
-    public void givenSomeExistingCategories_whenCallsExistsByIds_shouldReturnIds() {
+    void givenSomeExistingCategories_whenCallsExistsByIds_shouldReturnIds() {
         final var filmes = Category.newCategory("Filmes", "A categoria mais assistida", true);
         final var series = Category.newCategory("Séries", "Uma categoria assistida", true);
         final var documentarios = Category.newCategory("Documentários", "A categoria menos assistida", true);

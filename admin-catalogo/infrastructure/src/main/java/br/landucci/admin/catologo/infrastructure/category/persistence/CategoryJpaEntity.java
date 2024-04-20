@@ -30,13 +30,13 @@ public class CategoryJpaEntity {
     public CategoryJpaEntity() {}
 
     protected CategoryJpaEntity(final CategoryJpaEntityBuilder builder) {
-        this.id = builder.getId();
-        this.name = builder.getName();
-        this.description = builder.getDescription();
-        this.active = builder.isActive();
-        this.createdAt = builder.getCreatedAt();
-        this.updatedAt = builder.getUpdatedAt();
-        this.deletedAt = builder.getDeletedAt();
+        this.id = builder.id;
+        this.name = builder.name;
+        this.description = builder.description;
+        this.active = builder.active;
+        this.createdAt = builder.createdAt;
+        this.updatedAt = builder.updatedAt;
+        this.deletedAt = builder.deletedAt;
     }
 
     public static CategoryJpaEntity from(final Category category) {

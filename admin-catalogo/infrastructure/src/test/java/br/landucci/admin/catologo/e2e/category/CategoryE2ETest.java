@@ -41,7 +41,7 @@ public class CategoryE2ETest implements MockDsl {
     }
 
     @Test
-    public void asACatalogAdminIShouldBeAbleToNavigateInAllCategories() throws Exception {
+    void asACatalogAdminIShouldBeAbleToNavigateInAllCategories() throws Exception {
         Assertions.assertTrue(MY_SQL_CONTAINER.isRunning());
         Assertions.assertEquals(0, repository.count());
 
@@ -84,7 +84,7 @@ public class CategoryE2ETest implements MockDsl {
     }
 
     @Test
-    public void asACatalogAdminIShouldBeAbleToFilterCategoriesByName() throws Exception {
+    void asACatalogAdminIShouldBeAbleToFilterCategoriesByName() throws Exception {
         Assertions.assertTrue(MY_SQL_CONTAINER.isRunning());
         Assertions.assertEquals(0, repository.count());
 
@@ -104,7 +104,7 @@ public class CategoryE2ETest implements MockDsl {
     }
 
     @Test
-    public void asACatalogAdminIShouldBeAbleTSortCategoriesByDescriptionDesc() throws Exception {
+    void asACatalogAdminIShouldBeAbleTSortCategoriesByDescriptionDesc() throws Exception {
         Assertions.assertTrue(MY_SQL_CONTAINER.isRunning());
         Assertions.assertEquals(0, repository.count());
 
@@ -126,7 +126,7 @@ public class CategoryE2ETest implements MockDsl {
     }
 
     @Test
-    public void asACatalogAdminIShouldBeAbleToCreateAndRetrieveANewCategory() throws Exception {
+    void asACatalogAdminIShouldBeAbleToCreateAndRetrieveANewCategory() throws Exception {
         final var expectedName = "Ficcao Cientifica";
         final var expectedDescription = "Filmes de ficcao cientifica";
         final var expectedActive = true;
@@ -147,7 +147,7 @@ public class CategoryE2ETest implements MockDsl {
     }
 
     @Test
-    public void asACatalogAdminIShouldReceiveANotFoundErrorWhenFindingACategoryByAnInexistingID() throws Exception {
+    void asACatalogAdminIShouldReceiveANotFoundErrorWhenFindingACategoryByAnInexistingID() throws Exception {
         Assertions.assertTrue(MY_SQL_CONTAINER.isRunning());
         Assertions.assertEquals(0, repository.count());
 
@@ -162,7 +162,7 @@ public class CategoryE2ETest implements MockDsl {
     }
 
     @Test
-    public void asACatalogAdminIShouldBeAbleToUpdateAnExistingCategory() throws Exception {
+    void asACatalogAdminIShouldBeAbleToUpdateAnExistingCategory() throws Exception {
         final var expectedName = "Suspense";
         final var expectedDescription = "Filmes de suspense";
         final var expectedActive = true;
@@ -186,7 +186,7 @@ public class CategoryE2ETest implements MockDsl {
     }
 
     @Test
-    public void asACatalogAdminIShouldBeAbleToActivateAnExistingCategory() throws Exception {
+    void asACatalogAdminIShouldBeAbleToActivateAnExistingCategory() throws Exception {
         final var expectedName = "Suspense";
         final var expectedDescription = "Filmes de suspense";
         final var expectedActive = true;
@@ -210,7 +210,7 @@ public class CategoryE2ETest implements MockDsl {
     }
 
     @Test
-    public void asACatalogAdminIShouldBeAbleToInctivateAnExistingCategory() throws Exception {
+    void asACatalogAdminIShouldBeAbleToInctivateAnExistingCategory() throws Exception {
         final var expectedName = "Suspense";
         final var expectedDescription = "Filmes de suspense";
         final var expectedActive = false;
@@ -234,7 +234,7 @@ public class CategoryE2ETest implements MockDsl {
     }
 
     @Test
-    public void asACatalogAdminIShouldBeAbleToDeleteAnExistingCategory() throws Exception {
+    void asACatalogAdminIShouldBeAbleToDeleteAnExistingCategory() throws Exception {
         Assertions.assertTrue(MY_SQL_CONTAINER.isRunning());
         Assertions.assertEquals(0, repository.count());
 

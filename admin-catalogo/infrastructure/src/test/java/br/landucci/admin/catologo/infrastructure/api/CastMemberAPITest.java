@@ -37,7 +37,7 @@ import java.util.List;
 import java.util.Objects;
 
 @ControllerTest(controllers = CastMemberAPI.class)
-public class CastMemberAPITest {
+class CastMemberAPITest {
 
     @Autowired
     private MockMvc mvc;
@@ -61,7 +61,7 @@ public class CastMemberAPITest {
     private DefaultUpdateCastMemberUseCase updateCastMemberUseCase;
 
     @Test
-    public void givenAValidCommand_whenCreatingACastMember_thenShouldReturnItsIdentifier() throws Exception {
+    void givenAValidCommand_whenCreatingACastMember_thenShouldReturnItsIdentifier() throws Exception {
         final var expectedName = "Zelda";
         final var expectedType = CastMemberType.DIRECTOR;
         final var expectedId = CastMemberID.with("o1i2u3i1o");
@@ -90,7 +90,7 @@ public class CastMemberAPITest {
     }
 
     @Test
-    public void givenAnInvalidNullName_whenCreatingACastMember_thenShouldReturnANotification() throws Exception {
+    void givenAnInvalidNullName_whenCreatingACastMember_thenShouldReturnANotification() throws Exception {
         final var expectedType = CastMemberType.DIRECTOR;
         final var expectedErrorMessage = "Name should not be null";
 
@@ -118,7 +118,7 @@ public class CastMemberAPITest {
     }
 
     @Test
-    public void givenAValidId_whenFindingById_thenShouldReturnIt() throws Exception {
+    void givenAValidId_whenFindingById_thenShouldReturnIt() throws Exception {
         final var expectedName = "Zelda";
         final var expectedType = CastMemberType.ACTOR;
 
@@ -142,11 +142,11 @@ public class CastMemberAPITest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.updated_at", Matchers.equalTo(castMember.getUpdatedAt().toString())));
 
         final var input = FindCastMemberByIDInputCommand.with(expectedId);
-        Mockito.verify(this.findCastMemberByIDUseCase).execute(Mockito.eq(input));
+        Mockito.verify(this.findCastMemberByIDUseCase).execute(input);
     }
 
     @Test
-    public void givenAnInvalidId_whenFindingACastMember_thenShouldReturnNotFound() throws Exception {
+    void givenAnInvalidId_whenFindingACastMember_thenShouldReturnNotFound() throws Exception {
         final var expectedErrorMessage = "CastMember with ID 123 was not found";
         final var expectedId = CastMemberID.with("123");
 
@@ -163,11 +163,11 @@ public class CastMemberAPITest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.message", Matchers.equalTo(expectedErrorMessage)));
 
         final var input = FindCastMemberByIDInputCommand.with(expectedId.getValue());
-        Mockito.verify(this.findCastMemberByIDUseCase).execute(Mockito.eq(input));
+        Mockito.verify(this.findCastMemberByIDUseCase).execute(input);
     }
 
     @Test
-    public void givenAValidCommand_whenUpdatingACastMember_thenShouldReturnItsIdentifier() throws Exception {
+    void givenAValidCommand_whenUpdatingACastMember_thenShouldReturnItsIdentifier() throws Exception {
         final var expectedName = "Zelda";
         final var expectedType = CastMemberType.DIRECTOR;
         final var castMember = CastMember.newCastMember(expectedName, expectedType);
@@ -196,7 +196,7 @@ public class CastMemberAPITest {
     }
 
     @Test
-    public void givenAnInvalidNullName_whenUpdatingCastMember_thenShouldReturnANotification() throws Exception {
+    void givenAnInvalidNullName_whenUpdatingCastMember_thenShouldReturnANotification() throws Exception {
         final var castMember = CastMember.newCastMember("Zelda", CastMemberType.DIRECTOR);
         final var expectedId = castMember.getId();
         final var expectedType = CastMemberType.ACTOR;
@@ -227,7 +227,7 @@ public class CastMemberAPITest {
     }
 
     @Test
-    public void givenAnInvalidId_whenUpdatingCastMember_thenShouldReturnNotFound() throws Exception {
+    void givenAnInvalidId_whenUpdatingCastMember_thenShouldReturnNotFound() throws Exception {
         final var expectedId = CastMemberID.with("123");
         final var expectedName = "Zelda";
         final var expectedType = CastMemberType.DIRECTOR;
@@ -256,7 +256,7 @@ public class CastMemberAPITest {
     }
 
     @Test
-    public void givenAValidId_whenDeletingById_thenShouldDeleteIt() throws Exception {
+    void givenAValidId_whenDeletingById_thenShouldDeleteIt() throws Exception {
         final var expectedId = "123";
 
         Mockito.doNothing().when(this.deleteCastMemberUseCase).execute(Mockito.any());
@@ -267,11 +267,11 @@ public class CastMemberAPITest {
         response.andExpect(MockMvcResultMatchers.status().isNoContent());
 
         final var input = DeleteCastMemberInputCommand.with(expectedId);
-        Mockito.verify(deleteCastMemberUseCase).execute(Mockito.eq(input));
+        Mockito.verify(deleteCastMemberUseCase).execute(input);
     }
 
     @Test
-    public void givenValidParams_whenListingCastMembers_thenShouldReturnIt() throws Exception {
+    void givenValidParams_whenListingCastMembers_thenShouldReturnIt() throws Exception {
         final var castMember = CastMember.newCastMember("Zelda", CastMemberType.ACTOR);
         final var expectedPage = 1;
         final var expectedPerPage = 20;
@@ -315,7 +315,7 @@ public class CastMemberAPITest {
     }
 
     @Test
-    public void givenEmptyParams_whenListingCastMembers_thenShouldAndReturnAList() throws Exception {
+    void givenEmptyParams_whenListingCastMembers_thenShouldAndReturnAList() throws Exception {
         final var castMember = CastMember.newCastMember("Zelda", CastMemberType.ACTOR);
         final var expectedPage = 0;
         final var expectedPerPage = 10;

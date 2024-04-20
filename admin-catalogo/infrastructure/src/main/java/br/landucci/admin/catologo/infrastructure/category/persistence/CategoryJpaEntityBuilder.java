@@ -3,37 +3,13 @@ package br.landucci.admin.catologo.infrastructure.category.persistence;
 import java.time.Instant;
 
 public class CategoryJpaEntityBuilder {
-    private String id;
-    private String name;
-    private String description;
-    private boolean active;
-    private Instant createdAt;
-    private Instant updatedAt;
-    private Instant deletedAt;
-
-    public CategoryJpaEntityBuilder() {}
-
-    public String getId() {
-        return id;
-    }
-    public String getName() {
-        return name;
-    }
-    public String getDescription() {
-        return description;
-    }
-    public boolean isActive() {
-        return active;
-    }
-    public Instant getCreatedAt() {
-        return createdAt;
-    }
-    public Instant getUpdatedAt() {
-        return updatedAt;
-    }
-    public Instant getDeletedAt() {
-        return deletedAt;
-    }
+    protected String id;
+    protected String name;
+    protected String description;
+    protected boolean active;
+    protected Instant createdAt;
+    protected Instant updatedAt;
+    protected Instant deletedAt;
 
     public CategoryJpaEntityBuilder withId(String id) {
         this.id = id;

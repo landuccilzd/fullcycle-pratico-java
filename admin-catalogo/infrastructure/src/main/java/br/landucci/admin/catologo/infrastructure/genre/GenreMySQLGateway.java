@@ -35,10 +35,7 @@ public class GenreMySQLGateway implements GenreGateway {
                 Sort.by(Sort.Direction.fromString(query.direction()), query.sort()));
 
         final var specifications = Optional.ofNullable(query.terms()).filter(str -> !str.isBlank())
-                .map(str -> {
-                    final var nameLike = SpecificationUtils.<GenreJpaEntity>like("name", str);
-                    return nameLike;
-                }).orElse(null);
+                .map(str -> SpecificationUtils.<GenreJpaEntity>like("name", str)).orElse(null);
 
         final var pageResult = this.repository.findAll(Specification.where(specifications), page);
         return new Pagination<>(pageResult.getNumber(), pageResult.getSize(), pageResult.getTotalElements(),

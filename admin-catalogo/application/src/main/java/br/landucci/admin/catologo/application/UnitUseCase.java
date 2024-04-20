@@ -1,5 +1,5 @@
 package br.landucci.admin.catologo.application;
 
-public abstract class UnitUseCase<IN> {
-    public abstract void execute(IN in);
+public abstract class UnitUseCase<I> {
+    public abstract void execute(I in);
 }
