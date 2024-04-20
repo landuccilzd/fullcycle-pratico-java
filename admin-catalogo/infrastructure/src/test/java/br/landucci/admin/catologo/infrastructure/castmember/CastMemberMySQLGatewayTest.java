@@ -16,7 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
 
 @MySQLGatewayTest
-public class CastMemberMySQLGatewayTest {
+class CastMemberMySQLGatewayTest {
 
     @Autowired
     private CastMemberMySQLGateway gateway;
@@ -25,7 +25,7 @@ public class CastMemberMySQLGatewayTest {
     private CastMemberRepository repository;
 
     @Test
-    public void givenSomeValidParams_whenCreatingACastMember_thenShouldPersistTheCastMember() {
+    void givenSomeValidParams_whenCreatingACastMember_thenShouldPersistTheCastMember() {
         final var expectedName = "Zelda";
         final var expectedType = CastMemberType.ACTOR;
         final var excpectedCastMember = CastMember.newCastMember(expectedName, expectedType);
@@ -33,7 +33,8 @@ public class CastMemberMySQLGatewayTest {
 
         Assertions.assertEquals(0, repository.count());
 
-        final var castMember = this.gateway.create(excpectedCastMember.clone());
+        final var clonedCastMember = CastMember.clone(excpectedCastMember);
+        final var castMember = this.gateway.create(clonedCastMember);
 
         Assertions.assertEquals(1, repository.count());
 
@@ -53,7 +54,7 @@ public class CastMemberMySQLGatewayTest {
     }
 
     @Test
-    public void givenAValidCastMember_whenUpdating_shouldPersistTheUpdatedCastMember() {
+    void givenAValidCastMember_whenUpdating_shouldPersistTheUpdatedCastMember() {
         final var expectedName = "Zelda";
         final var expectedType = CastMemberType.ACTOR;
         final var expectedCastMember = CastMember.newCastMember("Peach", CastMemberType.DIRECTOR);
@@ -65,8 +66,8 @@ public class CastMemberMySQLGatewayTest {
         Assertions.assertEquals("Peach", castMemberEntity.getName());
         Assertions.assertEquals(CastMemberType.DIRECTOR, castMemberEntity.getType());
 
-        final var castMember = expectedCastMember.clone()
-                .updateName(expectedName).updateType(expectedType);
+        final var castMember = CastMember.clone(expectedCastMember);
+        castMember.updateName(expectedName).updateType(expectedType);
 
         final var updatedCastMember = gateway.update(castMember);
 
@@ -88,7 +89,7 @@ public class CastMemberMySQLGatewayTest {
     }
 
     @Test
-    public void givenTwoCastMembersAndOnePersisted_whenCallingExistsByIds_shouldReturnOnlyThePersistedID() {
+    void givenTwoCastMembersAndOnePersisted_whenCallingExistsByIds_shouldReturnOnlyThePersistedID() {
         final var expectedCastMember = CastMember.newCastMember("Zelda", CastMemberType.DIRECTOR);
         final var expectedItems = 1;
         final var expectedId = expectedCastMember.getId();
@@ -104,7 +105,7 @@ public class CastMemberMySQLGatewayTest {
     }
 
     @Test
-    public void givenAValidCastMember_whenDeletingById_thenShouldDeleteTheCastMember() {
+    void givenAValidCastMember_whenDeletingById_thenShouldDeleteTheCastMember() {
         final var castMember = CastMember.newCastMember("Zelda", CastMemberType.ACTOR);
 
         repository.saveAndFlush(CastMemberJpaEntity.from(castMember));
@@ -116,7 +117,7 @@ public class CastMemberMySQLGatewayTest {
     }
 
     @Test
-    public void givenAnInvalidId_whenDeletingById_thenShouldBeIgnored() {
+    void givenAnInvalidId_whenDeletingById_thenShouldBeIgnored() {
         final var castMember = CastMember.newCastMember("Zelda", CastMemberType.ACTOR);
 
         repository.saveAndFlush(CastMemberJpaEntity.from(castMember));
@@ -128,7 +129,7 @@ public class CastMemberMySQLGatewayTest {
     }
 
     @Test
-    public void givenAValidCastMember_whenFindindById_thenShouldReturnTheFoundCastMember() {
+    void givenAValidCastMember_whenFindindById_thenShouldReturnTheFoundCastMember() {
         final var expectedName = "Zelda";
         final var expectedType = CastMemberType.ACTOR;
         final var castMember = CastMember.newCastMember(expectedName, expectedType);
@@ -147,7 +148,7 @@ public class CastMemberMySQLGatewayTest {
     }
 
     @Test
-    public void givenAnInvalidId_whenFindingById_thenShouldReturnEmpty() {
+    void givenAnInvalidId_whenFindingById_thenShouldReturnEmpty() {
         final var castMember = CastMember.newCastMember("Zelda", CastMemberType.ACTOR);
 
         repository.saveAndFlush(CastMemberJpaEntity.from(castMember));
@@ -159,7 +160,7 @@ public class CastMemberMySQLGatewayTest {
     }
 
     @Test
-    public void givenNonExisteingCastMembers_whenFindingAll_thenShouldReturnEmpty() {
+    void givenNonExisteingCastMembers_whenFindingAll_thenShouldReturnEmpty() {
         final var expectedPage = 0;
         final var expectedPerPage = 10;
         final var expectedTotal = 0;
@@ -181,7 +182,7 @@ public class CastMemberMySQLGatewayTest {
             "kat,0,10,1,1,Katara",
             "SHE,0,10,1,1,She Ra",
     })
-    public void givenAValidTerm_whenFindingAll_thenShouldReturnFiltered(final String expectedTerms,
+    void givenAValidTerm_whenFindingAll_thenShouldReturnFiltered(final String expectedTerms,
             final int expectedPage, final int expectedPerPage, final int expectedItemsCount, final long expectedTotal,
             final String expectedName) {
         mockMembers();
@@ -203,7 +204,7 @@ public class CastMemberMySQLGatewayTest {
             "name,asc,0,10,5,5,Daisy",
             "name,desc,0,10,5,5,Zelda"
     })
-    public void givenAValidSortAndDirection_whenFindingAll_thenShouldReturnSorted(final String expectedSort,
+    void givenAValidSortAndDirection_whenFindingAll_thenShouldReturnSorted(final String expectedSort,
             final String expectedDir, final int expectedPage, final int expectedPerPage,
             final int expectedItemsCount, final long expectedTotal, final String expectedName) {
         mockMembers();
@@ -225,7 +226,7 @@ public class CastMemberMySQLGatewayTest {
             "1,2,2,5,Peach;She Ra",
             "2,2,1,5,Zelda",
     })
-    public void givenSomeValidParams_whenListing_thenShouldReturnCastMembersPaginated(final int expectedPage,
+    void givenSomeValidParams_whenListing_thenShouldReturnCastMembersPaginated(final int expectedPage,
             final int expectedPerPage, final int expectedItemsCount, final long expectedTotal,
             final String expectedNames) {
         mockMembers();

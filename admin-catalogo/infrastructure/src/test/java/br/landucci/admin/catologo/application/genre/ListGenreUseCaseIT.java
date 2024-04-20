@@ -15,7 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
 
 @IntegrationTest
-public class ListGenreUseCaseIT {
+class ListGenreUseCaseIT {
 
     @Autowired
     private ListGenreUseCase useCase;
@@ -27,7 +27,7 @@ public class ListGenreUseCaseIT {
     private GenreRepository repository;
 
     @Test
-    public void givenAValidQuery_whenListingGenres_shouldReturnGenres() {
+    void givenAValidQuery_whenListingGenres_shouldReturnGenres() {
         final var genres = List.of(
                 Genre.newGenre("Ação", true),
                 Genre.newGenre("Aventura", true)
@@ -54,7 +54,7 @@ public class ListGenreUseCaseIT {
     }
 
     @Test
-    public void givenAValidQuery_whenListingGenresAndResultIsEmpty_shouldReturnGenres() {
+    void givenAValidQuery_whenListingGenresAndResultIsEmpty_shouldReturnGenres() {
         final var genres = List.<Genre>of();
         final var expectedPage = 0;
         final var expectedPerPage = 10;

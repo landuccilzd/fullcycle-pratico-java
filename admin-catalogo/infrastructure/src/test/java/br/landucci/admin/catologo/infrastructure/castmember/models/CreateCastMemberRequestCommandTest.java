@@ -9,13 +9,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.json.JacksonTester;
 
 @JacksonTest
-public class CreateCastMemberRequestCommandTest {
+class CreateCastMemberRequestCommandTest {
 
     @Autowired
     private JacksonTester<CreateCastMemberRequestCommand> json;
 
     @Test
-    public void testMarshall() throws Exception {
+    void testMarshall() throws Exception {
         final var expectedName = "Zelda";
         final var expectedType = CastMemberType.ACTOR;
 
@@ -28,7 +28,7 @@ public class CreateCastMemberRequestCommandTest {
     }
 
     @Test
-    public void testUnmarshall() throws Exception {
+    void testUnmarshall() throws Exception {
         final var expectedName = "Zelda";
         final var expectedType = CastMemberType.ACTOR;
 

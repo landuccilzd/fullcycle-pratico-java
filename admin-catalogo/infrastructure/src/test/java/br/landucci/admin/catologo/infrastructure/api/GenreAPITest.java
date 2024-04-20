@@ -37,7 +37,7 @@ import java.util.List;
 import java.util.Objects;
 
 @ControllerTest(controllers = GenreAPI.class)
-public class GenreAPITest {
+class GenreAPITest {
     @Autowired
     private MockMvc mvc;
     @Autowired
@@ -54,7 +54,7 @@ public class GenreAPITest {
     private DeleteGenreUseCase deleteGenreUseCase;
 
     @Test
-    public void givenValidParams_whenListingGenres_shouldReturnGenres() throws Exception {
+    void givenValidParams_whenListingGenres_shouldReturnGenres() throws Exception {
         final var expectedPage = 0;
         final var expectedPerPage = 10;
         final var expectedTerms = "ac";
@@ -99,7 +99,7 @@ public class GenreAPITest {
     }
 
     @Test
-    public void givenAValidId_whenFindingAGenreById_shouldReturnGenre() throws Exception {
+    void givenAValidId_whenFindingAGenreById_shouldReturnGenre() throws Exception {
         final var expectedName = "Ação";
         final var expectedCategories = List.of("123", "456");
         final var expectedIsActive = false;
@@ -130,11 +130,11 @@ public class GenreAPITest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.deleted_at", Matchers.equalTo(genre.getDeletedAt().toString())));
 
         final var input = FindByIDGenreInputCommand.with(expectedId);
-        Mockito.verify(findGenreByIDUseCase).execute(Mockito.eq(input));
+        Mockito.verify(findGenreByIDUseCase).execute(input);
     }
 
     @Test
-    public void givenAnInvalidId_whenFindingGenreById_shouldReturnNotFound() throws Exception {
+    void givenAnInvalidId_whenFindingGenreById_shouldReturnNotFound() throws Exception {
         final var expectedErrorMessage = "Genre with ID 123 was not found";
         final var expectedId = GenreID.from("123");
         final var expectedMediaType = MediaType.APPLICATION_JSON_VALUE;
@@ -154,11 +154,11 @@ public class GenreAPITest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.message", Matchers.equalTo(expectedErrorMessage)));
 
         final var input = FindByIDGenreInputCommand.with(expectedId.getValue());
-        Mockito.verify(this.findGenreByIDUseCase).execute(Mockito.eq(input));
+        Mockito.verify(this.findGenreByIDUseCase).execute(input);
     }
 
     @Test
-    public void givenAValidCommand_whenCreatingAGenre_thenShouldReturnACreatedGenre() throws Exception {
+    void givenAValidCommand_whenCreatingAGenre_thenShouldReturnACreatedGenre() throws Exception {
         final var expectedName = "Drama";
         final var expectedActive = true;
         final var expectedCategories = List.of("456", "789");
@@ -189,7 +189,7 @@ public class GenreAPITest {
     }
 
     @Test
-    public void givenAnInvalidName_whenCallsCreateGenre_shouldReturnNotification() throws Exception {
+    void givenAnInvalidName_whenCallsCreateGenre_shouldReturnNotification() throws Exception {
         final var expectedCategories = List.of("123", "456");
         final var expectedIsActive = true;
         final var expectedErrorMessage = "Name should not be null";
@@ -220,7 +220,7 @@ public class GenreAPITest {
     }
 
     @Test
-    public void givenAValidCommand_whenUpdatingGenre_shouldReturnGenreId() throws Exception {
+    void givenAValidCommand_whenUpdatingGenre_shouldReturnGenreId() throws Exception {
         final var expectedName = "Ação";
         final var expectedCategories = List.of("123", "456");
         final var expectedIsActive = true;
@@ -251,7 +251,7 @@ public class GenreAPITest {
     }
 
     @Test
-    public void givenAnInvalidName_whenUpdatingGenre_shouldReturnNotification() throws Exception {
+    void givenAnInvalidName_whenUpdatingGenre_shouldReturnNotification() throws Exception {
         final var expectedCategories = List.of("123", "456");
         final var expectedIsActive = true;
         final var expectedErrorMessage = "Name should not be null";
@@ -284,7 +284,7 @@ public class GenreAPITest {
     }
 
     @Test
-    public void givenAValidId_whenDeletingGenre_shouldBeOK() throws Exception {
+    void givenAValidId_whenDeletingGenre_shouldBeOK() throws Exception {
         final var expectedId = "123";
         final var input = DeleteGenreInputCommand.with(expectedId);
 
@@ -298,7 +298,7 @@ public class GenreAPITest {
 
         result.andExpect(MockMvcResultMatchers.status().isNoContent());
 
-        Mockito.verify(this.deleteGenreUseCase).execute(Mockito.eq(input));
+        Mockito.verify(this.deleteGenreUseCase).execute(input);
     }
 
 }

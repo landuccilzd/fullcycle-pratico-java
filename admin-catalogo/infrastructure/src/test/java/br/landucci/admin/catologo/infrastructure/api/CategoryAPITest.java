@@ -38,7 +38,7 @@ import java.util.List;
 import java.util.Objects;
 
 @ControllerTest(controllers = CategoryAPI.class)
-public class CategoryAPITest {
+class CategoryAPITest {
 
     @Autowired
     private MockMvc mvc;
@@ -56,7 +56,7 @@ public class CategoryAPITest {
     private DeleteCategoryUseCase deleteCategoryUseCase;
 
     @Test
-    public void givenValidParams_whenListingCategories_shouldReturnAListOfCategories() throws Exception {
+    void givenValidParams_whenListingCategories_shouldReturnAListOfCategories() throws Exception {
         // GIVEN
         final var category = Category.newCategory("Ficção Científica", null, true);
         final var expectedPage = 0;
@@ -110,7 +110,7 @@ public class CategoryAPITest {
     }
 
     @Test
-    public void givenAValidInput_whenFindingACategory_thenShouldReturnTheCategory() throws Exception {
+    void givenAValidInput_whenFindingACategory_thenShouldReturnTheCategory() throws Exception {
         // GIVEN
         final var expectedName = "Ficção Científica";
         final var expectedDescription = "Filmes de ficção científica";
@@ -139,11 +139,11 @@ public class CategoryAPITest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.deleted_at", Matchers.equalTo(category.getDeletedAt())))
                 .andExpect(MockMvcResultMatchers.header().string("Content-Type", MediaType.APPLICATION_JSON_VALUE));
 
-        Mockito.verify(findByIDCategoryUseCase, Mockito.times(1)).execute(Mockito.eq(input));
+        Mockito.verify(findByIDCategoryUseCase, Mockito.times(1)).execute(input);
     }
 
     @Test
-    public void givenAnInvalidID_whenFindingACategory_thenShouldReturnNotFound() throws Exception {
+    void givenAnInvalidID_whenFindingACategory_thenShouldReturnNotFound() throws Exception {
         // GIVEN
         final var expectedErrorMessage = "Category with ID 123 was not found";
         final var expectedId = CategoryID.from("123");
@@ -164,7 +164,7 @@ public class CategoryAPITest {
     }
 
     @Test
-    public void givenAValidCommand_whenCreateACategory_thenShouldReturnACreatedCategory() throws Exception {
+    void givenAValidCommand_whenCreateACategory_thenShouldReturnACreatedCategory() throws Exception {
         // GIVEN - DADO
         final var expectedName = "Ficção Científica";
         final var expectedDescription = "Filmes de ficção científica";
@@ -196,7 +196,7 @@ public class CategoryAPITest {
     }
 
     @Test
-    public void givenAValidCommand_whenUpdatingACategory_thenShouldReturnAnUpdatedCategory() throws Exception {
+    void givenAValidCommand_whenUpdatingACategory_thenShouldReturnAnUpdatedCategory() throws Exception {
         // GIVEN - DADO
         final var expectedName = "Ficção Científica";
         final var expectedDescription = "Filmes de ficção científica";
@@ -231,7 +231,7 @@ public class CategoryAPITest {
     }
 
     @Test
-    public void givenAInvalidId_whenUpdatingACategory_thenShouldReturnAnErrorMessage() throws Exception {
+    void givenAInvalidId_whenUpdatingACategory_thenShouldReturnAnErrorMessage() throws Exception {
         // GIVEN - DADO
         final var expectedId = "not-found";
         final var expectedName = "Ficção Científica";
@@ -258,7 +258,7 @@ public class CategoryAPITest {
     }
 
     @Test
-    public void givenAInvalidNullNameCommand_whenUpdatingACategory_thenShouldReturnAnErrorMessage() throws Exception {
+    void givenAInvalidNullNameCommand_whenUpdatingACategory_thenShouldReturnAnErrorMessage() throws Exception {
         // GIVEN - DADO
         final var expectedId = "123";
         final var expectedDescription = "Filmes de ficção científica";
@@ -286,7 +286,7 @@ public class CategoryAPITest {
     }
 
     @Test
-    public void givenAValidCommand_whenDeletingACategory_thenShouldReturnNoContent() throws Exception {
+    void givenAValidCommand_whenDeletingACategory_thenShouldReturnNoContent() throws Exception {
         // GIVEN - DADO
         final var expectedId = "123";
         final var input = DeleteCategoryInputCommand.with(expectedId);
@@ -303,11 +303,11 @@ public class CategoryAPITest {
         // THEN - ENTÃO
         response.andExpect(MockMvcResultMatchers.status().isNoContent());
 
-        Mockito.verify(deleteCategoryUseCase, Mockito.times(1)).execute(Mockito.eq(input));
+        Mockito.verify(deleteCategoryUseCase, Mockito.times(1)).execute(input);
     }
 
     @Test
-    public void givenAnInvalidId_whenDeletingACategory_thenShouldReturnAnErrorMessage() throws Exception {
+    void givenAnInvalidId_whenDeletingACategory_thenShouldReturnAnErrorMessage() throws Exception {
         // GIVEN - DADO
         final var expectedId = "not-found";
         final var input = DeleteCategoryInputCommand.with(expectedId);

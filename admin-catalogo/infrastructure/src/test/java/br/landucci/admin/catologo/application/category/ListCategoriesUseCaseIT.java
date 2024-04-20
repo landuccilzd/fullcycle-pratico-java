@@ -14,7 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
 
 @IntegrationTest
-public class ListCategoriesUseCaseIT {
+class ListCategoriesUseCaseIT {
 
     @Autowired
     private ListCategoryUseCase useCase;
@@ -22,7 +22,7 @@ public class ListCategoriesUseCaseIT {
     private CategoryRepository repository;
 
     @Test
-    public void givenAValidInput_whenListingCategories_thenShouldReturnAListOfCategories() {
+    void givenAValidInput_whenListingCategories_thenShouldReturnAListOfCategories() {
         final var categories = List.of(
                 Category.newCategory("Ficção científica", "Filmes de ficção científica", true),
                 Category.newCategory("Comédia", "Filmes de comédia", true),

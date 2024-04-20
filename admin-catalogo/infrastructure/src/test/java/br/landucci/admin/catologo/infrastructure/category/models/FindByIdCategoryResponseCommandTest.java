@@ -7,16 +7,14 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.json.JacksonTester;
 
-import java.time.Instant;
-
 @JacksonTest
-public class FindByIdCategoryResponseCommandTest {
+class FindByIdCategoryResponseCommandTest {
 
     @Autowired
     private JacksonTester<FindByIdCategoryResponseCommand> json;
 
     @Test
-    public void testMarshall() throws Exception {
+    void testMarshall() throws Exception {
         final var expectedId = "123";
         final var expectedName = "Ficção Científica";
         final var expectedDescrition = "Filmes de ficção científica";
@@ -41,7 +39,7 @@ public class FindByIdCategoryResponseCommandTest {
     }
 
     @Test
-    public void testUnmarshall() throws Exception {
+    void testUnmarshall() throws Exception {
         final var expectedId = "123";
         final var expectedName = "Ficção Científica";
         final var expectedDescrition = "Filmes de ficção científica";

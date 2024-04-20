@@ -19,7 +19,7 @@ import org.mockito.Mockito;
 import java.util.List;
 import java.util.Optional;
 
-public class FindCastMemberByIdUseCaseTest extends UseCaseTest {
+class FindCastMemberByIdUseCaseTest extends UseCaseTest {
 
     @InjectMocks
     private DefaultFindCastMemberByIDUseCase useCase;
@@ -27,7 +27,7 @@ public class FindCastMemberByIdUseCaseTest extends UseCaseTest {
     private CastMemberGateway gateway;
 
     @Test
-    public void givenAValidId_whenFindingACastMember_shouldReturnTheCastMember() {
+    void givenAValidId_whenFindingACastMember_shouldReturnTheCastMember() {
         final var expectedName = Fixture.name();
         final var expectedType = Fixture.CastMembers.type();
         final var castMember = CastMember.newCastMember(expectedName, expectedType);
@@ -45,11 +45,11 @@ public class FindCastMemberByIdUseCaseTest extends UseCaseTest {
         Assertions.assertEquals(castMember.getCreatedAt(), output.createdAt());
         Assertions.assertEquals(castMember.getUpdatedAt(), output.updatedAt());
 
-        Mockito.verify(gateway).findById(ArgumentMatchers.eq(expectedId));
+        Mockito.verify(gateway).findById(expectedId);
     }
 
     @Test
-    public void givenAInvalidId_whenFindingCastMemberAndDoesNotExists_shouldReturnNotFoundException() {
+    void givenAInvalidId_whenFindingCastMemberAndDoesNotExists_shouldReturnNotFoundException() {
         final var expectedId = CastMemberID.with("123");
         final var expectedErrorMessage = "CastMember with ID 123 was not found";
 
@@ -61,7 +61,7 @@ public class FindCastMemberByIdUseCaseTest extends UseCaseTest {
 
         Assertions.assertNotNull(output);
         Assertions.assertEquals(expectedErrorMessage, output.getMessage());
-        Mockito.verify(gateway).findById(ArgumentMatchers.eq(expectedId));
+        Mockito.verify(gateway).findById(expectedId);
     }
 
     @Override

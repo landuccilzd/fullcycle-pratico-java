@@ -18,12 +18,8 @@ import org.springframework.boot.test.mock.mockito.SpyBean;
 
 import java.util.List;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.times;
-
 @IntegrationTest
-public class UpdateGenreUseCaseIT {
+class UpdateGenreUseCaseIT {
 
     @Autowired
     private UpdateGenreUseCase useCase;
@@ -38,7 +34,7 @@ public class UpdateGenreUseCaseIT {
     private GenreRepository repository;
 
     @Test
-    public void givenAValidCommand_whenUpdatingGenre_shouldReturnGenreId() {
+    void givenAValidCommand_whenUpdatingGenre_shouldReturnGenreId() {
         final var genre = gateway.create(Genre.newGenre("acao", true));
         final var expectedId = genre.getId();
         final var expectedName = "Ação";
@@ -66,7 +62,7 @@ public class UpdateGenreUseCaseIT {
     }
 
     @Test
-    public void givenAValidCommandWithCategories_whenUpdatingGenre_shouldReturnGenreId() {
+    void givenAValidCommandWithCategories_whenUpdatingGenre_shouldReturnGenreId() {
         final var filmes = this.categoryGateway.create(Category.newCategory("Filmes", null, true));
         final var series = this.categoryGateway.create(Category.newCategory("Séries", null, true));
         final var genre = this.gateway.create(Genre.newGenre("acao", true));
@@ -96,7 +92,7 @@ public class UpdateGenreUseCaseIT {
     }
 
     @Test
-    public void givenAValidCommandWithInactiveGenre_whenUpdatingGenre_shouldReturnGenreId() {
+    void givenAValidCommandWithInactiveGenre_whenUpdatingGenre_shouldReturnGenreId() {
         final var genre = this.gateway.create(Genre.newGenre("acao", true));
         final var expectedId = genre.getId();
         final var expectedName = "Ação";
@@ -127,7 +123,7 @@ public class UpdateGenreUseCaseIT {
     }
 
     @Test
-    public void givenAnInvalidName_whenUpdatingAGenre_shouldReturnNotificationException() {
+    void givenAnInvalidName_whenUpdatingAGenre_shouldReturnNotificationException() {
         // given
         final var aGenre = gateway.create(Genre.newGenre("acao", true));
         final var expectedId = aGenre.getId();
@@ -146,13 +142,13 @@ public class UpdateGenreUseCaseIT {
         Assertions.assertEquals(expectedErrorCount, exception.errorCount());
         Assertions.assertEquals(expectedErrorMessage, exception.firstError().message());
 
-        Mockito.verify(this.gateway, times(1)).findById(eq(expectedId));
-        Mockito.verify(this.categoryGateway, times(0)).existsByIds(any());
-        Mockito.verify(this.gateway, times(0)).update(any());
+        Mockito.verify(this.gateway, Mockito.times(1)).findById(expectedId);
+        Mockito.verify(this.categoryGateway, Mockito.times(0)).existsByIds(Mockito.any());
+        Mockito.verify(this.gateway, Mockito.times(0)).update(Mockito.any());
     }
 
     @Test
-    public void givenAnInvalidName_whenUpdatingGenreAndSomeCategoriesDoesNotExists_shouldReturnNotificationException() {
+    void givenAnInvalidName_whenUpdatingGenreAndSomeCategoriesDoesNotExists_shouldReturnNotificationException() {
         final var filmes = this.categoryGateway.create(Category.newCategory("Filems", null, true));
         final var series = CategoryID.from("456");
         final var documentarios = CategoryID.from("789");
@@ -178,9 +174,9 @@ public class UpdateGenreUseCaseIT {
         Assertions.assertEquals(expectedErrorMessageOne, actualException.firstError().message());
         Assertions.assertEquals(expectedErrorMessageTwo, actualException.getErrors().get(1).message());
 
-        Mockito.verify(this.gateway, times(1)).findById(eq(expectedId));
-        Mockito.verify(this.categoryGateway, times(1)).existsByIds(eq(expectedCategories));
-        Mockito.verify(this.gateway, times(0)).update(any());
+        Mockito.verify(this.gateway, Mockito.times(1)).findById(expectedId);
+        Mockito.verify(this.categoryGateway, Mockito.times(1)).existsByIds(expectedCategories);
+        Mockito.verify(this.gateway, Mockito.times(0)).update(Mockito.any());
     }
 
     private List<String> asString(final List<CategoryID> ids) {

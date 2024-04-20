@@ -9,13 +9,13 @@ import org.springframework.boot.test.json.JacksonTester;
 import java.util.List;
 
 @JacksonTest
-public class CreateGenreRequestCommandTest {
+class CreateGenreRequestCommandTest {
 
     @Autowired
     private JacksonTester<CreateGenreRequestCommand> json;
 
     @Test
-    public void testMarshall() throws Exception {
+    void testMarshall() throws Exception {
         final var expectedName = "Drama";
         final var expectedActive = true;
         final var expectedCategories = List.of("456", "789");
@@ -30,7 +30,7 @@ public class CreateGenreRequestCommandTest {
     }
 
     @Test
-    public void testUnmarshall() throws Exception {
+    void testUnmarshall() throws Exception {
         final var expectedName = "Drama";
         final var expectedActive = true;
         final var expectedCategories = "456, 789";

@@ -17,7 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.SpyBean;
 
 @IntegrationTest
-public class DeleteCastMemberUseCaseIT {
+class DeleteCastMemberUseCaseIT {
     @Autowired
     private DeleteCastMemberUseCase useCase;
     @Autowired
@@ -26,7 +26,7 @@ public class DeleteCastMemberUseCaseIT {
     private CastMemberGateway gateway;
 
     @Test
-    public void givenAValidId_whenDeletingCastMember_thenShouldDeleteIt() {
+    void givenAValidId_whenDeletingCastMember_thenShouldDeleteIt() {
         final var zelda = CastMember.newCastMember("Zelda", CastMemberType.DIRECTOR);
         final var peach = CastMember.newCastMember("Peach", CastMemberType.ACTOR);
         final var expectedId = zelda.getId();
@@ -43,11 +43,11 @@ public class DeleteCastMemberUseCaseIT {
         Assertions.assertFalse(this.repository.existsById(expectedId.getValue()));
         Assertions.assertTrue(this.repository.existsById(peach.getId().getValue()));
 
-        Mockito.verify(this.gateway).deleteById(ArgumentMatchers.eq(expectedId));
+        Mockito.verify(this.gateway).deleteById(expectedId);
     }
 
     @Test
-    public void givenAnInvalidId_whenDeletingACastMember_thenShouldDoNothing() {
+    void givenAnInvalidId_whenDeletingACastMember_thenShouldDoNothing() {
         final var zelda = CastMember.newCastMember("Zelda", CastMemberType.DIRECTOR);
         final var expectedId = CastMemberID.with("123");
 
@@ -58,13 +58,13 @@ public class DeleteCastMemberUseCaseIT {
         final var input = DeleteCastMemberInputCommand.with(expectedId.getValue());
         Assertions.assertDoesNotThrow(() -> this.useCase.execute(input));
 
-        Mockito.verify(this.gateway).deleteById(ArgumentMatchers.eq(expectedId));
+        Mockito.verify(this.gateway).deleteById(expectedId);
 
         Assertions.assertEquals(1, this.repository.count());
     }
 
     @Test
-    public void givenAValidId_whenDeletingCastMemberAndGatewayThrowsException_thenShouldReceiveAnException() {
+    void givenAValidId_whenDeletingCastMemberAndGatewayThrowsException_thenShouldReceiveAnException() {
         // given
         final var zelda = CastMember.newCastMember("Zelda", CastMemberType.ACTOR);
         final var expectedId = zelda.getId();
@@ -78,7 +78,7 @@ public class DeleteCastMemberUseCaseIT {
         final var input = DeleteCastMemberInputCommand.with(expectedId.getValue());
         Assertions.assertThrows(IllegalStateException.class, () -> this.useCase.execute(input));
 
-        Mockito.verify(this.gateway).deleteById(ArgumentMatchers.eq(expectedId));
+        Mockito.verify(this.gateway).deleteById(expectedId);
 
         Assertions.assertEquals(1, this.repository.count());
     }

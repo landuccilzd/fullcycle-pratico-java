@@ -17,7 +17,7 @@ import org.mockito.Mockito;
 import java.util.List;
 import java.util.Optional;
 
-public class FindCategoryByIDUseCaseTest extends UseCaseTest {
+class FindCategoryByIDUseCaseTest extends UseCaseTest {
 
     @InjectMocks
     private DefaultFindCategoryByIDUseCase useCase;
@@ -30,14 +30,14 @@ public class FindCategoryByIDUseCaseTest extends UseCaseTest {
     }
 
     @Test
-    public void givenAValidInput_whenFindingACategory_thenShouldReturnTheCategory() {
+    void givenAValidInput_whenFindingACategory_thenShouldReturnTheCategory() {
         final var expectedName = "Ficção Científica";
         final var expectedDescription = "Filmes de ficção científica";
         final var expectedActive = true;
         final var category = Category.newCategory(expectedName, expectedDescription, expectedActive);
         final var expectedId = category.getId();
 
-        Mockito.when(gateway.findById(Mockito.eq(expectedId))).thenReturn(Optional.of(category.clone()));
+        Mockito.when(gateway.findById(expectedId)).thenReturn(Optional.of(Category.clone(category)));
 
         final var input = FindByIDCategoryInputCommand.with(expectedId.getValue());
         final var output = useCase.execute(input);
@@ -51,31 +51,31 @@ public class FindCategoryByIDUseCaseTest extends UseCaseTest {
         Assertions.assertEquals(category.getUpdatedAt(), output.updatedAt());
         Assertions.assertEquals(category.getDeletedAt(), output.deletedAt());
 
-        Mockito.verify(gateway, Mockito.times(1)).findById(Mockito.eq(expectedId));
+        Mockito.verify(gateway, Mockito.times(1)).findById(expectedId);
     }
 
     @Test
-    public void givenAnInvalidID_whenDeletingACategory_thenShouldReturnNotFound() {
+    void givenAnInvalidID_whenDeletingACategory_thenShouldReturnNotFound() {
         final var expectedId = CategoryID.from("123");
         final var expectedErrorMessage = "Category with ID 123 was not found";
 
-        Mockito.when(gateway.findById(Mockito.eq(expectedId))).thenReturn(Optional.empty());
+        Mockito.when(gateway.findById(expectedId)).thenReturn(Optional.empty());
 
         final var input = FindByIDCategoryInputCommand.with(expectedId.getValue());
         final var exception = Assertions.assertThrows(NotFoundException.class, () -> useCase.execute(input));
 
         Assertions.assertEquals(expectedErrorMessage, exception.getMessage());
 
-        Mockito.verify(gateway, Mockito.times(1)).findById(Mockito.eq(expectedId));
+        Mockito.verify(gateway, Mockito.times(1)).findById(expectedId);
     }
 
     @Test
-    public void givenAValidInput_whenGatewayThrowsAnException_thenShouldReturnAnException() {
+    void givenAValidInput_whenGatewayThrowsAnException_thenShouldReturnAnException() {
         final var category = Category.newCategory("Ficção Científica", "Filmes de ficção científica", true);
         final var expectedId = category.getId();
         final var expectedErrorMessage = "Gateway Generic Error";
 
-        Mockito.when(gateway.findById(Mockito.eq(expectedId))).thenThrow(new IllegalStateException(expectedErrorMessage));
+        Mockito.when(gateway.findById(expectedId)).thenThrow(new IllegalStateException(expectedErrorMessage));
 
         final var input = FindByIDCategoryInputCommand.with(expectedId.getValue());
         final var exception = Assertions.assertThrows(IllegalStateException.class, () -> useCase.execute(input));

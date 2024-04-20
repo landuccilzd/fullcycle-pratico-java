@@ -17,7 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
 
 @MySQLGatewayTest
-public class GenreMySQLGatewayTest {
+class GenreMySQLGatewayTest {
     @Autowired
     private CategoryMySQLGateway categoryGateway;
     @Autowired
@@ -26,7 +26,7 @@ public class GenreMySQLGatewayTest {
     private GenreRepository repository;
 
     @Test
-    public void givenAPersistedGenre_whenFindingById_thenShouldReturnTheFoundGenre() {
+    void givenAPersistedGenre_whenFindingById_thenShouldReturnTheFoundGenre() {
         final var category = categoryGateway.create(
                 Category.newCategory("Filmes", "Todos os tipos de filmes", true));
         final var expectedName = "Ficção Científica";
@@ -57,7 +57,7 @@ public class GenreMySQLGatewayTest {
     }
 
     @Test
-    public void givenExistingGenres_whenListing_thenShouldReturnAListOfGenre() {
+    void givenExistingGenres_whenListing_thenShouldReturnAListOfGenre() {
         final var expectedPage = 0;
         final var expectedPerPage = 10;
         final var expectedTotal = 6;
@@ -74,7 +74,7 @@ public class GenreMySQLGatewayTest {
     }
 
     @Test
-    public void givenNonExistingCategories_whenListing_thenShouldReturnAnEmptyList() {
+    void givenNonExistingCategories_whenListing_thenShouldReturnAnEmptyList() {
         final var expectedPage = 0;
         final var expectedPerPage = 10;
         final var expectedTotal = 0;
@@ -100,7 +100,7 @@ public class GenreMySQLGatewayTest {
             "sus, 0, 10, 1, 1, Suspense, name, asc",
             "ter, 0, 10, 1, 1, Terror, name, asc"
     })
-    public void givenFollowPagination_whenFindingAllOnPage1_thenShouldReturnPaginated(
+    void givenFollowPagination_whenFindingAllOnPage1_thenShouldReturnPaginated(
             final String expectedTerms,
             final int expectedPage,
             final int expectedPerPage,
@@ -133,7 +133,7 @@ public class GenreMySQLGatewayTest {
             ", 4, 1, 1, 6, Suspense, name, asc",
             ", 5, 1, 1, 6, Terror, name, asc"
     })
-    public void givenExistingCategories_whenFilteringName_thenShouldReturnAFilteredListOfCategories(
+    void givenExistingCategories_whenFilteringName_thenShouldReturnAFilteredListOfCategories(
             final String expectedTerms,
             final int expectedPage,
             final int expectedPerPage,
@@ -158,14 +158,14 @@ public class GenreMySQLGatewayTest {
     }
 
     @Test
-    public void givenANonPersistedGenre_whenFindingByAnInexistingId_thenShouldNotReturnTheGenre() {
+    void givenANonPersistedGenre_whenFindingByAnInexistingId_thenShouldNotReturnTheGenre() {
         Assertions.assertEquals(0, repository.count());
         final var oGenre = gateway.findById(GenreID.from("123"));
         Assertions.assertTrue(oGenre.isEmpty());
     }
 
     @Test
-    public void givenAValidGenre_whenCreating_thenShouldPersistAGenre() {
+    void givenAValidGenre_whenCreating_thenShouldPersistAGenre() {
         final var category = categoryGateway.create(
                 Category.newCategory("Filmes", "Todos os tipos de filmes", true));
         final var expectedName = "Ficção Científica";
@@ -207,7 +207,7 @@ public class GenreMySQLGatewayTest {
     }
 
     @Test
-    public void givenAValidGenreWithoutCategories_whenCreating_thenShouldPersistAGenre() {
+    void givenAValidGenreWithoutCategories_whenCreating_thenShouldPersistAGenre() {
         final var expectedName = "Ficção Científica";
         final var expectedActive = true;
         final var expectedCategoryCount = 0;
@@ -240,7 +240,7 @@ public class GenreMySQLGatewayTest {
     }
 
     @Test
-    public void givenAValidGenreWithoutCategories_whenUpdating_thenShouldPersistAnUpdatedGenre() {
+    void givenAValidGenreWithoutCategories_whenUpdating_thenShouldPersistAnUpdatedGenre() {
         final var expectedName = "Ficção Científica";
         final var expectedActive = true;
         final var expectedCategoryCount = 1;
@@ -278,7 +278,7 @@ public class GenreMySQLGatewayTest {
     }
 
     @Test
-    public void givenPersistedGenre_whenDeleting_thenShouldRemoveAGenre() {
+    void givenPersistedGenre_whenDeleting_thenShouldRemoveAGenre() {
         final var expectedName = "Ficção Científica";
         final var expectedActive = true;
         final var expectedCategoryCount = 0;

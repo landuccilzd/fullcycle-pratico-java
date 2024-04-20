@@ -16,14 +16,14 @@ import org.mockito.Mockito;
 import java.util.List;
 import java.util.Objects;
 
-public class CreateCastMemberUseCaseTest extends UseCaseTest {
+class CreateCastMemberUseCaseTest extends UseCaseTest {
     @InjectMocks
     private DefaultCreateCastMemberUseCase useCase;
     @Mock
     private CastMemberGateway gateway;
 
     @Test
-    public void givenAValidCommand_whenCreatingACastMember_thenShouldReturnTheCreatedCastMember() {
+    void givenAValidCommand_whenCreatingACastMember_thenShouldReturnTheCreatedCastMember() {
         final var expectedName = Fixture.name();
         final var expectedType = Fixture.CastMembers.type();
 
@@ -45,7 +45,7 @@ public class CreateCastMemberUseCaseTest extends UseCaseTest {
     }
 
     @Test
-    public void givenAnInvalidNullName_whenCreatingACastMember_thenShouldThrowsNotificationException() {
+    void givenAnInvalidNullName_whenCreatingACastMember_thenShouldThrowsNotificationException() {
         final var expectedType = Fixture.CastMembers.type();
         final var expectedErrorCount = 1;
         final var expectedErrorMessage = "Name should not be null";
@@ -62,7 +62,7 @@ public class CreateCastMemberUseCaseTest extends UseCaseTest {
     }
 
     @Test
-    public void givenAnInvalidNullType_whenCreatingACastMember_thenShouldThrowsNotificationException() {
+    void givenAnInvalidNullType_whenCreatingACastMember_thenShouldThrowsNotificationException() {
         final var expectedName = Fixture.name();
         final var expectedErrorCount = 1;
         final var expectedErrorMessage = "Type should not be null";

@@ -8,13 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.json.JacksonTester;
 
 @JacksonTest
-public class ListCategoriesResponseCommandTest {
+class ListCategoriesResponseCommandTest {
 
     @Autowired
     private JacksonTester<ListCategoriesResponseCommand> json;
 
     @Test
-    public void testMarshall() throws Exception {
+    void testMarshall() throws Exception {
         final var expectedId = "123";
         final var expectedName = "Ficção Científica";
         final var expectedDescrition = "Filmes de ficção científica";
@@ -39,7 +39,7 @@ public class ListCategoriesResponseCommandTest {
     }
 
     @Test
-    public void testUnmarshall() throws Exception {
+    void testUnmarshall() throws Exception {
         final var expectedId = "123";
         final var expectedName = "Ficção Científica";
         final var expectedDescrition = "Filmes de ficção científica";

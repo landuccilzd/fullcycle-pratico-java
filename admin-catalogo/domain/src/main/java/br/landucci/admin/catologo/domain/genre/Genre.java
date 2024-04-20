@@ -12,7 +12,7 @@ import br.landucci.admin.catologo.domain.validation.handler.Notification;
 import java.time.Instant;
 import java.util.*;
 
-public class Genre extends AggregateRoot<GenreID> implements Cloneable {
+public class Genre extends AggregateRoot<GenreID> {
     private String name;
     private boolean active;
     private final Instant createdAt;
@@ -45,9 +45,9 @@ public class Genre extends AggregateRoot<GenreID> implements Cloneable {
         return with(id, name, active, now, now, nowDeleted);
     }
 
-    public static Genre from(Genre genre) {
-        return with(genre.getId(), genre.getName(), genre.isActive(), genre.getCreatedAt(), genre.getUpdatedAt(),
-                genre.getDeletedAt());
+    public static Genre clone(Genre genre) {
+        return with(genre.getId(), genre.getName(), genre.isActive(), genre.getCreatedAt(),
+                genre.getUpdatedAt(), genre.getDeletedAt());
     }
 
     public String getName() {
@@ -177,12 +177,4 @@ public class Genre extends AggregateRoot<GenreID> implements Cloneable {
         new GenreValidator(this, handler).validate();
     }
 
-    @Override
-    public Genre clone() {
-        try {
-            return (Genre) super.clone();
-        } catch (CloneNotSupportedException e) {
-            throw new AssertionError();
-        }
-    }
 }

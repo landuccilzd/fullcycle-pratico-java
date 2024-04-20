@@ -16,14 +16,14 @@ import org.mockito.Mockito;
 
 import java.util.List;
 
-public class DeleteCastMemberUseCaseTest extends UseCaseTest {
+class DeleteCastMemberUseCaseTest extends UseCaseTest {
     @InjectMocks
     private DefaultDeleteCastMemberUseCase useCase;
     @Mock
     private CastMemberGateway gateway;
 
     @Test
-    public void givenAValidId_whenDeletingACastMember_shouldDeleteTyheCastMember() {
+    void givenAValidId_whenDeletingACastMember_shouldDeleteTyheCastMember() {
         final var castMember = CastMember.newCastMember(Fixture.name(), Fixture.CastMembers.type());
         final var expectedId = castMember.getId();
 
@@ -31,22 +31,22 @@ public class DeleteCastMemberUseCaseTest extends UseCaseTest {
 
         final var command = DeleteCastMemberInputCommand.from(expectedId);
         Assertions.assertDoesNotThrow(() -> useCase.execute(command));
-        Mockito.verify(gateway).deleteById(ArgumentMatchers.eq(expectedId));
+        Mockito.verify(gateway).deleteById(expectedId);
     }
 
     @Test
-    public void givenAnInvalidId_whenDeletingACastMember_shouldBeOk() {
+    void givenAnInvalidId_whenDeletingACastMember_shouldBeOk() {
         final var expectedId = CastMemberID.with("123");
 
         Mockito.doNothing().when(gateway).deleteById(Mockito.any());
 
         final var command = DeleteCastMemberInputCommand.from(expectedId);
         Assertions.assertDoesNotThrow(() -> useCase.execute(command));
-        Mockito.verify(gateway).deleteById(ArgumentMatchers.eq(expectedId));
+        Mockito.verify(gateway).deleteById(expectedId);
     }
 
     @Test
-    public void givenAValidId_whenCallsDeleteCastMemberAndGatewayThrowsException_shouldReceiveException() {
+    void givenAValidId_whenCallsDeleteCastMemberAndGatewayThrowsException_shouldReceiveException() {
         final var castMember = CastMember.newCastMember(Fixture.name(), Fixture.CastMembers.type());
         final var expectedId = castMember.getId();
 
@@ -54,7 +54,7 @@ public class DeleteCastMemberUseCaseTest extends UseCaseTest {
 
         final var command = DeleteCastMemberInputCommand.from(expectedId);
         Assertions.assertThrows(IllegalStateException.class, () -> useCase.execute(command));
-        Mockito.verify(gateway).deleteById(ArgumentMatchers.eq(expectedId));
+        Mockito.verify(gateway).deleteById(expectedId);
     }
 
     @Override

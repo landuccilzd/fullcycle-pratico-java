@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
-public class UpdateCastMemberUseCaseTest extends UseCaseTest {
+class UpdateCastMemberUseCaseTest extends UseCaseTest {
 
     @InjectMocks
     private DefaultUpdateCastMemberUseCase useCase;
@@ -27,7 +27,7 @@ public class UpdateCastMemberUseCaseTest extends UseCaseTest {
     private CastMemberGateway gateway;
 
     @Test
-    public void givenAValidCommand_whenUpdatingACastMember_thenShouldReturnItsIdentifier() {
+    void givenAValidCommand_whenUpdatingACastMember_thenShouldReturnItsIdentifier() {
         final var castMember = CastMember.newCastMember(Fixture.name(), Fixture.CastMembers.type());
         final var expectedId = castMember.getId();
         final var expectedName = "Zelda";
@@ -42,7 +42,7 @@ public class UpdateCastMemberUseCaseTest extends UseCaseTest {
         Assertions.assertNotNull(output);
         Assertions.assertEquals(expectedId.getValue(), output.id());
 
-        Mockito.verify(gateway).findById(ArgumentMatchers.eq(expectedId));
+        Mockito.verify(gateway).findById(expectedId);
 
         Mockito.verify(gateway).update(Mockito.argThat(updatedCastMember ->
                 Objects.equals(expectedId, updatedCastMember.getId()) &&
@@ -53,7 +53,7 @@ public class UpdateCastMemberUseCaseTest extends UseCaseTest {
     }
 
     @Test
-    public void givenAnInvalidName_whenUpdatingACastMember_thenShouldThrowNotificationException() {
+    void givenAnInvalidName_whenUpdatingACastMember_thenShouldThrowNotificationException() {
         final var castMember = CastMember.newCastMember(Fixture.name(), Fixture.CastMembers.type());
         final var expectedId = castMember.getId();
         final var expectedType = CastMemberType.ACTOR;
@@ -69,12 +69,12 @@ public class UpdateCastMemberUseCaseTest extends UseCaseTest {
         Assertions.assertNotNull(exception);
         Assertions.assertEquals(expectedErrorCount, exception.errorCount());
         Assertions.assertEquals(expectedErrorMessage, exception.firstError().message());
-        Mockito.verify(gateway).findById(ArgumentMatchers.eq(expectedId));
+        Mockito.verify(gateway).findById(expectedId);
         Mockito.verify(gateway, Mockito.times(0)).update(Mockito.any());
     }
 
     @Test
-    public void givenAnInvalidType_whenUpdatingCastMember_thenShouldThrowANotificationException() {
+    void givenAnInvalidType_whenUpdatingCastMember_thenShouldThrowANotificationException() {
         final var castMember = CastMember.newCastMember(Fixture.name(), Fixture.CastMembers.type());
         final var expectedId = castMember.getId();
         final var expectedName = "Zelda";
@@ -90,12 +90,12 @@ public class UpdateCastMemberUseCaseTest extends UseCaseTest {
         Assertions.assertNotNull(exception);
         Assertions.assertEquals(expectedErrorCount, exception.errorCount());
         Assertions.assertEquals(expectedErrorMessage, exception.firstError().message());
-        Mockito.verify(gateway).findById(ArgumentMatchers.eq(expectedId));
+        Mockito.verify(gateway).findById(expectedId);
         Mockito.verify(gateway, Mockito.times(0)).update(Mockito.any());
     }
 
     @Test
-    public void givenAnInvalidId_whenUpdatingACastMember_thenShouldThrowANotFoundException() {
+    void givenAnInvalidId_whenUpdatingACastMember_thenShouldThrowANotFoundException() {
         final var expectedId = CastMemberID.with("123");
         final var expectedName = Fixture.name();
         final var expectedType = Fixture.CastMembers.type();
@@ -108,7 +108,7 @@ public class UpdateCastMemberUseCaseTest extends UseCaseTest {
 
         Assertions.assertNotNull(exception);
         Assertions.assertEquals(expectedErrorMessage, exception.getMessage());
-        Mockito.verify(gateway).findById(ArgumentMatchers.eq(expectedId));
+        Mockito.verify(gateway).findById(expectedId);
         Mockito.verify(gateway, Mockito.times(0)).update(Mockito.any());
     }
 

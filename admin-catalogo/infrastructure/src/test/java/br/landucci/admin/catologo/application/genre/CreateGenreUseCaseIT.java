@@ -19,7 +19,7 @@ import org.springframework.boot.test.mock.mockito.SpyBean;
 import java.util.List;
 
 @IntegrationTest
-public class CreateGenreUseCaseIT {
+class CreateGenreUseCaseIT {
 
     @Autowired
     private CreateGenreUseCase useCase;
@@ -31,7 +31,7 @@ public class CreateGenreUseCaseIT {
     private GenreRepository repository;
 
     @Test
-    public void givenAValidCommand_whenCreateAGenre_thenShouldReturnACreatedGenre() {
+    void givenAValidCommand_whenCreateAGenre_thenShouldReturnACreatedGenre() {
         final var filmes = categoryGateway.create(Category.newCategory("Filmes", null, true));
         final var expectedName = "Ação";
         final var expectedActive = true;
@@ -56,7 +56,7 @@ public class CreateGenreUseCaseIT {
     }
 
     @Test
-    public void givenAValidCommandWithoutCategories_whenCreatingGenre_shouldReturnGenreId() {
+    void givenAValidCommandWithoutCategories_whenCreatingGenre_shouldReturnGenreId() {
         final var expectedName = "Ação";
         final var expectedIsActive = true;
         final var expectedCategories = List.<CategoryID>of();
@@ -79,7 +79,7 @@ public class CreateGenreUseCaseIT {
     }
 
     @Test
-    public void givenAValidCommandWithInactiveGenre_whenCreatingGenre_shouldReturnGenreId() {
+    void givenAValidCommandWithInactiveGenre_whenCreatingGenre_shouldReturnGenreId() {
         final var expectedName = "Ação";
         final var expectedIsActive = false;
         final var expectedCategories = List.<CategoryID>of();
@@ -102,7 +102,7 @@ public class CreateGenreUseCaseIT {
     }
 
     @Test
-    public void givenAInvalidEmptyName_whenCreatingAGenre_shouldReturnDomainException() {
+    void givenAInvalidEmptyName_whenCreatingAGenre_shouldReturnDomainException() {
         final var expectedName = "";
         final var expectedIsActive = true;
         final var expectedCategories = List.<CategoryID>of();
@@ -124,7 +124,7 @@ public class CreateGenreUseCaseIT {
     }
 
     @Test
-    public void givenAInvalidNullNameCommand_whenCreatingAGenre_shouldReturnDomainException() {
+    void givenAInvalidNullNameCommand_whenCreatingAGenre_shouldReturnDomainException() {
         final String expectedName = null;
         final var expectedIsActive = true;
         final var expectedCategories = List.<CategoryID>of();
@@ -145,7 +145,7 @@ public class CreateGenreUseCaseIT {
     }
 
     @Test
-    public void givenAInvalidName_whenCallsCreateGenreAndSomeCategoriesDoesNotExists_shouldReturnDomainException() {
+    void givenAInvalidName_whenCallsCreateGenreAndSomeCategoriesDoesNotExists_shouldReturnDomainException() {
         final var series =  this.categoryGateway.create(Category.newCategory("Séries", null, true));
         final var filmes = CategoryID.from("456");
         final var documentarios = CategoryID.from("789");

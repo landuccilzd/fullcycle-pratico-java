@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @IntegrationTest
-public class FindCategoryByIDUseCaseIT {
+class FindCategoryByIDUseCaseIT {
 
     @Autowired
     private FindCategoryByIDUseCase useCase;
@@ -19,7 +19,7 @@ public class FindCategoryByIDUseCaseIT {
     private CategoryRepository repository;
 
     @Test
-    public void givenAValidInput_whenFindingACategory_thenShouldReturnTheCategory() {
+    void givenAValidInput_whenFindingACategory_thenShouldReturnTheCategory() {
         final var expectedName = "Ficção Científica";
         final var expectedDescription = "Filmes de ficção científica";
         final var expectedActive = true;

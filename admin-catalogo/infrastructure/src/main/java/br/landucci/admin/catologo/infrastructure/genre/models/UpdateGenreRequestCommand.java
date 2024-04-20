@@ -11,7 +11,7 @@ public record UpdateGenreRequestCommand(
         @JsonProperty("categories_id") List<String> categories
 ) {
     public boolean isActive() {
-        return this.active != null ? this.active : true;
+        return this.active != null ? this.active : Boolean.TRUE;
     }
 
     public List<String> categories() {
@@ -19,7 +19,7 @@ public record UpdateGenreRequestCommand(
     }
 
     public boolean hasCategories() {
-        return this.categories != null && this.categories.size() > 0;
+        return this.categories != null && !this.categories.isEmpty();
     }
 
     public int categoriesCount() {

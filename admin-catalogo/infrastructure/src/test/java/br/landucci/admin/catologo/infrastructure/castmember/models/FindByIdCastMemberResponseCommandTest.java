@@ -10,13 +10,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.json.JacksonTester;
 
 @JacksonTest
-public class FindByIdCastMemberResponseCommandTest {
+class FindByIdCastMemberResponseCommandTest {
 
     @Autowired
     private JacksonTester<FindCastMemberByIDResponseCommand> json;
 
     @Test
-    public void testMarshall() throws Exception {
+    void testMarshall() throws Exception {
         final var expectedId = "123";
         final var expectedName = "Zelda";
         final var expectedType = CastMemberType.ACTOR;
@@ -37,7 +37,7 @@ public class FindByIdCastMemberResponseCommandTest {
     }
 
     @Test
-    public void testUnmarshall() throws Exception {
+    void testUnmarshall() throws Exception {
         final var expectedId = "123";
         final var expectedName = "Zelda";
         final var expectedType= CastMemberType.ACTOR;

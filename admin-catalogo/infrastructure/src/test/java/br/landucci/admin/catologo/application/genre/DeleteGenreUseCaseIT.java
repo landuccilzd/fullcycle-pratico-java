@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @IntegrationTest
-public class DeleteGenreUseCaseIT {
+class DeleteGenreUseCaseIT {
 
     @Autowired
     private DeleteGenreUseCase useCase;
@@ -24,7 +24,7 @@ public class DeleteGenreUseCaseIT {
     private GenreRepository repository;
 
     @Test
-    public void givenAValidGenreId_whenDeletingAGenre_shouldDeleteGenre() {
+    void givenAValidGenreId_whenDeletingAGenre_shouldDeleteGenre() {
         final var genre = gateway.create(Genre.newGenre("Ação", true));
         final var expectedId = genre.getId();
 
@@ -37,7 +37,7 @@ public class DeleteGenreUseCaseIT {
     }
 
     @Test
-    public void givenAnInvalidGenreId_whenDeletingAGenre_shouldReturnInvalidArgumentException() {
+    void givenAnInvalidGenreId_whenDeletingAGenre_shouldReturnInvalidArgumentException() {
         final var expectedId = GenreID.from("123");
         final var expectedErrorMessage = "Genre with ID 123 was not found";
 

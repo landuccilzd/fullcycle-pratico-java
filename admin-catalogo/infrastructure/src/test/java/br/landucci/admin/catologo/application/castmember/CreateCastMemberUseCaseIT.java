@@ -14,7 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.SpyBean;
 
 @IntegrationTest
-public class CreateCastMemberUseCaseIT {
+class CreateCastMemberUseCaseIT {
 
     @Autowired
     private CreateCastMemberUseCase useCase;
@@ -26,7 +26,7 @@ public class CreateCastMemberUseCaseIT {
     private CastMemberGateway gateway;
 
     @Test
-    public void givenAValidCommand_whenCreatingCastMember_thenShouldReturnTheCreatedCastMember() {
+    void givenAValidCommand_whenCreatingCastMember_thenShouldReturnTheCreatedCastMember() {
         final var expectedName = "Zelda";
         final var expectedType = CastMemberType.DIRECTOR;
 
@@ -48,7 +48,7 @@ public class CreateCastMemberUseCaseIT {
     }
 
     @Test
-    public void givenAnInvalidNullName_whenCreatingACastMember_thenShouldThrowsANotificationException() {
+    void givenAnInvalidNullName_whenCreatingACastMember_thenShouldThrowsANotificationException() {
         final var expectedErrorCount = 1;
         final var expectedErrorMessage = "Name should not be null";
 
@@ -64,7 +64,7 @@ public class CreateCastMemberUseCaseIT {
     }
 
     @Test
-    public void givenAnInvalidEmptyName_whenCreatingACastMember_thenShouldThrowsANotificationException() {
+    void givenAnInvalidEmptyName_whenCreatingACastMember_thenShouldThrowsANotificationException() {
         final var expectedErrorCount = 1;
         final var expectedErrorMessage = "Name should not be empty";
 
@@ -80,7 +80,7 @@ public class CreateCastMemberUseCaseIT {
     }
 
     @Test
-    public void givenAnInvalidNullType_whenCreatingACastMember_thenShouldThrowsANotificationException() {
+    void givenAnInvalidNullType_whenCreatingACastMember_thenShouldThrowsANotificationException() {
         final var expectedErrorCount = 1;
         final var expectedErrorMessage = "Type should not be null";
 

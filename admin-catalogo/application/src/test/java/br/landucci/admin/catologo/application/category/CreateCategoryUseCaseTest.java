@@ -15,7 +15,7 @@ import org.mockito.Mockito;
 import java.util.List;
 import java.util.Objects;
 
-public class CreateCategoryUseCaseTest extends UseCaseTest {
+class CreateCategoryUseCaseTest extends UseCaseTest {
 
     @InjectMocks
     private DefaultCreateCategoryUseCase useCase;
@@ -29,7 +29,7 @@ public class CreateCategoryUseCaseTest extends UseCaseTest {
 
     //Caminho feliz
     @Test
-    public void givenAValidCommand_whenCreateACategory_thenShouldReturnACreatedCategory() {
+    void givenAValidCommand_whenCreateACategory_thenShouldReturnACreatedCategory() {
         final var expectedName = "Ficção Científica";
         final var expectedDescription = "Filmes de ficção científica";
         final var expectedActive = true;
@@ -55,7 +55,7 @@ public class CreateCategoryUseCaseTest extends UseCaseTest {
 
     @Test
     //Teste com propriedade inválida
-    public void givenAnInValidNameCommand_whenCreateACategory_thenShouldReturnDomainException() {
+    void givenAnInValidNameCommand_whenCreateACategory_thenShouldReturnDomainException() {
         final var expectedDescription = "Filmes de ficção científica";
         final var expectedActive = true;
         final var expectedErrorMessage = "Name should not be null";
@@ -72,7 +72,7 @@ public class CreateCategoryUseCaseTest extends UseCaseTest {
 
     @Test
     //Criar categoria inativa
-    public void givenAValidCommand_whenCreateACategoryInactivated_thenShouldReturnACreatedCategoryInactivated() {
+    void givenAValidCommand_whenCreateACategoryInactivated_thenShouldReturnACreatedCategoryInactivated() {
         final var expectedName = "Ficção Científica";
         final var expectedDescription = "Filmes de ficção científica";
         final var expectedActive = false;
@@ -98,7 +98,7 @@ public class CreateCategoryUseCaseTest extends UseCaseTest {
 
     @Test
     //Criar uma categoria simulando um erro vindo do gateway
-    public void givenAValidCommand_whenGatewayThrowsAnException_thenShouldReturnAnException() {
+    void givenAValidCommand_whenGatewayThrowsAnException_thenShouldReturnAnException() {
         final var expectedName = "Ficção Científica";
         final var expectedDescription = "Filmes de ficção científica";
         final var expectedActive = false;

@@ -17,7 +17,7 @@ import org.mockito.Mockito;
 import java.util.List;
 import java.util.Optional;
 
-public class DeleteCategoryUseCaseTest extends UseCaseTest {
+class DeleteCategoryUseCaseTest extends UseCaseTest {
     @InjectMocks
     private DefaultDeleteCategoryUseCase useCase;
     @Mock
@@ -29,20 +29,20 @@ public class DeleteCategoryUseCaseTest extends UseCaseTest {
     }
 
     @Test
-    public void givenAValidInput_whenDeletingACategory_thenShouldDelete() {
+    void givenAValidInput_whenDeletingACategory_thenShouldDelete() {
         final var category = Category.newCategory("Ficção Científica", "Filmes de ficção científica", true);
         final var expectedId = category.getId();
 
-        Mockito.when(gateway.findById(Mockito.eq(expectedId))).thenReturn(Optional.of(category));
+        Mockito.when(gateway.findById(expectedId)).thenReturn(Optional.of(category));
 
         final var input = DeleteCategoryInputCommand.with(expectedId.getValue());
         Assertions.assertDoesNotThrow(() -> useCase.execute(input));
 
-        Mockito.verify(gateway, Mockito.times(1)).deleteById(Mockito.eq(expectedId));
+        Mockito.verify(gateway, Mockito.times(1)).deleteById(expectedId);
     }
 
     @Test
-    public void givenAnInvalidID_whenDeletingACategory_thenShouldReturnNotFound() {
+    void givenAnInvalidID_whenDeletingACategory_thenShouldReturnNotFound() {
         final var expectedId = CategoryID.from("123");
         final var expectedErrorMessage = "Category with ID 123 was not found";
         final var expectedErrorCount = 1;
@@ -53,11 +53,11 @@ public class DeleteCategoryUseCaseTest extends UseCaseTest {
         Assertions.assertEquals(expectedErrorCount, exception.errorCount());
         Assertions.assertEquals(expectedErrorMessage, exception.firstError().message());
 
-        Mockito.verify(gateway, Mockito.times(0)).deleteById(Mockito.eq(expectedId));
+        Mockito.verify(gateway, Mockito.times(0)).deleteById(expectedId);
     }
 
     @Test
-    public void givenAValidInput_whenGatewayThrowsAnException_thenShouldReturnAnException() {
+    void givenAValidInput_whenGatewayThrowsAnException_thenShouldReturnAnException() {
         final var category = Category.newCategory("Ficção Científica", "Filmes de ficção científica", true);
         final var expectedId = category.getId();
         final var expectedErrorMessage = "Gateway Generic Error";

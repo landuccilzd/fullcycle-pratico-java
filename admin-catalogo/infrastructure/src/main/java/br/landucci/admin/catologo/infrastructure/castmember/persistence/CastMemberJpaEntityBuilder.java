@@ -1,7 +1,6 @@
 package br.landucci.admin.catologo.infrastructure.castmember.persistence;
 
 import br.landucci.admin.catologo.domain.castmember.CastMemberType;
-import br.landucci.admin.catologo.infrastructure.category.persistence.CategoryJpaEntity;
 
 import java.time.Instant;
 
@@ -11,8 +10,6 @@ public final class CastMemberJpaEntityBuilder {
     protected CastMemberType type;
     protected Instant createdAt;
     protected Instant updatedAt;
-
-    public CastMemberJpaEntityBuilder() {}
 
     public CastMemberJpaEntityBuilder withId(String id) {
         this.id = id;

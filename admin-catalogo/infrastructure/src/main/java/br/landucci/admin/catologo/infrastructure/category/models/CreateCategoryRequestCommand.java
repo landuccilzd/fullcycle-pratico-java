@@ -7,5 +7,7 @@ public record CreateCategoryRequestCommand(
         @JsonProperty("description") String description,
         @JsonProperty("is_active") Boolean active
 ) {
-
+    public Boolean active() {
+        return this.active != null ? this.active : Boolean.FALSE;
+    }
 }

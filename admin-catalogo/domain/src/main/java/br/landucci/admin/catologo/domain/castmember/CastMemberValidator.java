@@ -42,7 +42,6 @@ public class CastMemberValidator extends Validator {
         final var type = this.castMember.getType();
         if (type == null) {
             this.validationHandler().append(new ValidationError("Type should not be null"));
-            return;
         }
     }
 }

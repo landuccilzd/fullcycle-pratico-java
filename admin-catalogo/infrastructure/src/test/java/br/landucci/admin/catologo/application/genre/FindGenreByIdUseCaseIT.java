@@ -17,7 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
 
 @IntegrationTest
-public class FindGenreByIdUseCaseIT {
+class FindGenreByIdUseCaseIT {
 
     @Autowired
     private FindGenreByIDUseCase useCase;
@@ -29,7 +29,7 @@ public class FindGenreByIdUseCaseIT {
     private GenreGateway gateway;
 
     @Test
-    public void givenAValidId_whenFindingGenre_shouldReturnGenre() {
+    void givenAValidId_whenFindingGenre_shouldReturnGenre() {
         final var series = this.categoryGateway.create(Category.newCategory("Séries", null, true));
         final var filmes = this.categoryGateway.create(Category.newCategory("Filmes", null, true));
         final var expectedName = "Ação";
@@ -55,14 +55,12 @@ public class FindGenreByIdUseCaseIT {
     }
 
     @Test
-    public void givenAValidId_whenFindingAGenreAndDoesNotExists_shouldReturnNotFound() {
+    void givenAValidId_whenFindingAGenreAndDoesNotExists_shouldReturnNotFound() {
         final var expectedErrorMessage = "Genre with ID 123 was not found";
         final var expectedId = GenreID.from("123");
 
-        final var actualException = Assertions.assertThrows(NotFoundException.class, () -> {
-            final var input = FindByIDGenreInputCommand.with(expectedId.getValue());
-            useCase.execute(input);
-        });
+        final var input = FindByIDGenreInputCommand.with(expectedId.getValue());
+        final var actualException = Assertions.assertThrows(NotFoundException.class, () -> useCase.execute(input));
 
         Assertions.assertEquals(expectedErrorMessage, actualException.getMessage());
     }

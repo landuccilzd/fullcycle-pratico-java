@@ -16,7 +16,7 @@ public record FindGenreByIdResponseCommand(
         @JsonProperty("deleted_at") Instant deletedAt
 ) {
     public boolean isActive() {
-        return this.active != null ? this.active : true;
+        return this.active != null ? this.active : Boolean.TRUE;
     }
 
     public List<String> categories() {
@@ -24,7 +24,7 @@ public record FindGenreByIdResponseCommand(
     }
 
     public boolean hasCategories() {
-        return this.categories != null && this.categories.size() > 0;
+        return this.categories != null && !this.categories.isEmpty();
     }
 
     public int categoriesCount() {

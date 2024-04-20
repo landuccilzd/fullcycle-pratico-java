@@ -17,7 +17,7 @@ import org.mockito.Mockito;
 import java.util.List;
 import java.util.Objects;
 
-public class CreateGenreUseCaseTest extends UseCaseTest {
+class CreateGenreUseCaseTest extends UseCaseTest {
 
     @InjectMocks
     private DefaultCreateGenreUseCase useCase;
@@ -27,7 +27,7 @@ public class CreateGenreUseCaseTest extends UseCaseTest {
     private CategoryGateway categoryGateway;
 
     @Test
-    public void givenAValidCommand_whenCreateAGenre_thenShouldReturnACreatedGenre() {
+    void givenAValidCommand_whenCreateAGenre_thenShouldReturnACreatedGenre() {
         final var expectedName = "Ação";
         final var expectedActive = true;
         final var expectedCategories = List.<CategoryID>of();
@@ -55,7 +55,7 @@ public class CreateGenreUseCaseTest extends UseCaseTest {
     }
 
     @Test
-    public void givenAValidCommandWithCategoires_whenCreateAGenre_thenShouldReturnACreatedGenre() {
+    void givenAValidCommandWithCategoires_whenCreateAGenre_thenShouldReturnACreatedGenre() {
         final var expectedName = "Ação";
         final var expectedActive = true;
         final var expectedCategories = List.of(
@@ -91,7 +91,7 @@ public class CreateGenreUseCaseTest extends UseCaseTest {
     }
 
     @Test
-    public void givenAnInValidNullNameCommand_whenCreateAGenre_thenShouldReturnDomainException() {
+    void givenAnInValidNullNameCommand_whenCreateAGenre_thenShouldReturnDomainException() {
         final var expectedActive = true;
         final var expectedCategories = List.<CategoryID>of();
         final var expectedErrorMessage = "Name should not be null";
@@ -110,7 +110,7 @@ public class CreateGenreUseCaseTest extends UseCaseTest {
     }
 
     @Test
-    public void givenAnInValidEmptyNameCommand_whenCreateAGenre_thenShouldReturnDomainException() {
+    void givenAnInValidEmptyNameCommand_whenCreateAGenre_thenShouldReturnDomainException() {
         final var expectedActive = true;
         final var expectedCategories = List.<CategoryID>of();
         final var expectedErrorMessage = "Name should not be empty";
@@ -129,7 +129,7 @@ public class CreateGenreUseCaseTest extends UseCaseTest {
     }
 
     @Test
-    public void givenAnInvalidCommandWithCategoriesNotExisting_whenCratingAGenre_thenShouldReturnNotificationException() {
+    void givenAnInvalidCommandWithCategoriesNotExisting_whenCratingAGenre_thenShouldReturnNotificationException() {
         final var filmes = CategoryID.from("123");
         final var series = CategoryID.from("456");
         final var documentarios = CategoryID.from("789");
@@ -158,7 +158,7 @@ public class CreateGenreUseCaseTest extends UseCaseTest {
     }
 
     @Test
-    public void givenAnInvalidCommandWithNullNameAndCategoriesNotExisting_whenCratingAGenre_thenShouldReturnNotificationException() {
+    void givenAnInvalidCommandWithNullNameAndCategoriesNotExisting_whenCratingAGenre_thenShouldReturnNotificationException() {
         final var filmes = CategoryID.from("123");
         final var series = CategoryID.from("456");
         final var documentarios = CategoryID.from("789");

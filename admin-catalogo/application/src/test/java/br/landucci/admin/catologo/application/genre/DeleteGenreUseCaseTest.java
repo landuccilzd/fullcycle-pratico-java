@@ -17,7 +17,7 @@ import java.util.List;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
-public class DeleteGenreUseCaseTest extends UseCaseTest {
+class DeleteGenreUseCaseTest extends UseCaseTest {
 
     @InjectMocks
     private DefaultDeleteGenreUseCase useCase;
@@ -31,7 +31,7 @@ public class DeleteGenreUseCaseTest extends UseCaseTest {
     }
 
     @Test
-    public void givenAValidGenreId_whenCallsDeleteGenre_shouldDeleteGenre() {
+    void givenAValidGenreId_whenCallsDeleteGenre_shouldDeleteGenre() {
         // given
         final var aGenre = Genre.newGenre("Ação", true);
         final var expectedId = aGenre.getId();
@@ -44,7 +44,7 @@ public class DeleteGenreUseCaseTest extends UseCaseTest {
     }
 
     @Test
-    public void givenAnInvalidGenreId_whenCallsDeleteGenre_shouldBeOk() {
+    void givenAnInvalidGenreId_whenCallsDeleteGenre_shouldBeOk() {
         final var expectedId = GenreID.from("123");
 
         doNothing().when(genreGateway).deleteById(any());
@@ -55,7 +55,7 @@ public class DeleteGenreUseCaseTest extends UseCaseTest {
     }
 
     @Test
-    public void givenAValidGenreId_whenCallsDeleteGenreAndGatewayThrowsUnexpectedError_shouldReceiveException() {
+    void givenAValidGenreId_whenCallsDeleteGenreAndGatewayThrowsUnexpectedError_shouldReceiveException() {
         final var aGenre = Genre.newGenre("Ação", true);
         final var expectedId = aGenre.getId();
 

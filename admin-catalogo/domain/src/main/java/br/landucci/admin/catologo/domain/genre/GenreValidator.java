@@ -1,6 +1,5 @@
 package br.landucci.admin.catologo.domain.genre;
 
-import br.landucci.admin.catologo.domain.category.Category;
 import br.landucci.admin.catologo.domain.validation.ValidationError;
 import br.landucci.admin.catologo.domain.validation.ValidationHandler;
 import br.landucci.admin.catologo.domain.validation.Validator;

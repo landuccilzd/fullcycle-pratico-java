@@ -1,7 +1,6 @@
 package br.landucci.admin.catologo.domain.genre;
 
 import br.landucci.admin.catologo.domain.Identifier;
-import br.landucci.admin.catologo.domain.category.CategoryID;
 
 import java.util.Objects;
 import java.util.UUID;

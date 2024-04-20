@@ -5,10 +5,10 @@ import br.landucci.admin.catologo.domain.exception.NotificationException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-public class CastMemberTest extends UnitTest {
+class CastMemberTest extends UnitTest {
 
     @Test
-    public void givenValidParams_whenCreatingANewCastMember_thenShouldInstantiateACastMember() {
+    void givenValidParams_whenCreatingANewCastMember_thenShouldInstantiateACastMember() {
         final var expectedName = "Peach";
         final var expectedType = CastMemberType.ACTOR;
 
@@ -24,7 +24,7 @@ public class CastMemberTest extends UnitTest {
     }
 
     @Test
-    public void givenAnInvalidNullNameParam_whenCreatingANewCastMember_thenShouldReceiveANotification() {
+    void givenAnInvalidNullNameParam_whenCreatingANewCastMember_thenShouldReceiveANotification() {
         final var expectedType = CastMemberType.ACTOR;
         final var expectedErrorCount = 1;
         final var expectedErrorMessage = "Name should not be null";
@@ -39,7 +39,7 @@ public class CastMemberTest extends UnitTest {
     }
 
     @Test
-    public void givenAnInvalidEmptyNameParameter_whenCreatingANewCastMember_thenShouldReceiveANotification() {
+    void givenAnInvalidEmptyNameParameter_whenCreatingANewCastMember_thenShouldReceiveANotification() {
         final var expectedType = CastMemberType.ACTOR;
         final var expectedErrorCount = 1;
         final var expectedErrorMessage = "Name should not be empty";
@@ -54,7 +54,7 @@ public class CastMemberTest extends UnitTest {
     }
 
     @Test
-    public void givenAInvalidLongNameParam_whenCreatingANewCastMember_thenShouldReceiveANotification() {
+    void givenAInvalidLongNameParam_whenCreatingANewCastMember_thenShouldReceiveANotification() {
         final var expectedName = """
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et 
             dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex 
@@ -75,7 +75,7 @@ public class CastMemberTest extends UnitTest {
     }
 
     @Test
-    public void givenAInvalidNullTypeParam_whenCreatingANewCastMember_thenShouldReceiveANotification() {
+    void givenAInvalidNullTypeParam_whenCreatingANewCastMember_thenShouldReceiveANotification() {
         final var expectedName = "Zelda";
         final var expectedErrorCount = 1;
         final var expectedErrorMessage = "Type should not be null";
@@ -90,7 +90,7 @@ public class CastMemberTest extends UnitTest {
     }
 
     @Test
-    public void givenAValidCastMember_whenUpdatingACastMember_thenShouldUpdateACastMember() {
+    void givenAValidCastMember_whenUpdatingACastMember_thenShouldUpdateACastMember() {
         final var expectedName = "Zelda";
         final var expectedType = CastMemberType.ACTOR;
         final var castMember = CastMember.newCastMember("Peach", CastMemberType.DIRECTOR);
@@ -98,7 +98,9 @@ public class CastMemberTest extends UnitTest {
         Assertions.assertNotNull(castMember);
         Assertions.assertNotNull(castMember.getId());
 
-        final var clone = castMember.clone().updateName(expectedName).updateType(expectedType);
+
+        final var clone = CastMember.clone(castMember);
+        clone.updateName(expectedName).updateType(expectedType);
 
         Assertions.assertEquals(castMember.getId(), clone.getId());
         Assertions.assertEquals(expectedName, clone.getName());
@@ -108,7 +110,7 @@ public class CastMemberTest extends UnitTest {
     }
 
     @Test
-    public void givenAValidCastMember_whenUpdatingWithAnInvalidNullName_thenShouldReceiveNotification() {
+    void givenAValidCastMember_whenUpdatingWithAnInvalidNullName_thenShouldReceiveNotification() {
         final var expectedName = "Zelda";
         final var expectedErrorCount = 1;
         final var expectedErrorMessage = "Name should not be null";
@@ -128,7 +130,7 @@ public class CastMemberTest extends UnitTest {
     }
 
     @Test
-    public void givenAValidCastMember_whenUpdatingWithAnInvalidEmptyName_thenShouldReceiveANotification() {
+    void givenAValidCastMember_whenUpdatingWithAnInvalidEmptyName_thenShouldReceiveANotification() {
         final var expectedName = "Zelda";
         final var expectedErrorCount = 1;
         final var expectedErrorMessage = "Name should not be empty";
@@ -148,7 +150,7 @@ public class CastMemberTest extends UnitTest {
     }
 
     @Test
-    public void givenAValidCastMember_whenUpdatingWithAnInvalidLongName_shouldReceiveNotification() {
+    void givenAValidCastMember_whenUpdatingWithAnInvalidLongName_shouldReceiveNotification() {
         final var expectedName = """
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et 
             dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex 
@@ -174,7 +176,7 @@ public class CastMemberTest extends UnitTest {
     }
 
     @Test
-    public void givenAValidCastMember_whenUpdatingWithAnInvalidShortName_shouldReceiveNotification() {
+    void givenAValidCastMember_whenUpdatingWithAnInvalidShortName_shouldReceiveNotification() {
         final var expectedName = "Oi";
         final var expectedType = CastMemberType.ACTOR;
         final var expectedErrorCount = 1;
@@ -195,7 +197,7 @@ public class CastMemberTest extends UnitTest {
     }
 
     @Test
-    public void givenAValidCastMember_whenUpdatingWithAnInvalidNullType_thenShouldReceiveNotification() {
+    void givenAValidCastMember_whenUpdatingWithAnInvalidNullType_thenShouldReceiveNotification() {
         final var expectedName = "Zelda";
         final var expectedErrorCount = 1;
         final var expectedErrorMessage = "Type should not be null";
