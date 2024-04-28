@@ -37,7 +37,7 @@ repositories {
 dependencies {
     implementation(project(":domain"))
     implementation(project(":application"))
-    implementation("io.vavr:vavr:0.10.4")
+//    implementation("io.vavr:vavr:0.10.4")
 
     implementation ('com.mysql:mysql-connector-j:8.2.0')
 
@@ -51,12 +51,18 @@ dependencies {
 
     implementation ('com.fasterxml.jackson.module:jackson-module-afterburner')
 
+    implementation('org.yaml:snakeyaml:1.33') {
+        version { strictly("1.33") }
+    }
+
+    testImplementation(project(path: ':domain', configuration: 'testClasses'))
+    testImplementation ('org.flywaydb:flyway-core')
+
+    testImplementation ('org.springframework.boot:spring-boot-starter-test')
+
     testImplementation ('org.testcontainers:testcontainers:1.19.4')
     testImplementation ('org.testcontainers:mysql:1.19.4')
     testImplementation ('org.testcontainers:junit-jupiter:1.19.4')
-
-    testImplementation ('org.flywaydb:flyway-core')
-    testImplementation ('org.springframework.boot:spring-boot-starter-test')
 
     testRuntimeOnly ('com.h2database:h2')
 }

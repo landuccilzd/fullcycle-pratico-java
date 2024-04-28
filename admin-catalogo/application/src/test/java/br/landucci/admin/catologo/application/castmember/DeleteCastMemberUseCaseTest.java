@@ -1,15 +1,14 @@
 package br.landucci.admin.catologo.application.castmember;
 
-import br.landucci.admin.catologo.application.Fixture;
 import br.landucci.admin.catologo.application.UseCaseTest;
 import br.landucci.admin.catologo.application.castmember.delete.DefaultDeleteCastMemberUseCase;
 import br.landucci.admin.catologo.application.castmember.delete.DeleteCastMemberInputCommand;
+import br.landucci.admin.catologo.domain.Fixture;
 import br.landucci.admin.catologo.domain.castmember.CastMemberGateway;
 import br.landucci.admin.catologo.domain.castmember.CastMember;
 import br.landucci.admin.catologo.domain.castmember.CastMemberID;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentMatchers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;

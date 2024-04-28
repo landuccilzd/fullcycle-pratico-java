@@ -1,9 +1,9 @@
 package br.landucci.admin.catologo.application.castmember;
 
-import br.landucci.admin.catologo.application.Fixture;
 import br.landucci.admin.catologo.application.UseCaseTest;
 import br.landucci.admin.catologo.application.castmember.create.CreateCastMemberInputCommand;
 import br.landucci.admin.catologo.application.castmember.create.DefaultCreateCastMemberUseCase;
+import br.landucci.admin.catologo.domain.Fixture;
 import br.landucci.admin.catologo.domain.castmember.CastMemberGateway;
 import br.landucci.admin.catologo.domain.exception.NotificationException;
 import org.junit.jupiter.api.Assertions;

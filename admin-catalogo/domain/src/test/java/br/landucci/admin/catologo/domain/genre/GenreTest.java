@@ -5,6 +5,8 @@ import br.landucci.admin.catologo.domain.exception.DomainException;
 import br.landucci.admin.catologo.domain.exception.NotificationException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import java.util.List;
 
@@ -28,39 +30,19 @@ class GenreTest {
         Assertions.assertNull(genre.getDeletedAt());
     }
 
-    @Test
-    void givenAnInvalidNullNameInput_whenCreatingGenre_thenShouldReturnAnError() {
-        final var expectedErrorCount = 1;
-        final var expectedErrorMessage = "Name should not be null";
+    @ParameterizedTest
+    @CsvSource({
+            ",1,Name should not be null",
+            "empty,1,Name should not be empty",
+            "ab,1,Name must have between 3 and 255 characters"
+    })
+    void givenSomeInvalidNamesInput_whenCreatingGenre_thenShouldReturnAnError(final String expectedName,
+            final int expectedErrorCount, final String expectedErrorMessage) {
 
-        final var exception = Assertions.assertThrows(NotificationException.class,
-                () -> Genre.newGenre(null, true));
-
-        Assertions.assertNotNull(exception);
-        Assertions.assertEquals(expectedErrorCount, exception.errorCount());
-        Assertions.assertEquals(expectedErrorMessage, exception.firstError().message());
-    }
-
-    @Test
-    void givenAnInvalidEmptyNameInput_whenCreatingGenre_thenShouldReturnAnError() {
-        final var expectedErrorCount = 1;
-        final var expectedErrorMessage = "Name should not be empty";
-
-        final var exception = Assertions.assertThrows(NotificationException.class,
-                () -> Genre.newGenre("", true));
-
-        Assertions.assertNotNull(exception);
-        Assertions.assertEquals(expectedErrorCount, exception.errorCount());
-        Assertions.assertEquals(expectedErrorMessage, exception.firstError().message());
-    }
-
-    @Test
-    void givenAnInvalidShortNameInput_whenCreatingGenre_thenShouldReturnAnError() {
-        final var expectedErrorCount = 1;
-        final var expectedErrorMessage = "Name must have between 3 and 255 characters";
-
-        final var exception = Assertions.assertThrows(NotificationException.class,
-                () -> Genre.newGenre("ab", true));
+        final var name = "empty".equals(expectedName) ? "" : expectedName;
+        final var exception = Assertions.assertThrows(NotificationException.class, () ->
+                Genre.newGenre(name, true)
+        );
 
         Assertions.assertNotNull(exception);
         Assertions.assertEquals(expectedErrorCount, exception.errorCount());
@@ -167,51 +149,20 @@ class GenreTest {
         Assertions.assertNull(genre.getDeletedAt());
     }
 
-    @Test
-    void givenAnExistingGenre_whenUpdatingWithNullName_thenShouldReturnNotificationException() {
-        final var expectedName = "Ação";
-        final var expectedActive = true;
-        final var expectedErrorCount = 1;
-        final var expectedErrorMessage = "Name should not be null";
+    @ParameterizedTest
+    @CsvSource({
+            ",1,Name should not be null",
+            "empty,1,Name should not be empty",
+            "ab,1,Name must have between 3 and 255 characters"
+    })
+    void givenAnExistingGenre_whenUpdatingWithNullName_thenShouldReturnNotificationException(final String expectedName,
+            final int expectedErrorCount, final String expectedErrorMessage) {
 
-        final var genre = Genre.newGenre(expectedName, expectedActive);
-
-        final var exception = Assertions.assertThrows(NotificationException.class,
-                () -> genre.updateName(null));
-
-        Assertions.assertNotNull(exception);
-        Assertions.assertEquals(expectedErrorCount, exception.errorCount());
-        Assertions.assertEquals(expectedErrorMessage, exception.firstError().message());
-    }
-
-    @Test
-    void givenAnExistingGenre_whenUpdatingWithEmptyName_thenShouldReturnNotificationException() {
-        final var expectedName = "Ação";
-        final var expectedActive = true;
-        final var expectedErrorCount = 1;
-        final var expectedErrorMessage = "Name should not be empty";
-
-        final var genre = Genre.newGenre(expectedName, expectedActive);
-
-        final var exception = Assertions.assertThrows(NotificationException.class,
-                () -> genre.updateName(""));
-
-        Assertions.assertNotNull(exception);
-        Assertions.assertEquals(expectedErrorCount, exception.errorCount());
-        Assertions.assertEquals(expectedErrorMessage, exception.firstError().message());
-    }
-
-    @Test
-    void givenAnExistingGenre_whenUpdatingWithShortName_thenShouldReturnNotificationException() {
-        final var expectedName = "Ação";
-        final var expectedActive = true;
-        final var expectedErrorCount = 1;
-        final var expectedErrorMessage = "Name must have between 3 and 255 characters";
-
-        final var genre = Genre.newGenre(expectedName, expectedActive);
-
-        final var exception = Assertions.assertThrows(NotificationException.class,
-                () -> genre.updateName("ab"));
+        final var genre = Genre.newGenre("Ação", true);
+        final var name = "empty".equals(expectedName) ? "" : expectedName;
+        final var exception = Assertions.assertThrows(NotificationException.class, () ->
+                genre.updateName(name)
+        );
 
         Assertions.assertNotNull(exception);
         Assertions.assertEquals(expectedErrorCount, exception.errorCount());

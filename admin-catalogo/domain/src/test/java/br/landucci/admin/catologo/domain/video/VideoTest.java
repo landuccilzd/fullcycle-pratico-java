@@ -1,8 +1,12 @@
 package br.landucci.admin.catologo.domain.video;
 
 import br.landucci.admin.catologo.domain.UnitTest;
+import br.landucci.admin.catologo.domain.castmember.CastMember;
 import br.landucci.admin.catologo.domain.castmember.CastMemberID;
+import br.landucci.admin.catologo.domain.castmember.CastMemberType;
+import br.landucci.admin.catologo.domain.category.Category;
 import br.landucci.admin.catologo.domain.category.CategoryID;
+import br.landucci.admin.catologo.domain.genre.Genre;
 import br.landucci.admin.catologo.domain.genre.GenreID;
 import br.landucci.admin.catologo.domain.utils.InstantUtils;
 import br.landucci.admin.catologo.domain.validation.handler.ThrowsValidationHandler;
@@ -36,6 +40,61 @@ class VideoTest extends UnitTest {
     private static final boolean[] EXPECTED_OPENED = { false, true };
     private static final boolean[] EXPECTED_PUBLISHED = { true, false };
     private static final Rating[] EXPECTED_RATINGS = { Rating.AGE_12, Rating.AGE_12 };
+
+
+    @Test
+    void givenValidParams_whenCreatingANewVideo_thenShouldInstantiateIt() {
+        final var expectedTitle = "O Enigma dos Números";
+        final var expectedDescription = """
+            Inpirada pela mãe em enquanto jogava um jogo de celular com a prima, uma estudante de mestrado que 
+            trabalha de home office tem que decifrar O ENIGMA DOS NÚMEROS para poder concluir o seu mestrado e voltar
+            a ter vida
+        """;
+        final var expectedLauchedAt = Year.of(2024);
+        final var expectedDuration = 120.0;
+        final var expectedOpened = false;
+        final var expectedPublished = false;
+        final var expectedRating = Rating.L;
+
+        final var filmes = Category.newCategory("Filmes", null, true);
+        final var expectedCategories = Set.of(filmes.getId());
+
+        final var terror = Genre.newGenre("Terror", true);
+        final var ficcao = Genre.newGenre("Ficção Científica", true);
+        final var expectedGenres = Set.of(terror.getId(), ficcao.getId());
+
+        final var cogu = CastMember.newCastMember("Malu", CastMemberType.DIRECTOR);
+        final var biju = CastMember.newCastMember("Julia", CastMemberType.ACTOR);
+        final var mandy = CastMember.newCastMember("Ammanda", CastMemberType.ACTOR);
+        final var expectedMembers = Set.of(cogu.getId(), biju.getId(), mandy.getId());
+
+        final var video = createVideo(expectedTitle, expectedDescription, expectedLauchedAt, expectedDuration,
+                expectedOpened, expectedPublished, expectedRating, expectedCategories, expectedGenres, expectedMembers);
+
+        Assertions.assertNotNull(video);
+        Assertions.assertNotNull(video.getId());
+        Assertions.assertNotNull(video.getCreatedAt());
+        Assertions.assertNotNull(video.getUpdatedAt());
+        Assertions.assertEquals(video.getCreatedAt(), video.getUpdatedAt());
+        Assertions.assertEquals(expectedTitle, video.getTitle());
+        Assertions.assertEquals(expectedDescription, video.getDescription());
+        Assertions.assertEquals(expectedLauchedAt, video.getLaunchedAt());
+        Assertions.assertEquals(expectedDuration, video.getDuration());
+        Assertions.assertEquals(expectedOpened, video.isOpened());
+        Assertions.assertEquals(expectedPublished, video.isPublished());
+        Assertions.assertEquals(expectedRating, video.getRating());
+        Assertions.assertEquals(expectedCategories, video.getCategories());
+        Assertions.assertEquals(expectedGenres, video.getGenres());
+        Assertions.assertEquals(expectedMembers, video.getCastMembers());
+        Assertions.assertTrue(video.getContent().isEmpty());
+        Assertions.assertTrue(video.getTrailer().isEmpty());
+        Assertions.assertTrue(video.getBanner().isEmpty());
+        Assertions.assertTrue(video.getThumbnail().isEmpty());
+        Assertions.assertTrue(video.getThumbnailHalf().isEmpty());
+        Assertions.assertTrue(video.getDomainEvents().isEmpty());
+
+        Assertions.assertDoesNotThrow(() -> video.validate(new ThrowsValidationHandler()));
+    }
 
     @Test
     void givenValidParams_whenCreatingANewVideo_thenShouldInstantiate() {

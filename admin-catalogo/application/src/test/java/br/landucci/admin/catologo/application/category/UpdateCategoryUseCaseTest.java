@@ -149,8 +149,7 @@ class UpdateCategoryUseCaseTest extends UseCaseTest {
         Mockito.when(gateway.findById(CategoryID.from(expectedId))).thenReturn(Optional.empty());
 
         final var exception = Assertions.assertThrows(DomainException.class, () -> {
-            final var either = useCase.execute(command);
-            either.getLeft();
+            useCase.execute(command).getLeft();
         });
 
         Assertions.assertEquals(expectedErrorCount, exception.errorCount());

@@ -4,6 +4,7 @@ import br.landucci.admin.catologo.domain.castmember.CastMemberID;
 import br.landucci.admin.catologo.domain.category.CategoryID;
 import br.landucci.admin.catologo.domain.events.DomainEvent;
 import br.landucci.admin.catologo.domain.genre.GenreID;
+import br.landucci.admin.catologo.domain.utils.InstantUtils;
 
 import java.time.Instant;
 import java.time.Year;
@@ -108,6 +109,8 @@ public class VideoBuilder {
         return this;
     }
     public Video build() {
+        final var now = InstantUtils.now();
+        this.withCreatedAt(now).withUpdatedAt(now);
         return new Video(this);
     }
 }

@@ -1,5 +1,7 @@
 package br.landucci.admin.catologo.infrastructure.configuration.json;
 
+import br.landucci.admin.catologo.domain.exception.DomainException;
+import br.landucci.admin.catologo.domain.validation.ValidationError;
 import com.fasterxml.jackson.databind.*;
 import com.fasterxml.jackson.databind.util.StdDateFormat;
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
@@ -29,7 +31,7 @@ public enum Json {
         try {
             return callable.call();
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw DomainException.with(new ValidationError(e.getMessage()));
         }
     }
 
