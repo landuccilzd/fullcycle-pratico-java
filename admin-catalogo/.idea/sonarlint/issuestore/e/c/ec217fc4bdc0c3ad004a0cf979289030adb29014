@@ -1,0 +1,5 @@
+
+¥
+java:S5778="bRefactor the code of the lambda to have only one invocation possibly throwing a runtime exception.(òÂÉ‘8¿œìƒò1J$13c2c577-e900-48f3-aa61-956bebda3035
+…
+java:S6068A"CRemove this useless "eq(...)" invocation; pass the values directly.(±Ð·'8Àœìƒò1J$8142a4c2-8eff-472a-95bd-d5a6a3c55318

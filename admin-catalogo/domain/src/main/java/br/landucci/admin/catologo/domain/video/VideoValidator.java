@@ -6,6 +6,7 @@ import br.landucci.admin.catologo.domain.validation.Validator;
 
 public class VideoValidator extends Validator {
 
+    private static final int TITLE_MIN_LENGTH = 3;
     private static final int TITLE_MAX_LENGTH = 255;
     private static final int DESCRIPTION_MAX_LENGTH = 4000;
 
@@ -37,8 +38,8 @@ public class VideoValidator extends Validator {
             return;
         }
 
-        if (title.trim().length() > TITLE_MAX_LENGTH) {
-            this.validationHandler().append(new ValidationError("Title must have less then 255 characters"));
+        if (title.trim().length() < TITLE_MIN_LENGTH || title.trim().length() > TITLE_MAX_LENGTH) {
+            this.validationHandler().append(new ValidationError("Title must have between 3 and 255 characters"));
         }
     }
 

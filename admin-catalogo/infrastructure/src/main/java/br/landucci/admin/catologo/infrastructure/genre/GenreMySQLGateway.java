@@ -13,8 +13,10 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.StreamSupport;
 
 @Component
 public class GenreMySQLGateway implements GenreGateway {
@@ -60,6 +62,12 @@ public class GenreMySQLGateway implements GenreGateway {
             throw new IllegalArgumentException("Genre with ID %s was not found".formatted(id.getValue()));
         }
         this.repository.deleteById(idValue);
+    }
+
+    @Override
+    public List<GenreID> existsByIds(final Iterable<GenreID> genreIDS) {
+        final var ids = StreamSupport.stream(genreIDS.spliterator(), false).map(GenreID::getValue).toList();
+        return this.repository.existsByIds(ids).stream().map(GenreID::from).toList();
     }
 
     private Genre save(final Genre genre) {

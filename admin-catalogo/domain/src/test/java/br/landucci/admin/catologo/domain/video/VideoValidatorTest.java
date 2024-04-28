@@ -113,7 +113,7 @@ class VideoValidatorTest extends UnitTest {
         final var expectedGenres = Set.of(GenreID.unique());
         final var expectedMembers = Set.of(CastMemberID.unique());
         final var expectedErrorCount = 1;
-        final var expectedErrorMessage = "Title must have less then 255 characters";
+        final var expectedErrorMessage = "Title must have between 3 and 255 characters";
 
         final var video = new VideoBuilder()
                 .withId(VideoID.unique())

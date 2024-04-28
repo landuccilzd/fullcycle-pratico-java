@@ -82,7 +82,6 @@ public class CategoryController implements CategoryAPI {
         final Function<Notification, ResponseEntity<?>> onError = notification ->
                 ResponseEntity.unprocessableEntity().body(notification);
 
-//        final Function<UpdateCategoryOutputCommand, ResponseEntity<?>> onSuccess = output -> ResponseEntity.ok(output);
         final Function<UpdateCategoryOutputCommand, ResponseEntity<?>> onSuccess = ResponseEntity::ok;
 
         return this.updateCategoryUseCase.execute(input).fold(onError, onSuccess);
