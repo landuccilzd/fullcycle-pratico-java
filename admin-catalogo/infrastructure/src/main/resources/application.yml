@@ -53,6 +53,9 @@ spring:
       ddl-auto: update
   datasource:
     url: jdbc:mysql://${DATABASE_MYSQL_URL}/${DATABASE_MYSQL_DB}_dev
+storage:
+  catalogo-videos:
+    local-storage-path: C:\\dev\\storage\\dev
 ---
 spring:
   config:
@@ -74,6 +77,9 @@ spring:
     console:
       enabled: true
       path: /h2
+storage:
+  catalogo-videos:
+    local-storage-path: C:\\dev\\storage\\tst
 ---
 spring:
   config:
@@ -93,6 +99,9 @@ spring:
     console:
       enabled: true
       path: /h2
+storage:
+  catalogo-videos:
+    local-storage-path: C:\\dev\\storage\\tst-int
 ---
 spring:
   flyway:
@@ -106,6 +115,9 @@ spring:
       ddl-auto: create-drop
   datasource:
     url: jdbc:mysql://localhost:${E2E_MYSQL_PORT}/adm_videos_e2e
+storage:
+  catalogo-videos:
+    local-storage-path: C:\\dev\\storage\\tst-e2e
 ---
 spring:
   config:
@@ -117,3 +129,11 @@ spring:
       ddl-auto: none
   datasource:
     url: jdbc:mysql://${DATABASE_MYSQL_URL}/${DATABASE_MYSQL_DB}
+storage:
+  catalogo-videos:
+    local-storage-path: C:\\dev\\storage\\prd
+---
+storage:
+  catalogo-videos:
+    location-pattern: videoId-{videoId}
+    filename-pattern: type-{type}

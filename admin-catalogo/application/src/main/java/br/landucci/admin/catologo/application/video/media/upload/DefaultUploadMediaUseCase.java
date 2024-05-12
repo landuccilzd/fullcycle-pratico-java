@@ -29,8 +29,8 @@ public class DefaultUploadMediaUseCase extends UploadMediaUseCase {
         final var video = this.videoGateway.findById(id).orElseThrow(() -> notFound(id));
 
         switch (resource.type()) {
-            case VIDEO -> video.updateContent(gateway.storeAudioVideo(id, resource));
-            case TRAILER -> video.updateTrailer(gateway.storeAudioVideo(id, resource));
+            case VIDEO -> video.updateContent(gateway.storeVideo(id, resource));
+            case TRAILER -> video.updateTrailer(gateway.storeVideo(id, resource));
             case BANNER -> video.updateBanner(gateway.storeImage(id, resource));
             case THUMBNAIL -> video.updateThumbnail(gateway.storeImage(id, resource));
             case THUMBNAIL_HALF -> video.updateThumbnailHalf(gateway.storeImage(id, resource));

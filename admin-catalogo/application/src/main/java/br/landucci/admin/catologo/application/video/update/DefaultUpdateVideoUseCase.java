@@ -98,11 +98,11 @@ public class DefaultUpdateVideoUseCase extends UpdateVideoUseCase {
 
         try {
             final var videoMedia = command.getVideo().map(it ->
-                    this.mediaResourceGateway.storeAudioVideo(id, VideoResource.with(VideoMediaType.VIDEO, it)))
+                    this.mediaResourceGateway.storeVideo(id, VideoResource.with(VideoMediaType.VIDEO, it)))
                     .orElse(null);
 
             final var trailerMedia = command.getTrailer().map(it ->
-                    this.mediaResourceGateway.storeAudioVideo(id, VideoResource.with(VideoMediaType.TRAILER, it)))
+                    this.mediaResourceGateway.storeVideo(id, VideoResource.with(VideoMediaType.TRAILER, it)))
                     .orElse(null);
 
             final var bannerMedia = command.getBanner().map(it ->

@@ -3,7 +3,7 @@ package br.landucci.admin.catologo.application.video.media;
 import br.landucci.admin.catologo.application.UseCaseTest;
 import br.landucci.admin.catologo.application.video.media.update.DefaultUpdateMediaStatusUseCase;
 import br.landucci.admin.catologo.application.video.media.update.UpdateMediaStatusInputCommand;
-import br.landucci.admin.catologo.domain.Fixture;
+import br.landucci.admin.catologo.application.Fixture;
 import br.landucci.admin.catologo.domain.video.MediaStatus;
 import br.landucci.admin.catologo.domain.video.Video;
 import br.landucci.admin.catologo.domain.video.VideoGateway;

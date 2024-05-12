@@ -1,9 +1,9 @@
 package br.landucci.admin.catologo.application.video.media;
 
 import br.landucci.admin.catologo.application.UseCaseTest;
-import br.landucci.admin.catologo.application.video.media.find.DefaultGetMediaUseCase;
+import br.landucci.admin.catologo.application.video.media.find.DefaultFindMediaByIDUseCase;
 import br.landucci.admin.catologo.application.video.media.find.FindMediaByIDInputCommand;
-import br.landucci.admin.catologo.domain.Fixture;
+import br.landucci.admin.catologo.application.Fixture;
 import br.landucci.admin.catologo.domain.exception.NotFoundException;
 import br.landucci.admin.catologo.domain.video.MediaResourceGateway;
 import br.landucci.admin.catologo.domain.video.VideoID;
@@ -19,7 +19,7 @@ import java.util.Optional;
 class FindMediaByIDUseCaseTest extends UseCaseTest {
 
     @InjectMocks
-    private DefaultGetMediaUseCase useCase;
+    private DefaultFindMediaByIDUseCase useCase;
 
     @Mock
     private MediaResourceGateway mediaResourceGateway;

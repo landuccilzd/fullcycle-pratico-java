@@ -9,7 +9,7 @@ public final class CollectionUtils {
     private CollectionUtils() {
     }
 
-    public static <IN, OUT> Set<OUT> mapTo(final Set<IN> list, final Function<IN, OUT> mapper) {
+    public static <I, O> Set<O> mapTo(final Set<I> list, final Function<I, O> mapper) {
         if (list == null) {
             return null;
         }

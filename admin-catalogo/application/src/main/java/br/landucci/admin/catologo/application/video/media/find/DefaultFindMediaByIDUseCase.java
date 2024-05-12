@@ -8,11 +8,11 @@ import br.landucci.admin.catologo.domain.video.VideoMediaType;
 
 import java.util.Objects;
 
-public class DefaultGetMediaUseCase extends FindMediaByIDUseCase {
+public class DefaultFindMediaByIDUseCase extends FindMediaByIDUseCase {
 
     private final MediaResourceGateway gateway;
 
-    public DefaultGetMediaUseCase(final MediaResourceGateway gateway) {
+    public DefaultFindMediaByIDUseCase(final MediaResourceGateway gateway) {
         this.gateway = Objects.requireNonNull(gateway);
     }
 
