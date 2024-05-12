@@ -3,7 +3,7 @@ package br.landucci.admin.catologo.application.video.media;
 import br.landucci.admin.catologo.application.UseCaseTest;
 import br.landucci.admin.catologo.application.video.media.upload.DefaultUploadMediaUseCase;
 import br.landucci.admin.catologo.application.video.media.upload.UploadMediaInputCommand;
-import br.landucci.admin.catologo.domain.Fixture;
+import br.landucci.admin.catologo.application.Fixture;
 import br.landucci.admin.catologo.domain.exception.NotFoundException;
 import br.landucci.admin.catologo.domain.video.MediaResourceGateway;
 import br.landucci.admin.catologo.domain.video.VideoGateway;
@@ -38,7 +38,7 @@ class UploadMediaUseCaseTest extends UseCaseTest {
         final var expectedMedia = Fixture.Videos.audioVideo(expectedType);
 
         Mockito.when(videoGateway.findById(Mockito.any())).thenReturn(Optional.of(video));
-        Mockito.when(mediaResourceGateway.storeAudioVideo(Mockito.any(), Mockito.any())).thenReturn(expectedMedia);
+        Mockito.when(mediaResourceGateway.storeVideo(Mockito.any(), Mockito.any())).thenReturn(expectedMedia);
         Mockito.when(videoGateway.update(Mockito.any())).thenAnswer(AdditionalAnswers.returnsFirstArg());
 
         final var input = UploadMediaInputCommand.with(expectedId.getValue(), expectedVideoResource);
@@ -48,7 +48,7 @@ class UploadMediaUseCaseTest extends UseCaseTest {
         Assertions.assertEquals(expectedId.getValue(), output.videoId());
 
         Mockito.verify(videoGateway, Mockito.times(1)).findById(expectedId);
-        Mockito.verify(mediaResourceGateway, Mockito.times(1)).storeAudioVideo(expectedId, expectedVideoResource);
+        Mockito.verify(mediaResourceGateway, Mockito.times(1)).storeVideo(expectedId, expectedVideoResource);
         Mockito.verify(videoGateway, Mockito.times(1)).update(ArgumentMatchers.argThat(vid ->
                 Objects.equals(expectedMedia, vid.getContent().get())
                 && vid.getTrailer().isEmpty()
@@ -68,7 +68,7 @@ class UploadMediaUseCaseTest extends UseCaseTest {
         final var expectedMedia = Fixture.Videos.audioVideo(expectedType);
 
         Mockito.when(videoGateway.findById(Mockito.any())).thenReturn(Optional.of(video));
-        Mockito.when(mediaResourceGateway.storeAudioVideo(Mockito.any(), Mockito.any())).thenReturn(expectedMedia);
+        Mockito.when(mediaResourceGateway.storeVideo(Mockito.any(), Mockito.any())).thenReturn(expectedMedia);
         Mockito.when(videoGateway.update(Mockito.any())).thenAnswer(AdditionalAnswers.returnsFirstArg());
 
         final var input = UploadMediaInputCommand.with(expectedId.getValue(), expectedVideoResource);
@@ -78,7 +78,7 @@ class UploadMediaUseCaseTest extends UseCaseTest {
         Assertions.assertEquals(expectedId.getValue(), output.videoId());
 
         Mockito.verify(videoGateway, Mockito.times(1)).findById(expectedId);
-        Mockito.verify(mediaResourceGateway, Mockito.times(1)).storeAudioVideo(expectedId, expectedVideoResource);
+        Mockito.verify(mediaResourceGateway, Mockito.times(1)).storeVideo(expectedId, expectedVideoResource);
         Mockito.verify(videoGateway, Mockito.times(1)).update(ArgumentMatchers.argThat(vid ->
                 vid.getContent().isEmpty()
                 && Objects.equals(expectedMedia, vid.getTrailer().get())

@@ -113,4 +113,8 @@ public class VideoBuilder {
         this.withCreatedAt(now).withUpdatedAt(now);
         return new Video(this);
     }
+    public Video newVideo() {
+        this.withId(VideoID.unique());
+        return build();
+    }
 }

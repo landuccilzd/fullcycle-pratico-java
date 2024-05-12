@@ -3,9 +3,9 @@ package br.landucci.admin.catologo.application.castmember;
 import br.landucci.admin.catologo.application.UseCaseTest;
 import br.landucci.admin.catologo.application.castmember.list.DefaultListCastMemberUseCase;
 import br.landucci.admin.catologo.application.castmember.list.ListCastMemberOutputCommand;
-import br.landucci.admin.catologo.domain.Fixture;
 import br.landucci.admin.catologo.domain.castmember.CastMember;
 import br.landucci.admin.catologo.domain.castmember.CastMemberGateway;
+import br.landucci.admin.catologo.domain.castmember.CastMemberType;
 import br.landucci.admin.catologo.domain.pagination.Pagination;
 import br.landucci.admin.catologo.domain.pagination.SearchQuery;
 import org.junit.jupiter.api.Assertions;
@@ -26,8 +26,8 @@ class ListCastMembersUseCaseTest extends UseCaseTest {
     @Test
     void givenAValidQuery_whenListingCastMembers_thenShouldReturnAll() {
         final var members = List.of(
-                CastMember.newCastMember(Fixture.name(), Fixture.CastMembers.type()),
-                CastMember.newCastMember(Fixture.name(), Fixture.CastMembers.type())
+                CastMember.newCastMember("Zelda", CastMemberType.ACTOR),
+                CastMember.newCastMember("Peach", CastMemberType.DIRECTOR)
         );
 
         final var expectedPage = 0;

@@ -3,8 +3,8 @@ package br.landucci.admin.catologo.application.castmember;
 import br.landucci.admin.catologo.application.UseCaseTest;
 import br.landucci.admin.catologo.application.castmember.create.CreateCastMemberInputCommand;
 import br.landucci.admin.catologo.application.castmember.create.DefaultCreateCastMemberUseCase;
-import br.landucci.admin.catologo.domain.Fixture;
 import br.landucci.admin.catologo.domain.castmember.CastMemberGateway;
+import br.landucci.admin.catologo.domain.castmember.CastMemberType;
 import br.landucci.admin.catologo.domain.exception.NotificationException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -24,8 +24,8 @@ class CreateCastMemberUseCaseTest extends UseCaseTest {
 
     @Test
     void givenAValidCommand_whenCreatingACastMember_thenShouldReturnTheCreatedCastMember() {
-        final var expectedName = Fixture.name();
-        final var expectedType = Fixture.CastMembers.type();
+        final var expectedName = "Zelda";
+        final var expectedType = CastMemberType.ACTOR;
 
         Mockito.when(gateway.create(Mockito.any())).thenAnswer(AdditionalAnswers.returnsFirstArg());
 
@@ -46,7 +46,7 @@ class CreateCastMemberUseCaseTest extends UseCaseTest {
 
     @Test
     void givenAnInvalidNullName_whenCreatingACastMember_thenShouldThrowsNotificationException() {
-        final var expectedType = Fixture.CastMembers.type();
+        final var expectedType = CastMemberType.ACTOR;
         final var expectedErrorCount = 1;
         final var expectedErrorMessage = "Name should not be null";
 
@@ -63,7 +63,7 @@ class CreateCastMemberUseCaseTest extends UseCaseTest {
 
     @Test
     void givenAnInvalidNullType_whenCreatingACastMember_thenShouldThrowsNotificationException() {
-        final var expectedName = Fixture.name();
+        final var expectedName = "Zelda";
         final var expectedErrorCount = 1;
         final var expectedErrorMessage = "Type should not be null";
 

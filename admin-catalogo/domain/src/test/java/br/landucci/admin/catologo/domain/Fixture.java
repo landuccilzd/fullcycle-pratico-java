@@ -6,23 +6,67 @@ import br.landucci.admin.catologo.domain.category.Category;
 import br.landucci.admin.catologo.domain.genre.Genre;
 import br.landucci.admin.catologo.domain.utils.IdUtils;
 import br.landucci.admin.catologo.domain.video.*;
-import com.github.javafaker.Faker;
 import io.vavr.API;
 
 import java.time.Year;
+import java.util.Random;
 import java.util.Set;
 import java.util.UUID;
 
 public final class Fixture {
 
-    public static final Faker FAKER = new Faker();
+    private static final String[] NAMES = new String[] { "Zelda", "Peach", "Katara", "She Ra", "Kitana" };
+    private static final boolean[] BOOLS = new boolean[] { true, false };
+
+    private static final Rating[] RATINGS = new Rating[] { Rating.L, Rating.ER, Rating.AGE_10, Rating.AGE_12,
+            Rating.AGE_14, Rating.AGE_16, Rating.AGE_18 };
+
+    private static final VideoMediaType[] MEDIA_TYPES = new VideoMediaType[] {VideoMediaType.VIDEO,
+            VideoMediaType.TRAILER, VideoMediaType.BANNER, VideoMediaType.THUMBNAIL, VideoMediaType.THUMBNAIL_HALF };
+
+    private static final CastMemberType[] CAST_MEMBER_TYPES = new CastMemberType[] { CastMemberType.ACTOR,
+            CastMemberType.DIRECTOR };
+
+    private static final String[] TITLES = new String[] {"O Enigma dos números", "Poeira em alto mar",
+            "A volta dos que não foram", "Prefiro a morte do que morrer", "O triste olhar de um pobre cego" };
+
+    private static final String[] DESCRIPTIONS = new String[] {
+            """
+                Inspirada pela mãe enquanto jogava um jogo de celular com a prima Ammanda, Julia, uma estudante de 
+                mestrado que trabalha em home office, tem que decifrar O ENIGMA DOS NÚMEROS para poder concluir o seu 
+                mestrado e voltar a ter vida.
+            """,
+            """
+                Ao se deparar com uma cena inexplicável o capitão de um navio precisa descobrir qual o motivo de estar 
+                preso com sua tripulação em um local no meio do oceano pacífico rodeado de poeira.
+            """,
+            """
+                Após anos presos em uma estação espacial, a tripulação se prepara para voltar à Terra. O que os está 
+                incomodando no momento é a situação de duas crianças que nasceram nesse paríodo e agora não se sabe como 
+                serão recebidas.
+            """,
+            """
+                Um casal dono de uma fazendo no interior de Minas Gerais é assombrado por um espírito vigantivo que era 
+                o antigo dono daquelas terras e que é conhecido por matar suas vítimas porém deixando que elas mesmas 
+                escolham como preferem morrer.
+            """,
+            """
+                Cego de nascensça, uma criança que queria fazer a diferença no mundo procura por uma cura para sua 
+                cegueira.
+            """
+    };
+
+    private static final Random RANDOM = new Random();
+
 
     public static String name() {
-        return FAKER.name().fullName();
+        final var index = RANDOM.nextInt(NAMES.length);
+        return NAMES[index];
     }
 
     public static boolean bool() {
-        return FAKER.bool().bool();
+        final var index = RANDOM.nextInt(BOOLS.length);
+        return BOOLS[index];
     }
 
     public static final class Categories {
@@ -83,75 +127,50 @@ public final class Fixture {
 
     public static final class CastMembers {
 
-        private static final CastMember JEHNIFFER_ANISTON =
-                CastMember.newCastMember("Jehniffer Aniston", CastMemberType.ACTOR);
+        private static final CastMember ZELDA =
+                CastMember.newCastMember("Zelda", CastMemberType.ACTOR);
 
-        private static final CastMember MEGAN_FOX =
-                CastMember.newCastMember("Megan Fox", CastMemberType.ACTOR);
+        private static final CastMember PEACH =
+                CastMember.newCastMember("Peach", CastMemberType.ACTOR);
 
         public static CastMemberType type() {
-            return FAKER.options().option(CastMemberType.ACTOR, CastMemberType.DIRECTOR);
+            final var index = RANDOM.nextInt(CAST_MEMBER_TYPES.length);
+            return CAST_MEMBER_TYPES[index];
         }
 
-        public static CastMember jehnifferAniston() {
-            return CastMember.clone(JEHNIFFER_ANISTON);
+        public static CastMember zelda() {
+            return CastMember.clone(ZELDA);
         }
 
-        public static CastMember meganFox() {
-            return CastMember.clone(MEGAN_FOX);
+        public static CastMember peach() {
+            return CastMember.clone(PEACH);
         }
     }
 
     public static final class Videos {
 
         public static String title() {
-            return FAKER.options().option(
-                    "O Enigma dos números",
-                    "Poeira em alto mar",
-                    "A volta dos que não foram",
-                    "Prefiro a morte do que morrer",
-                    "O triste olhar de um pobre cego"
-            );
+            final var index = RANDOM.nextInt(TITLES.length);
+            return TITLES[index];
         }
 
         public static String description() {
-            return FAKER.options().option(
-                    """
-                Inspirada pela mãe enquanto jogava um jogo de celular com a prima Ammanda, Julia, uma estudante de mestrado
-                que trabalha em home office, tem que decifrar O ENIGMA DOS NÚMEROS para poder concluir o seu mestrado e 
-                voltar a ter vida.
-            """,
-                    """
-                        Ao se deparar com uma cena inexplicável o capitão de um navio precisa descobrir qual o motivo de estar 
-                        preso com sua tripulação em um local no meio do oceano pacífico rodeado de poeira.
-                    """,
-                    """
-                        Após anos presos em uma estação espacial, a tripulação se prepara para voltar à Terra. O que os está 
-                        incomodando no momento é a situação de duas crianças que nasceram nesse paríodo e agora não se sabe como 
-                        serão recebidas.
-                    """,
-                    """
-                        Um casal dono de uma fazendo no interior de Minas Gerais é assombrado por um espírito vigantivo que era o 
-                        antigo dono daquelas terras e que é conhecido por matar suas vítimas porém deixando que elas mesmas escolham
-                        como preferem morrer.
-                    """,
-                    """
-                        Cego de nascensça, uma criança que queria fazer a diferença no mundo procura por uma cura para sua cegueira.
-                    """
-            );
+            final var index = RANDOM.nextInt(DESCRIPTIONS.length);
+            return DESCRIPTIONS[index];
         }
 
         public static Year year() {
-            final var ano =  FAKER.random().nextInt(1980, 2024);
+            final var ano = RANDOM.nextInt(1980, 2024);
             return Year.of(ano);
         }
 
         public static double duration() {
-            return FAKER.options().option(80.0, 90.0, 100.0, 110.0, 120.0);
+            return RANDOM.nextDouble(60, 120);
         }
 
         public static Rating rating() {
-            return FAKER.options().option(Rating.values());
+            final var index =  RANDOM.nextInt(RATINGS.length);
+            return RATINGS[index];
         }
 
         public static String checksum() {
@@ -159,7 +178,8 @@ public final class Fixture {
         }
 
         public static VideoMediaType mediaType() {
-            return FAKER.options().option(VideoMediaType.values());
+            final var index = RANDOM.nextInt(MEDIA_TYPES.length);
+            return MEDIA_TYPES[index];
         }
 
         public static Video video() {
@@ -173,7 +193,7 @@ public final class Fixture {
                     .withRating(Videos.rating())
                     .withCategories(Set.of(Categories.filmes().getId()))
                     .withGenres(Set.of(Genres.ficcaoCientifica().getId()))
-                    .withCastMembers(Set.of(CastMembers.jehnifferAniston().getId(), CastMembers.meganFox().getId()))
+                    .withCastMembers(Set.of(CastMembers.zelda().getId(), CastMembers.peach().getId()))
                     .build();
         }
 

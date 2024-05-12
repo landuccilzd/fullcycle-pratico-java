@@ -9,7 +9,7 @@ import java.time.Instant;
 import java.util.Objects;
 
 @Entity
-@Table(name = "cast_members")
+@Table(name = "cast_member")
 public class CastMemberJpaEntity {
 
     @Id

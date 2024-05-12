@@ -1,9 +1,9 @@
 package br.landucci.admin.catologo.application.video;
 
+import br.landucci.admin.catologo.application.Fixture;
 import br.landucci.admin.catologo.application.UseCaseTest;
 import br.landucci.admin.catologo.application.video.create.CreateVideoInputCommand;
 import br.landucci.admin.catologo.application.video.create.DefaultCreateVideoUseCase;
-import br.landucci.admin.catologo.domain.Fixture;
 import br.landucci.admin.catologo.domain.castmember.CastMemberGateway;
 import br.landucci.admin.catologo.domain.castmember.CastMemberID;
 import br.landucci.admin.catologo.domain.category.CategoryGateway;
@@ -55,7 +55,7 @@ class CreateVideoUseCaseTest extends UseCaseTest {
         final var expectedRating = Fixture.Videos.rating();
         final var expectedCategories = Set.of(Fixture.Categories.filmes().getId());
         final var expectedGenres = Set.of(Fixture.Genres.acao().getId());
-        final var expectedMembers = Set.of(Fixture.CastMembers.jehnifferAniston().getId(), Fixture.CastMembers.meganFox().getId());
+        final var expectedMembers = Set.of(Fixture.CastMembers.zelda().getId(), Fixture.CastMembers.peach().getId());
         final Resource expectedVideo = Fixture.Videos.resource(VideoMediaType.VIDEO);
         final Resource expectedTrailer = Fixture.Videos.resource(VideoMediaType.TRAILER);
         final Resource expectedBanner = Fixture.Videos.resource(VideoMediaType.BANNER);
@@ -112,7 +112,7 @@ class CreateVideoUseCaseTest extends UseCaseTest {
         final var expectedRating = Fixture.Videos.rating();
         final var expectedCategories = Set.<CategoryID>of();
         final var expectedGenres = Set.of(Fixture.Genres.acao().getId());
-        final var expectedMembers = Set.of(Fixture.CastMembers.meganFox().getId());
+        final var expectedMembers = Set.of(Fixture.CastMembers.peach().getId());
         final Resource expectedVideo = Fixture.Videos.resource(VideoMediaType.VIDEO);
         final Resource expectedTrailer = Fixture.Videos.resource(VideoMediaType.TRAILER);
         final Resource expectedBanner = Fixture.Videos.resource(VideoMediaType.BANNER);
@@ -169,8 +169,8 @@ class CreateVideoUseCaseTest extends UseCaseTest {
         final var expectedCategories = Set.of(Fixture.Categories.filmes().getId());
         final var expectedGenres = Set.<GenreID>of();
         final var expectedMembers = Set.of(
-                Fixture.CastMembers.meganFox().getId(),
-                Fixture.CastMembers.jehnifferAniston().getId()
+                Fixture.CastMembers.peach().getId(),
+                Fixture.CastMembers.zelda().getId()
         );
         final var expectedVideo = Fixture.Videos.resource(VideoMediaType.VIDEO);
         final var expectedTrailer = Fixture.Videos.resource(VideoMediaType.TRAILER);
@@ -307,7 +307,7 @@ class CreateVideoUseCaseTest extends UseCaseTest {
         final var expectedRating = Fixture.Videos.rating();
         final var expectedCategories = Set.of(Fixture.Categories.filmes().getId());
         final var expectedGenres = Set.of(Fixture.Genres.acao().getId());
-        final var expectedMembers = Set.of(Fixture.CastMembers.jehnifferAniston().getId(), Fixture.CastMembers.meganFox().getId());
+        final var expectedMembers = Set.of(Fixture.CastMembers.zelda().getId(), Fixture.CastMembers.peach().getId());
         final Resource expectedVideo = null;
         final Resource expectedTrailer = null;
         final Resource expectedBanner = null;
@@ -412,7 +412,7 @@ class CreateVideoUseCaseTest extends UseCaseTest {
 
         Mockito.verify(categoryGateway, Mockito.times(0)).existsByIds(Mockito.any());
         Mockito.verify(castMemberGateway, Mockito.times(0)).existsByIds(Mockito.any());
-        Mockito.verify(mediaResourceGateway, Mockito.times(0)).storeAudioVideo(Mockito.any(), Mockito.any());
+        Mockito.verify(mediaResourceGateway, Mockito.times(0)).storeVideo(Mockito.any(), Mockito.any());
         Mockito.verify(genreGateway, Mockito.times(0)).existsByIds(Mockito.any());
         Mockito.verify(gateway, Mockito.times(0)).create(Mockito.any());
     }
@@ -544,7 +544,7 @@ class CreateVideoUseCaseTest extends UseCaseTest {
         final var expectedRating = Fixture.Videos.rating();
         final var expectedCategories = Set.of(aulasId);
         final var expectedGenres = Set.of(Fixture.Genres.acao().getId());
-        final var expectedMembers = Set.of(Fixture.CastMembers.meganFox().getId());
+        final var expectedMembers = Set.of(Fixture.CastMembers.peach().getId());
         final Resource expectedVideo = null;
         final Resource expectedTrailer = null;
         final Resource expectedBanner = null;
@@ -604,7 +604,7 @@ class CreateVideoUseCaseTest extends UseCaseTest {
         final var expectedRating = Fixture.Videos.rating();
         final var expectedCategories = Set.of(Fixture.Categories.filmes().getId());
         final var expectedGenres = Set.of(techId);
-        final var expectedMembers = Set.of(Fixture.CastMembers.meganFox().getId());
+        final var expectedMembers = Set.of(Fixture.CastMembers.peach().getId());
         final Resource expectedVideo = null;
         final Resource expectedTrailer = null;
         final Resource expectedBanner = null;
@@ -650,7 +650,7 @@ class CreateVideoUseCaseTest extends UseCaseTest {
 
     @Test
     void givenAValidCommand_whenCreatingVideoAndSomeCastMembersDoesNotExists_thenShouldReturnDomainException() {
-        final var wesleyId = Fixture.CastMembers.jehnifferAniston().getId();
+        final var wesleyId = Fixture.CastMembers.zelda().getId();
 
         final var expectedErrorMessage = "Some cast members could not be found: %s".formatted(wesleyId.getValue());
         final var expectedErrorCount = 1;
@@ -721,7 +721,7 @@ class CreateVideoUseCaseTest extends UseCaseTest {
         final var expectedRating = Fixture.Videos.rating();
         final var expectedCategories = Set.of(Fixture.Categories.filmes().getId());
         final var expectedGenres = Set.of(Fixture.Genres.acao().getId());
-        final var expectedMembers = Set.of(Fixture.CastMembers.meganFox().getId(), Fixture.CastMembers.jehnifferAniston().getId());
+        final var expectedMembers = Set.of(Fixture.CastMembers.peach().getId(), Fixture.CastMembers.zelda().getId());
         final Resource expectedVideo = Fixture.Videos.resource(VideoMediaType.VIDEO);
         final Resource expectedTrailer = Fixture.Videos.resource(VideoMediaType.TRAILER);
         final Resource expectedBanner = Fixture.Videos.resource(VideoMediaType.BANNER);
@@ -774,7 +774,7 @@ class CreateVideoUseCaseTest extends UseCaseTest {
     }
 
     private void mockAudioVideoMedia() {
-        Mockito.when(mediaResourceGateway.storeAudioVideo(Mockito.any(), Mockito.any())).thenAnswer(t -> {
+        Mockito.when(mediaResourceGateway.storeVideo(Mockito.any(), Mockito.any())).thenAnswer(t -> {
             final var videoResource = t.getArgument(1, VideoResource.class);
             final var resource = videoResource.resource();
             return VideoMedia.with(resource.getChecksum(), resource.getName(), "/img");

@@ -3,10 +3,10 @@ package br.landucci.admin.catologo.application.castmember;
 import br.landucci.admin.catologo.application.UseCaseTest;
 import br.landucci.admin.catologo.application.castmember.delete.DefaultDeleteCastMemberUseCase;
 import br.landucci.admin.catologo.application.castmember.delete.DeleteCastMemberInputCommand;
-import br.landucci.admin.catologo.domain.Fixture;
 import br.landucci.admin.catologo.domain.castmember.CastMemberGateway;
 import br.landucci.admin.catologo.domain.castmember.CastMember;
 import br.landucci.admin.catologo.domain.castmember.CastMemberID;
+import br.landucci.admin.catologo.domain.castmember.CastMemberType;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -23,7 +23,7 @@ class DeleteCastMemberUseCaseTest extends UseCaseTest {
 
     @Test
     void givenAValidId_whenDeletingACastMember_shouldDeleteTyheCastMember() {
-        final var castMember = CastMember.newCastMember(Fixture.name(), Fixture.CastMembers.type());
+        final var castMember = CastMember.newCastMember("Zelda", CastMemberType.ACTOR);
         final var expectedId = castMember.getId();
 
         Mockito.doNothing().when(gateway).deleteById(Mockito.any());
@@ -46,7 +46,7 @@ class DeleteCastMemberUseCaseTest extends UseCaseTest {
 
     @Test
     void givenAValidId_whenCallsDeleteCastMemberAndGatewayThrowsException_shouldReceiveException() {
-        final var castMember = CastMember.newCastMember(Fixture.name(), Fixture.CastMembers.type());
+        final var castMember = CastMember.newCastMember("Zelda", CastMemberType.ACTOR);
         final var expectedId = castMember.getId();
 
         Mockito.doThrow(new IllegalStateException("Gateway error")).when(gateway).deleteById(Mockito.any());

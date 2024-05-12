@@ -3,7 +3,6 @@ package br.landucci.admin.catologo.application.castmember;
 import br.landucci.admin.catologo.application.UseCaseTest;
 import br.landucci.admin.catologo.application.castmember.update.DefaultUpdateCastMemberUseCase;
 import br.landucci.admin.catologo.application.castmember.update.UpdateCastMemberInputCommand;
-import br.landucci.admin.catologo.domain.Fixture;
 import br.landucci.admin.catologo.domain.castmember.CastMember;
 import br.landucci.admin.catologo.domain.castmember.CastMemberGateway;
 import br.landucci.admin.catologo.domain.castmember.CastMemberID;
@@ -28,7 +27,7 @@ class UpdateCastMemberUseCaseTest extends UseCaseTest {
 
     @Test
     void givenAValidCommand_whenUpdatingACastMember_thenShouldReturnItsIdentifier() {
-        final var castMember = CastMember.newCastMember(Fixture.name(), Fixture.CastMembers.type());
+        final var castMember = CastMember.newCastMember("Peach", CastMemberType.ACTOR);
         final var expectedId = castMember.getId();
         final var expectedName = "Zelda";
         final var expectedType = CastMemberType.DIRECTOR;
@@ -54,7 +53,7 @@ class UpdateCastMemberUseCaseTest extends UseCaseTest {
 
     @Test
     void givenAnInvalidName_whenUpdatingACastMember_thenShouldThrowNotificationException() {
-        final var castMember = CastMember.newCastMember(Fixture.name(), Fixture.CastMembers.type());
+        final var castMember = CastMember.newCastMember("Zelda", CastMemberType.DIRECTOR);
         final var expectedId = castMember.getId();
         final var expectedType = CastMemberType.ACTOR;
         final var expectedErrorCount = 1;
@@ -75,7 +74,7 @@ class UpdateCastMemberUseCaseTest extends UseCaseTest {
 
     @Test
     void givenAnInvalidType_whenUpdatingCastMember_thenShouldThrowANotificationException() {
-        final var castMember = CastMember.newCastMember(Fixture.name(), Fixture.CastMembers.type());
+        final var castMember = CastMember.newCastMember("Peach", CastMemberType.ACTOR);
         final var expectedId = castMember.getId();
         final var expectedName = "Zelda";
         final var expectedErrorCount = 1;
@@ -97,8 +96,8 @@ class UpdateCastMemberUseCaseTest extends UseCaseTest {
     @Test
     void givenAnInvalidId_whenUpdatingACastMember_thenShouldThrowANotFoundException() {
         final var expectedId = CastMemberID.with("123");
-        final var expectedName = Fixture.name();
-        final var expectedType = Fixture.CastMembers.type();
+        final var expectedName = "Zelda";
+        final var expectedType = CastMemberType.DIRECTOR;
         final var expectedErrorMessage = "CastMember with ID 123 was not found";
         final var command = UpdateCastMemberInputCommand.with(expectedId.getValue(), expectedName, expectedType);
 

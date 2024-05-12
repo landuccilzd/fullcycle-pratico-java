@@ -3,10 +3,10 @@ package br.landucci.admin.catologo.application.castmember;
 import br.landucci.admin.catologo.application.UseCaseTest;
 import br.landucci.admin.catologo.application.castmember.find.DefaultFindCastMemberByIDUseCase;
 import br.landucci.admin.catologo.application.castmember.find.FindCastMemberByIDInputCommand;
-import br.landucci.admin.catologo.domain.Fixture;
 import br.landucci.admin.catologo.domain.castmember.CastMember;
 import br.landucci.admin.catologo.domain.castmember.CastMemberGateway;
 import br.landucci.admin.catologo.domain.castmember.CastMemberID;
+import br.landucci.admin.catologo.domain.castmember.CastMemberType;
 import br.landucci.admin.catologo.domain.exception.NotFoundException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -26,8 +26,8 @@ class FindCastMemberByIdUseCaseTest extends UseCaseTest {
 
     @Test
     void givenAValidId_whenFindingACastMember_shouldReturnTheCastMember() {
-        final var expectedName = Fixture.name();
-        final var expectedType = Fixture.CastMembers.type();
+        final var expectedName = "Zelda";
+        final var expectedType = CastMemberType.ACTOR;
         final var castMember = CastMember.newCastMember(expectedName, expectedType);
         final var expectedId = castMember.getId();
 

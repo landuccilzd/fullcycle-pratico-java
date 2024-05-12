@@ -4,7 +4,7 @@ import br.landucci.admin.catologo.application.UseCaseTest;
 import br.landucci.admin.catologo.application.genre.list.ListGenreOutputCommand;
 import br.landucci.admin.catologo.application.video.list.DefaultListVideosUseCase;
 import br.landucci.admin.catologo.application.video.list.ListVideoOutputCommand;
-import br.landucci.admin.catologo.domain.Fixture;
+import br.landucci.admin.catologo.application.Fixture;
 import br.landucci.admin.catologo.domain.pagination.Pagination;
 import br.landucci.admin.catologo.domain.video.VideoGateway;
 import br.landucci.admin.catologo.domain.video.VideoPreview;

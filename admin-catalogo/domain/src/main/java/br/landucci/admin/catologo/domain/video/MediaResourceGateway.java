@@ -4,7 +4,7 @@ import java.util.Optional;
 
 public interface MediaResourceGateway {
 
-    VideoMedia storeAudioVideo(VideoID anId, VideoResource aResource);
+    VideoMedia storeVideo(VideoID anId, VideoResource aResource);
 
     ImageMedia storeImage(VideoID anId, VideoResource aResource);
 
