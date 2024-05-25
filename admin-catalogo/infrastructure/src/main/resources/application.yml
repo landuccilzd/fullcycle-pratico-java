@@ -1,3 +1,16 @@
+amqp:
+  admin:
+    auto-create: false
+  queues:
+    video-created:
+      exchange: video.events
+      routing-key: video.created
+      queue: video.created.queue
+    video-encoded:
+      exchange: video.events
+      routing-key: video.encoded
+      queue: video.encoded.queue
+---
 spring:
   application:
     name: Admin Catalogo
@@ -23,6 +36,12 @@ spring:
     maximun-pool-size: 20 # Qunatidade de conexões para manter abertas
     minimum-idle: 10
     pool-name: master
+  rabbitmq:
+    dynamic: ${amqp.admin.auto-create}
+    host: localhost
+    port: 5672
+    username: codeflix
+    password: C0d3Fl1x
   profiles:
     active: dev
 ---
@@ -43,6 +62,11 @@ server:
       worker: 64
       io: 4
 ---
+storage:
+  catalogo-videos:
+    location-pattern: videoId-{videoId}
+    filename-pattern: type-{type}
+---
 spring:
   config:
     activate:
@@ -53,6 +77,14 @@ spring:
       ddl-auto: update
   datasource:
     url: jdbc:mysql://${DATABASE_MYSQL_URL}/${DATABASE_MYSQL_DB}_dev
+amqp:
+  queues:
+    video-created:
+      exchange: video.events.dev
+      routing-key: video.created.dev
+    video-encoded:
+      exchange: video.events.dev
+      routing-key: video.encoded.dev
 storage:
   catalogo-videos:
     local-storage-path: C:\\dev\\storage\\dev
@@ -61,12 +93,13 @@ spring:
   config:
     activate:
       on-profile: tst
+  autoconfigure:
+    exclude:
+      - org.springframework.boot.autoconfigure.amqp.RabbitAutoConfiguration
   jpa:
-#    defer-datasource-inicialization: true
     database-platform: org.hibernate.dialect.H2Dialect
     show-sql: true
     hibernate:
-#      ddl-auto: create-drop
       ddl-auto: none
   datasource:
     driver-class-name: org.h2.Driver
@@ -77,6 +110,14 @@ spring:
     console:
       enabled: true
       path: /h2
+amqp:
+  queues:
+    video-created:
+      exchange: video.events.tst
+      routing-key: video.created.tst
+    video-encoded:
+      exchange: video.events.tst
+      routing-key: video.encoded.tst
 storage:
   catalogo-videos:
     local-storage-path: C:\\dev\\storage\\tst
@@ -85,6 +126,9 @@ spring:
   config:
     activate:
       on-profile: tst-int
+  autoconfigure:
+    exclude:
+      - org.springframework.boot.autoconfigure.amqp.RabbitAutoConfiguration
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
     show-sql: true
@@ -99,6 +143,16 @@ spring:
     console:
       enabled: true
       path: /h2
+amqp:
+  queues:
+    video-created:
+      exchange: video.events.tst-int
+      routing-key: video.created.tst-int
+      queue: video.created.queue.tst-int
+    video-encoded:
+      exchange: video.events.tst-int
+      routing-key: video.encoded.tst-int
+      queue: video.encoded.queue.tst-int
 storage:
   catalogo-videos:
     local-storage-path: C:\\dev\\storage\\tst-int
@@ -109,12 +163,26 @@ spring:
   config:
     activate:
       on-profile: tst-e2e
+  autoconfigure:
+    exclude:
+      - org.springframework.boot.autoconfigure.amqp.RabbitAutoConfiguration
   jpa:
     show-sql: true
     hibernate:
       ddl-auto: create-drop
   datasource:
     url: jdbc:mysql://localhost:${E2E_MYSQL_PORT}/adm_videos_e2e
+  rabbitmq:
+    admin:
+      auto-create: true
+amqp:
+  queues:
+    video-created:
+      exchange: video.events.tst-e2e
+      routing-key: video.created.tst-e2e
+    video-encoded:
+      exchange: video.events.tst-e2e
+      routing-key: video.encoded.tst-e2e
 storage:
   catalogo-videos:
     local-storage-path: C:\\dev\\storage\\tst-e2e
@@ -129,11 +197,11 @@ spring:
       ddl-auto: none
   datasource:
     url: jdbc:mysql://${DATABASE_MYSQL_URL}/${DATABASE_MYSQL_DB}
+  rabbitmq:
+    host: ${AMQP_RABBIT_HOST}
+    port: ${AMQP_RABBIT_PORT}
+    username: ${AMQP_RABBIT_USER}
+    password: ${AMQP_RABBIT_PASS}
 storage:
   catalogo-videos:
     local-storage-path: C:\\dev\\storage\\prd
----
-storage:
-  catalogo-videos:
-    location-pattern: videoId-{videoId}
-    filename-pattern: type-{type}

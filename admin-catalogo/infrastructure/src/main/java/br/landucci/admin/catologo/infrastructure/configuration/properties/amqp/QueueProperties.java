@@ -27,23 +27,27 @@ public class QueueProperties implements InitializingBean {
         return queue;
     }
 
-    public void setExchange(String exchange) {
+    public QueueProperties setExchange(String exchange) {
         this.exchange = exchange;
+        return this;
     }
-    public void setRoutingKey(String routingKey) {
+    public QueueProperties setRoutingKey(String routingKey) {
         this.routingKey = routingKey;
+        return this;
     }
-    public void setQueue(String queue) {
+    public QueueProperties setQueue(String queue) {
         this.queue = queue;
+        return this;
     }
 
     @Override
     public String toString() {
-        return "QueueProperties{" +
-                "exchange='" + exchange + '\'' +
-                ", routingKey='" + routingKey + '\'' +
-                ", queue='" + queue + '\'' +
-                '}';
+        return new StringBuilder()
+                .append("{ ")
+                .append("exchange='").append(exchange).append("', ")
+                .append("routingKey='").append(routingKey).append("', ")
+                .append("queue='").append(queue).append("' ")
+                .append("}").toString();
     }
 
 }

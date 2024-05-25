@@ -1,9 +1,11 @@
 package br.landucci.admin.catologo.infrastructure.video;
 
+import br.landucci.admin.catologo.domain.Identifier;
 import br.landucci.admin.catologo.domain.pagination.Pagination;
 import br.landucci.admin.catologo.domain.utils.CollectionUtils;
-import br.landucci.admin.catologo.domain.Identifier;
 import br.landucci.admin.catologo.domain.video.*;
+import br.landucci.admin.catologo.infrastructure.configuration.annotations.VideoCreatedQueue;
+import br.landucci.admin.catologo.infrastructure.services.EventService;
 import br.landucci.admin.catologo.infrastructure.utils.SqlUtils;
 import br.landucci.admin.catologo.infrastructure.video.persistence.VideoJpaEntity;
 import br.landucci.admin.catologo.infrastructure.video.persistence.VideoRepository;
@@ -18,14 +20,14 @@ import java.util.Optional;
 @Component
 public class DefaultVideoGateway implements VideoGateway {
 
-//    private final EventService eventService;
+    private final EventService eventService;
     private final VideoRepository repository;
 
     public DefaultVideoGateway(
-//            @VideoCreatedQueue final EventService eventService,
+            @VideoCreatedQueue final EventService eventService,
             final VideoRepository videoRepository) {
 
-//        this.eventService = Objects.requireNonNull(eventService);
+        this.eventService = Objects.requireNonNull(eventService);
         this.repository = Objects.requireNonNull(videoRepository);
     }
 
@@ -69,16 +71,16 @@ public class DefaultVideoGateway implements VideoGateway {
 
     @Override
     public void deleteById(final VideoID id) {
-        final var aVideoId = id.getValue();
+        final var videoId = id.getValue();
 
-        if (this.repository.existsById(aVideoId)) {
-            this.repository.deleteById(aVideoId);
+        if (this.repository.existsById(videoId)) {
+            this.repository.deleteById(videoId);
         }
     }
 
-    private Video save(final Video aVideo) {
-        final var result = this.repository.save(VideoJpaEntity.from(aVideo)).toAggregate();
-//        aVideo.publishDomainEvents(this.eventService::send);
+    private Video save(final Video video) {
+        final var result = this.repository.save(VideoJpaEntity.from(video)).toAggregate();
+        video.publishDomainEvents(this.eventService::send);
         return result;
     }
 }
