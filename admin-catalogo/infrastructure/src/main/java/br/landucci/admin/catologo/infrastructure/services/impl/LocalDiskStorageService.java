@@ -34,7 +34,7 @@ public class LocalDiskStorageService implements StorageService {
             final var content = Files.readString(path);
             return Optional.ofNullable(Resource.with(content.getBytes(StandardCharsets.UTF_8), "123",
                     "Video", id));
-        } catch(IOException e) {
+        } catch (IOException e) {
             logger.severe(e.getMessage());
         }
         return Optional.empty();
@@ -44,7 +44,7 @@ public class LocalDiskStorageService implements StorageService {
     public List<String> list(String prefix) {
         final var retorno = new ArrayList<String>();
 
-        for (final File file: this.diretorioStorage.listFiles()) {
+        for (final File file : this.diretorioStorage.listFiles()) {
             if (file.getName().toLowerCase().startsWith(prefix.toLowerCase())) {
                 retorno.add(file.getName());
             }
@@ -59,8 +59,9 @@ public class LocalDiskStorageService implements StorageService {
             return;
         }
 
-        if (!diretorioStorage.exists()) {
-            diretorioStorage.mkdirs();
+        final var destination = new File(diretorioStorage.getAbsolutePath() + "/" + id.substring(0, id.indexOf("/")));
+        if (!destination.exists()) {
+            destination.mkdirs();
         }
 
         final var content = resource.getContent();
@@ -73,7 +74,7 @@ public class LocalDiskStorageService implements StorageService {
 
     @Override
     public void deleteAll(List<String> ids) {
-        for (final File file: this.diretorioStorage.listFiles()) {
+        for (final File file : this.diretorioStorage.listFiles()) {
             if (ids.contains(file.getName())) {
                 try {
                     Files.delete(Paths.get(file.getAbsolutePath()));
