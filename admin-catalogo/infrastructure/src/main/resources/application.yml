@@ -44,6 +44,10 @@ spring:
     password: C0d3Fl1x
   profiles:
     active: dev
+  servlet:
+    multipart:
+      max-file-size: 10GB
+      max-request-size: 100GB
 ---
 springdoc:
   swagger-ui:
