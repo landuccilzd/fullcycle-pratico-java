@@ -1,5 +1,6 @@
 package br.landucci.admin.catologo.domain.genre;
 
+import br.landucci.admin.catologo.domain.UnitTest;
 import br.landucci.admin.catologo.domain.category.CategoryID;
 import br.landucci.admin.catologo.domain.exception.DomainException;
 import br.landucci.admin.catologo.domain.exception.NotificationException;
@@ -10,7 +11,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 import java.util.List;
 
-class GenreTest {
+class GenreTest extends UnitTest {
 
     @Test
     void givenAValidInput_whenCreatingGenre_thenShouldInstantiateAGenre() {
@@ -37,7 +38,7 @@ class GenreTest {
             "ab,1,Name must have between 3 and 255 characters"
     })
     void givenSomeInvalidNamesInput_whenCreatingGenre_thenShouldReturnAnError(final String expectedName,
-            final int expectedErrorCount, final String expectedErrorMessage) {
+                                                                              final int expectedErrorCount, final String expectedErrorMessage) {
 
         final var name = "empty".equals(expectedName) ? "" : expectedName;
         final var exception = Assertions.assertThrows(NotificationException.class, () ->
@@ -54,17 +55,17 @@ class GenreTest {
         final var expectedErrorCount = 1;
         final var expectedErrorMessage = "Name must have between 3 and 255 characters";
         final var expectedName = """
-            But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and
-            I will give you a complete account of the system, and expound the actual teachings of the great explorer of
-            the truth, the master-builder of human happiness. No one rejects, dislikes, or avoids pleasure itself,
-            because it is pleasure, but because those who do not know how to pursue pleasure rationally encounter
-            consequences that are extremely painful. Nor again is there anyone who loves or pursues or desires to obtain
-            pain of itself, because it is pain, but because occasionally circumstances occur in which toil and pain can
-            procure him some great pleasure. To take a trivial example, which of us ever undertakes laborious physical
-            exercise, except to obtain some advantage from it? But who has any right to find fault with a man who
-            chooses to enjoy a pleasure that has no annoying consequences, or one who avoids a pain that produces no
-            resultant pleasure?
-        """;
+                    But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and
+                    I will give you a complete account of the system, and expound the actual teachings of the great explorer of
+                    the truth, the master-builder of human happiness. No one rejects, dislikes, or avoids pleasure itself,
+                    because it is pleasure, but because those who do not know how to pursue pleasure rationally encounter
+                    consequences that are extremely painful. Nor again is there anyone who loves or pursues or desires to obtain
+                    pain of itself, because it is pain, but because occasionally circumstances occur in which toil and pain can
+                    procure him some great pleasure. To take a trivial example, which of us ever undertakes laborious physical
+                    exercise, except to obtain some advantage from it? But who has any right to find fault with a man who
+                    chooses to enjoy a pleasure that has no annoying consequences, or one who avoids a pain that produces no
+                    resultant pleasure?
+                """;
 
         final var exception = Assertions.assertThrows(NotificationException.class,
                 () -> Genre.newGenre(expectedName, true));
@@ -156,7 +157,7 @@ class GenreTest {
             "ab,1,Name must have between 3 and 255 characters"
     })
     void givenAnExistingGenre_whenUpdatingWithNullName_thenShouldReturnNotificationException(final String expectedName,
-            final int expectedErrorCount, final String expectedErrorMessage) {
+                                                                                             final int expectedErrorCount, final String expectedErrorMessage) {
 
         final var genre = Genre.newGenre("Ação", true);
         final var name = "empty".equals(expectedName) ? "" : expectedName;
@@ -176,17 +177,17 @@ class GenreTest {
         final var expectedErrorCount = 1;
         final var expectedErrorMessage = "Name must have between 3 and 255 characters";
         final var newName = """
-            But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and
-            I will give you a complete account of the system, and expound the actual teachings of the great explorer of
-            the truth, the master-builder of human happiness. No one rejects, dislikes, or avoids pleasure itself,
-            because it is pleasure, but because those who do not know how to pursue pleasure rationally encounter
-            consequences that are extremely painful. Nor again is there anyone who loves or pursues or desires to obtain
-            pain of itself, because it is pain, but because occasionally circumstances occur in which toil and pain can
-            procure him some great pleasure. To take a trivial example, which of us ever undertakes laborious physical
-            exercise, except to obtain some advantage from it? But who has any right to find fault with a man who
-            chooses to enjoy a pleasure that has no annoying consequences, or one who avoids a pain that produces no
-            resultant pleasure?
-        """;
+                    But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and
+                    I will give you a complete account of the system, and expound the actual teachings of the great explorer of
+                    the truth, the master-builder of human happiness. No one rejects, dislikes, or avoids pleasure itself,
+                    because it is pleasure, but because those who do not know how to pursue pleasure rationally encounter
+                    consequences that are extremely painful. Nor again is there anyone who loves or pursues or desires to obtain
+                    pain of itself, because it is pain, but because occasionally circumstances occur in which toil and pain can
+                    procure him some great pleasure. To take a trivial example, which of us ever undertakes laborious physical
+                    exercise, except to obtain some advantage from it? But who has any right to find fault with a man who
+                    chooses to enjoy a pleasure that has no annoying consequences, or one who avoids a pain that produces no
+                    resultant pleasure?
+                """;
 
         final var genre = Genre.newGenre(expectedName, expectedActive);
         final var exception = Assertions.assertThrows(NotificationException.class,
@@ -231,7 +232,7 @@ class GenreTest {
         final var genre = Genre.newGenre(expectedName, expectedActive);
 
         genre.adicionarCategoria(expectedCategoryID);
-        final var exception = Assertions.assertThrows(DomainException.class,() ->
+        final var exception = Assertions.assertThrows(DomainException.class, () ->
                 genre.adicionarCategoria(expectedCategoryID));
 
         Assertions.assertNotNull(exception);

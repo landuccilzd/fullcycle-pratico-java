@@ -38,10 +38,10 @@ spring:
     pool-name: master
   rabbitmq:
     dynamic: ${amqp.admin.auto-create}
-    host: localhost
-    port: 5672
-    username: codeflix
-    password: C0d3Fl1x
+    host: ${AMQP_RABBIT_HOST}
+    port: ${AMQP_RABBIT_PORT}
+    username: ${AMQP_RABBIT_USER}
+    password: ${AMQP_RABBIT_PASS}
   profiles:
     active: dev
   servlet:

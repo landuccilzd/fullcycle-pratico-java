@@ -1,5 +1,6 @@
 package br.landucci.admin.catologo.domain.category;
 
+import br.landucci.admin.catologo.domain.UnitTest;
 import br.landucci.admin.catologo.domain.exception.DomainException;
 import br.landucci.admin.catologo.domain.validation.handler.ThrowsValidationHandler;
 import org.junit.jupiter.api.Assertions;
@@ -7,7 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-class CategoryTest {
+class CategoryTest extends UnitTest {
 
     @Test
     void givenAValidParams_whenCallNewCategory_thenInstantiateACategory() {
@@ -33,13 +34,13 @@ class CategoryTest {
             "ab,A Categoria mais assistida,true,1,Name must have between 3 and 255 characters"
     })
     void givenAnInvalidNullName_whenValidateNewCatewgory_thenShouldReceiveError(final String expectedName,
-            final String expectedDescription, final boolean expectedIsActive, final int expectedErrorCount,
-            final String expectedErrorMessage) {
+                                                                                final String expectedDescription, final boolean expectedIsActive, final int expectedErrorCount,
+                                                                                final String expectedErrorMessage) {
 
         final var name = "empty".equals(expectedName) ? "" : expectedName;
         final var category = Category.newCategory(name, expectedDescription, expectedIsActive);
 
-        final var handler =  new ThrowsValidationHandler();
+        final var handler = new ThrowsValidationHandler();
         final var exception = Assertions.assertThrows(DomainException.class, () -> category.validate(handler));
 
         Assertions.assertEquals(expectedErrorCount, exception.getErrors().size());
@@ -201,7 +202,7 @@ class CategoryTest {
         final var category = Category.newCategory(expectedName, "Vamos mudar isso aqui", expectedIsActive);
         Assertions.assertDoesNotThrow(() -> category.validate(new ThrowsValidationHandler()));
 
-         Assertions.assertNotNull(category);
+        Assertions.assertNotNull(category);
         Assertions.assertNotNull(category.getId());
         Assertions.assertNotNull(category.getCreatedAt());
         Assertions.assertNotNull(category.getUpdatedAt());

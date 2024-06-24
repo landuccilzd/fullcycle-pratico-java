@@ -1,6 +1,33 @@
 version: '3.7'
 
 services:
+  app:
+    container_name: codeflix_app
+    build: .
+    profiles: [ "app" ]
+    restart: unless-stopped
+    env_file:
+      - .env
+    ports:
+      - 8090:8090
+    depends_on:
+      - rabbitmq
+    networks:
+      - codeflix_network
+
+  mysql:
+    container_name: codeflix_mysql
+    image: mysql:latest
+    environment:
+      - MYSQL_ROOT_PASSWORD=123456
+      - DATABASE_MYSQL_DB=adm_videos_dev
+    security_opt:
+      - seccomp:unconfined
+    ports:
+      - 3306:3306
+    networks:
+      - codeflix_network
+
   rabbitmq:
     container_name: codeflix_rabbitmq
     image: rabbitmq:3-management

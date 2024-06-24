@@ -59,9 +59,11 @@ public class LocalDiskStorageService implements StorageService {
             return;
         }
 
-        final var destination = new File(diretorioStorage.getAbsolutePath() + "/" + id.substring(0, id.indexOf("/")));
-        if (!destination.exists()) {
-            destination.mkdirs();
+        if (id.indexOf('/') >= 0) {
+            final var destination = new File(diretorioStorage.getAbsolutePath() + "/" + id.substring(0, id.indexOf("/")));
+            if (!destination.exists()) {
+                destination.mkdirs();
+            }
         }
 
         final var content = resource.getContent();
