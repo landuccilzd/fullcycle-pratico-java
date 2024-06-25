@@ -11,20 +11,31 @@ services:
     ports:
       - 8090:8090
     depends_on:
+      - mysql
       - rabbitmq
     networks:
       - codeflix_network
 
   mysql:
-    container_name: codeflix_mysql
     image: mysql:latest
+    command: --innodb-use-native-aio=0
+    container_name: codeflix_mysql
+    restart: always
+    tty: true
+    volumes:
+      - /c/dev/storage/mysql/codeflix:/var/lib/mysql
     environment:
+      - MYSQL_USER=codeflix
+      - MYSQL_PASSWORD=C0d3Fl1x
+      - MYSQL_TCP_PORT=3307
+      - MYSQL_DATABASE=adm_videos_dev
       - MYSQL_ROOT_PASSWORD=123456
-      - DATABASE_MYSQL_DB=adm_videos_dev
     security_opt:
       - seccomp:unconfined
     ports:
-      - 3306:3306
+      - 3307:3307
+    expose:
+      - 3307
     networks:
       - codeflix_network
 
