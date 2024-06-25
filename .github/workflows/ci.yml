@@ -1,9 +1,11 @@
 name: CI Pipeline
 
 on:
-  push:
   # Habilita o gatilho manual através da interface do Github Actions
   workflow_dispatch:
+  pull_request:
+    branches:
+      - main
 
 jobs:
   # Job para a execução dos testes
