@@ -3,7 +3,8 @@ version: '3.7'
 services:
   app:
     container_name: codeflix_app
-    build: .
+#    build: .
+    image: landucci/codeflix:feature_cicd-1
     profiles: [ "app" ]
     restart: unless-stopped
     env_file:
