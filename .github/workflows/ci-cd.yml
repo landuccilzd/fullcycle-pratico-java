@@ -13,7 +13,7 @@ env:
 
 jobs:
   tests:
-    name: Tests runner
+    name: Execução dos testes da aplicação
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -23,11 +23,11 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
           architecture: x64
-      - name: Run application tests
+      - name: Executando os testes da aplicação
         run: ./gradlew test
 
   build:
-    name: Build runner
+    name: Construção da aplicação
     needs: tests
     runs-on: ubuntu-latest
     steps:
@@ -38,26 +38,23 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
           architecture: x64
-      - name: Validate Graddle Wrapper
+      - name: Validando a versão do "Gradle Wrapper"
         uses: gradle/actions/wrapper-validation@v3
-      - name: Build application
+      - name: Construindo a aplicação
         uses: gradle/actions/setup-gradle@v3
-        with:
-          arguments: clean build -x test
-      - name: Set BUILD_TAG
+        run: ./gradlew clean build -x test
+      - name: Definindo a TAG da aplicação
         run: |
           echo BUILD_TAG=${{ env.MAJOR_VERSION }}.${{ env.MINOR_VERSION }}.${{ github.run_number }} >> $GITHUB_ENV
-      - name: Print BUILD_TAG defined
-        run: |
           echo "Branch     ---> ${{ github.head_ref || github.ref_name }}"
           echo "Run number ---> ${{ github.run_number }}"
           echo "Tag        ---> ${{ env.BUILD_TAG }}"
-      - name: Login to DOckerHub
+      - name: Conectando e autenticando no "DockerHub"
         uses: docker/login-action@v3.2.0
         with:
           username: ${{ secrets.DOCKER_HUB_USER }}
           password: ${{ secrets.DOCKER_HUB_PWD }}
-      - name: Build and deploy docker image
+      - name: Construindo e publicando a iamgem no "DockerHub"
         uses: docker/build-push-action@v6.1.0
         with:
           context: .
