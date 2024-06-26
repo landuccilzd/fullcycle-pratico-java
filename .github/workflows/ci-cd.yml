@@ -40,8 +40,9 @@ jobs:
           architecture: x64
       - name: Validando a versão do "Gradle Wrapper"
         uses: gradle/actions/wrapper-validation@v3
-      - name: Construindo a aplicação
+      - name: Configurando o Gradle
         uses: gradle/actions/setup-gradle@v3
+      - name: Construindo a aplicação
         run: ./gradlew clean build -x test
       - name: Definindo a TAG da aplicação
         run: |
