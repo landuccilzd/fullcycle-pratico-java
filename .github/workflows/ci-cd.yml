@@ -8,6 +8,8 @@ on:
 
 env:
   IMAGE_NAME: landucci/codeflix
+  MAJOR_VERSION: 0
+  MINOR_VERSION: 1
 
 jobs:
   tests:
@@ -44,7 +46,7 @@ jobs:
           arguments: clean build -x test
       - name: Set BUILD_TAG
         run: |
-          echo BUILD_TAG=$(echo ${{ github.head_ref || github.ref_name }} | sed "s,/,_,g")-${{ github.run_number }} >> $GITHUB_ENV
+          echo BUILD_TAG=${{ env.MAJOR_VERSION }}.${{ env.MINOR_VERSION }}.${{ github.run_number }} >> $GITHUB_ENV
       - name: Print BUILD_TAG defined
         run: |
           echo "Branch     ---> ${{ github.head_ref || github.ref_name }}"
