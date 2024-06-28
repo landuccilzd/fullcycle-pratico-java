@@ -38,8 +38,11 @@ dependencies {
     implementation('org.springframework.boot:spring-boot-starter-amqp')
     implementation('com.fasterxml.jackson.module:jackson-module-afterburner')
 
-//    testImplementation platform('org.junit:junit-bom:5.9.1')
-//    testImplementation('org.junit.jupiter:junit-jupiter')
+    implementation('org.springframework.boot:spring-boot-starter-security')
+    implementation('org.springframework.boot:spring-boot-starter-oauth2-resource-server:')
+    implementation('com.nimbusds:nimbus-jose-jwt')
+
+
 
     testImplementation('org.flywaydb:flyway-core')
     testImplementation('org.springframework.amqp:spring-rabbit-test:3.1.4')
@@ -47,6 +50,9 @@ dependencies {
     testImplementation('org.testcontainers:testcontainers:1.19.4')
     testImplementation('org.testcontainers:mysql:1.19.4')
     testImplementation('org.testcontainers:junit-jupiter:1.19.4')
+
+    testImplementation('org.springframework.security:spring-security-test')
+
 
     testRuntimeOnly('com.h2database:h2')
 }
