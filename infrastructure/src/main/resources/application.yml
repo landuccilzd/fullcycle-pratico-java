@@ -48,6 +48,12 @@ spring:
     multipart:
       max-file-size: 10GB
       max-request-size: 100GB
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: ${keycloak.host}/realms/${keycloak.realm}/protocol/openid-connect/certs
+          issuer-uri: ${keycloak.host}/realms/${keycloak.realm}
 ---
 springdoc:
   swagger-ui:
@@ -92,6 +98,9 @@ amqp:
 storage:
   catalogo-videos:
     local-storage-path: C:\\dev\\storage\\dev
+keycloak:
+  realm: hyrule
+  host: http://localhost:8080
 ---
 spring:
   config:
@@ -125,6 +134,9 @@ amqp:
 storage:
   catalogo-videos:
     local-storage-path: C:\\dev\\storage\\tst
+keycloak:
+  realm: hyrule
+  host: http://localhost:8080
 ---
 spring:
   config:
@@ -160,6 +172,9 @@ amqp:
 storage:
   catalogo-videos:
     local-storage-path: C:\\dev\\storage\\tst-int
+keycloak:
+  realm: hyrule
+  host: http://localhost:8080
 ---
 spring:
   flyway:
@@ -190,6 +205,9 @@ amqp:
 storage:
   catalogo-videos:
     local-storage-path: C:\\dev\\storage\\tst-e2e
+keycloak:
+  realm: hyrule
+  host: http://localhost:8080
 ---
 spring:
   config:
@@ -209,3 +227,6 @@ spring:
 storage:
   catalogo-videos:
     local-storage-path: C:\\dev\\storage\\prd
+keycloak:
+  realm: ${KEYCLOAK_REALM:hyrule}
+  host: ${KEYCLOAK_HOST:http://localhost:8080}
