@@ -1,5 +1,6 @@
 package br.landucci.admin.catologo.infrastructure.api;
 
+import br.landucci.admin.catologo.ApiTest;
 import br.landucci.admin.catologo.ControllerTest;
 import br.landucci.admin.catologo.application.video.create.CreateVideoInputCommand;
 import br.landucci.admin.catologo.application.video.create.CreateVideoOutputCommand;
@@ -120,7 +121,7 @@ class VideoAPITest {
                 .file(expectedBanner)
                 .file(expectedThumb)
                 .file(expectedThumbHalf)
-//                .with(ApiTest.GENRES_JWT)
+                .with(ApiTest.VIDEOS_JWT)
                 .param("title", expectedTitle)
                 .param("description", expectedDescription)
                 .param("year_launched", String.valueOf(expectedLaunchYear.getValue()))
@@ -171,7 +172,7 @@ class VideoAPITest {
                 .thenThrow(NotificationException.with(new ValidationError(expectedErrorMessage)));
 
         final var aRequest = MockMvcRequestBuilders.multipart("/videos")
-//                .with(ApiTest.GENRES_JWT)
+                .with(ApiTest.VIDEOS_JWT)
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.MULTIPART_FORM_DATA);
 
@@ -217,7 +218,7 @@ class VideoAPITest {
                 .thenReturn(new CreateVideoOutputCommand(expectedId.getValue()));
 
         final var aRequest = MockMvcRequestBuilders.post("/videos")
-//                .with(ApiTest.GENRES_JWT)
+                .with(ApiTest.VIDEOS_JWT)
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(mapper.writeValueAsString(command));
@@ -254,7 +255,7 @@ class VideoAPITest {
     @Test
     void givenAnEmptyBody_whenCallsCreatePartial_shouldReturnError() throws Exception {
         final var aRequest = MockMvcRequestBuilders.post("/videos")
-//                .with(ApiTest.GENRES_JWT)
+                .with(ApiTest.VIDEOS_JWT)
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON);
 
@@ -270,7 +271,7 @@ class VideoAPITest {
                 .thenThrow(NotificationException.with(new ValidationError(expectedErrorMessage)));
 
         final var aRequest = MockMvcRequestBuilders.post("/videos")
-//                .with(ApiTest.GENRES_JWT)
+                .with(ApiTest.VIDEOS_JWT)
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("""
@@ -334,7 +335,7 @@ class VideoAPITest {
                 .thenReturn(FindVideoByIDOutputCommand.from(video));
 
         final var aRequest = MockMvcRequestBuilders.get("/videos/{id}", expectedId)
-//                .with(ApiTest.GENRES_JWT)
+                .with(ApiTest.VIDEOS_JWT)
                 .accept(MediaType.APPLICATION_JSON);
 
         final var response = this.mvc.perform(aRequest);
@@ -389,7 +390,7 @@ class VideoAPITest {
                 .thenThrow(NotFoundException.with(Video.class, expectedId));
 
         final var request = MockMvcRequestBuilders.get("/videos/{id}", expectedId)
-//                .with(ApiTest.GENRES_JWT)
+                .with(ApiTest.VIDEOS_JWT)
                 .accept(MediaType.APPLICATION_JSON);
 
         final var response = this.mvc.perform(request);
@@ -433,7 +434,7 @@ class VideoAPITest {
         Mockito.when(updateVideoUseCase.execute(Mockito.any())).thenReturn(new UpdateVideoOutputCommand(expectedId.getValue()));
 
         final var request = MockMvcRequestBuilders.put("/videos/{id}", expectedId.getValue())
-//                .with(ApiTest.GENRES_JWT)
+                .with(ApiTest.VIDEOS_JWT)
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(mapper.writeValueAsString(command));
@@ -506,7 +507,7 @@ class VideoAPITest {
                 .thenThrow(NotificationException.with(new ValidationError(expectedErrorMessage)));
 
         final var request = MockMvcRequestBuilders.put("/videos/{id}", expectedId.getValue())
-//                .with(ApiTest.GENRES_JWT)
+                .with(ApiTest.VIDEOS_JWT)
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(mapper.writeValueAsString(command));
@@ -529,8 +530,8 @@ class VideoAPITest {
 
         Mockito.doNothing().when(deleteVideoUseCase).execute(Mockito.any());
 
-        final var request = MockMvcRequestBuilders.delete("/videos/{id}", expectedId.getValue());
-//                .with(ApiTest.GENRES_JWT)
+        final var request = MockMvcRequestBuilders.delete("/videos/{id}", expectedId.getValue())
+                .with(ApiTest.VIDEOS_JWT);
 
         final var response = this.mvc.perform(request);
 
@@ -558,7 +559,7 @@ class VideoAPITest {
                 .thenReturn(new Pagination<>(expectedPage, expectedPerPage, expectedTotal, expectedItems));
 
         final var aRequest = MockMvcRequestBuilders.get("/videos")
-//                .with(ApiTest.GENRES_JWT)
+                .with(ApiTest.VIDEOS_JWT)
                 .queryParam("page", String.valueOf(expectedPage))
                 .queryParam("perPage", String.valueOf(expectedPerPage))
                 .queryParam("sort", expectedSort)
@@ -616,7 +617,7 @@ class VideoAPITest {
                 .thenReturn(new Pagination<>(expectedPage, expectedPerPage, expectedTotal, expectedItems));
 
         final var aRequest = MockMvcRequestBuilders.get("/videos")
-//                .with(ApiTest.GENRES_JWT)
+                .with(ApiTest.VIDEOS_JWT)
                 .accept(MediaType.APPLICATION_JSON);
 
         final var response = this.mvc.perform(aRequest);
@@ -656,8 +657,8 @@ class VideoAPITest {
 
         Mockito.when(findMediaByIDUseCase.execute(Mockito.any())).thenReturn(expectedMedia);
 
-        final var aRequest = MockMvcRequestBuilders.get("/videos/{id}/medias/{type}", expectedId.getValue(), expectedMediaType.name());
-//                .with(ApiTest.GENRES_JWT);
+        final var aRequest = MockMvcRequestBuilders.get("/videos/{id}/medias/{type}", expectedId.getValue(), expectedMediaType.name())
+                .with(ApiTest.VIDEOS_JWT);
 
         final var response = this.mvc.perform(aRequest);
 
@@ -689,7 +690,7 @@ class VideoAPITest {
 
         final var aRequest = MockMvcRequestBuilders.multipart("/videos/{id}/medias/{type}", expectedId.getValue(), expectedType.name())
                 .file(expectedVideo)
-//                .with(ApiTest.GENRES_JWT)
+                .with(ApiTest.VIDEOS_JWT)
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.MULTIPART_FORM_DATA);
 
@@ -725,7 +726,7 @@ class VideoAPITest {
         // when
         final var aRequest = MockMvcRequestBuilders.multipart("/videos/{id}/medias/INVALID", expectedId.getValue())
                 .file(expectedVideo)
-//                .with(ApiTest.GENRES_JWT)
+                .with(ApiTest.VIDEOS_JWT)
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.MULTIPART_FORM_DATA);
 

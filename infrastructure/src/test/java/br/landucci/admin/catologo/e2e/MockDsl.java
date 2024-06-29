@@ -1,5 +1,6 @@
 package br.landucci.admin.catologo.e2e;
 
+import br.landucci.admin.catologo.ApiTest;
 import br.landucci.admin.catologo.application.castmember.create.CreateCastMemberOutputCommand;
 import br.landucci.admin.catologo.application.castmember.update.UpdateCastMemberOutputCommand;
 import br.landucci.admin.catologo.application.category.create.CreateCategoryOutputCommand;
@@ -131,6 +132,7 @@ public interface MockDsl {
     private ResultActions list(final String url, final int page, final int perPage, final String search,
                                          final String sort, final String direction) throws Exception {
         final var request = MockMvcRequestBuilders.get(url)
+                .with(ApiTest.ADMIN_JWT)
                 .queryParam("page", String.valueOf(page))
                 .queryParam("perPage", String.valueOf(perPage))
                 .queryParam("search", search)
@@ -144,6 +146,7 @@ public interface MockDsl {
 
     private String retrieve(final String url) throws Exception {
         final var request = MockMvcRequestBuilders.get(url)
+                .with(ApiTest.ADMIN_JWT)
                 .contentType(MediaType.APPLICATION_JSON);
 
         return this.mvc().perform(request)
@@ -154,6 +157,7 @@ public interface MockDsl {
 
     private String create(final String url, final Object body) throws Exception {
         final var request = MockMvcRequestBuilders.post(url)
+                .with(ApiTest.ADMIN_JWT)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(Json.writeValueAsString(body));
 
@@ -165,6 +169,7 @@ public interface MockDsl {
 
     private String update(final String url, final Object body) throws Exception {
         final var request = MockMvcRequestBuilders.put(url)
+                .with(ApiTest.ADMIN_JWT)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(Json.writeValueAsString(body));
 
@@ -174,13 +179,15 @@ public interface MockDsl {
     }
 
     private void delete(final String url) throws Exception {
-        final var request = MockMvcRequestBuilders.delete(url).contentType(MediaType.APPLICATION_JSON);
+        final var request = MockMvcRequestBuilders.delete(url)
+                .with(ApiTest.ADMIN_JWT)
+                .contentType(MediaType.APPLICATION_JSON);
+
         this.mvc().perform(request).andExpect(MockMvcResultMatchers.status().isNoContent());
     }
 
     default <S, D> List<D> mapTo(final List<S> source, final Function<S, D> mapper) {
         return source.stream().map(mapper).toList();
     }
-
 
 }

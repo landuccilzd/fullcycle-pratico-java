@@ -57,13 +57,21 @@ services:
   keycloak:
     container_name: codeflix_keycloack
     image: quay.io/keycloak/keycloak:25.0.1
+    volumes:
+      - /c/dev/storage/keycloak/realm/data:/opt/keycloak/data/import
     environment:
+      - DB_VENDOR: mysql
+      - DB_ADDR: mysql #Use development db, since this is development docker
+        DB_DATABASE: keycloak
+        DB_USER: keycloak
+        DB_PASSWORD: K3yCl04k
       - KEYCLOAK_ADMIN=codeflix
       - KEYCLOAK_ADMIN_PASSWORD=C0d3Fl1x
     ports:
       - 8080:8080
     command:
       - start-dev
+      - --import-realm
     networks:
       - codeflix_network
 

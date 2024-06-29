@@ -1,5 +1,6 @@
 package br.landucci.admin.catologo.infrastructure.api;
 
+import br.landucci.admin.catologo.ApiTest;
 import br.landucci.admin.catologo.ControllerTest;
 import br.landucci.admin.catologo.application.category.create.CreateCategoryOutputCommand;
 import br.landucci.admin.catologo.application.category.create.CreateCategoryUseCase;
@@ -77,6 +78,7 @@ class CategoryAPITest {
 
         // WHEN
         final var request = MockMvcRequestBuilders.get("/categories")
+                .with(ApiTest.CATEGORIES_JWT)
                 .queryParam("page", String.valueOf(expectedPage))
                 .queryParam("perPage", String.valueOf(expectedPerPage))
                 .queryParam("sort", expectedSort)
@@ -124,6 +126,7 @@ class CategoryAPITest {
 
         // WHEN
         final var request = MockMvcRequestBuilders.get("/categories/{id}", expectedId.getValue())
+                .with(ApiTest.CATEGORIES_JWT)
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON);
         final var response = this.mvc.perform(request).andDo(MockMvcResultHandlers.print());
@@ -153,6 +156,7 @@ class CategoryAPITest {
 
         // WHEN
         final var request = MockMvcRequestBuilders.get("/categories/{id}", expectedId.getValue())
+                .with(ApiTest.CATEGORIES_JWT)
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON);
 
@@ -177,6 +181,7 @@ class CategoryAPITest {
 
         // WHEN - QUANDO
         final var request = MockMvcRequestBuilders.post("/categories")
+                .with(ApiTest.CATEGORIES_JWT)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(this.mapper.writeValueAsString(input));
 
@@ -211,6 +216,7 @@ class CategoryAPITest {
 
         // WHEN - QUANDO
         final var request = MockMvcRequestBuilders.put("/categories/{id}", expectedId.getValue())
+                .with(ApiTest.CATEGORIES_JWT)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
                 .content(this.mapper.writeValueAsString(input));
@@ -245,6 +251,7 @@ class CategoryAPITest {
 
         // WHEN - QUANDO
         final var request = MockMvcRequestBuilders.put("/categories/{id}", expectedId)
+                .with(ApiTest.CATEGORIES_JWT)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
                 .content(this.mapper.writeValueAsString(input));
@@ -272,6 +279,7 @@ class CategoryAPITest {
 
         // WHEN - QUANDO
         final var request = MockMvcRequestBuilders.put("/categories/{id}", expectedId)
+                .with(ApiTest.CATEGORIES_JWT)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
                 .content(this.mapper.writeValueAsString(input));
@@ -295,6 +303,7 @@ class CategoryAPITest {
 
         // WHEN - QUANDO
         final var request = MockMvcRequestBuilders.delete("/categories/{id}", expectedId)
+                .with(ApiTest.CATEGORIES_JWT)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON);
 
@@ -318,6 +327,7 @@ class CategoryAPITest {
 
         // WHEN - QUANDO
         final var request = MockMvcRequestBuilders.delete("/categories/{id}", expectedId)
+                .with(ApiTest.CATEGORIES_JWT)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON);
 
