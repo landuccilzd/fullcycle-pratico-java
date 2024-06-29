@@ -29,7 +29,7 @@ services:
       - MYSQL_USER=codeflix
       - MYSQL_PASSWORD=C0d3Fl1x
       - MYSQL_TCP_PORT=3307
-      - MYSQL_DATABASE=adm_videos_dev
+      - MYSQL_DATABASE=adm_videos_e2e
       - MYSQL_ROOT_PASSWORD=123456
     security_opt:
       - seccomp:unconfined
@@ -60,11 +60,11 @@ services:
     volumes:
       - /c/dev/storage/keycloak/realm/data:/opt/keycloak/data/import
     environment:
-      - DB_VENDOR: mysql
-      - DB_ADDR: mysql #Use development db, since this is development docker
-        DB_DATABASE: keycloak
-        DB_USER: keycloak
-        DB_PASSWORD: K3yCl04k
+#      - DB_VENDOR: mysql
+#      - DB_ADDR: mysql #Use development db, since this is development docker
+#      - DB_DATABASE: keycloak
+#      - DB_USER: keycloak
+#      - DB_PASSWORD: K3yCl04k
       - KEYCLOAK_ADMIN=codeflix
       - KEYCLOAK_ADMIN_PASSWORD=C0d3Fl1x
     ports:
