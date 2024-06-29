@@ -1,5 +1,6 @@
 package br.landucci.admin.catologo.infrastructure.api;
 
+import br.landucci.admin.catologo.ApiTest;
 import br.landucci.admin.catologo.ControllerTest;
 import br.landucci.admin.catologo.application.castmember.create.CreateCastMemberOutputCommand;
 import br.landucci.admin.catologo.application.castmember.create.DefaultCreateCastMemberUseCase;
@@ -73,6 +74,8 @@ class CastMemberAPITest {
                 .thenReturn(CreateCastMemberOutputCommand.from(expectedId));
 
         final var request = MockMvcRequestBuilders.post("/castmember")
+                .with(ApiTest.CASTMEMBERS_JWT)
+                .with(ApiTest.CASTMEMBERS_JWT)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(mapper.writeValueAsString(command));
 
@@ -100,6 +103,7 @@ class CastMemberAPITest {
                 .thenThrow(NotificationException.with(new ValidationError(expectedErrorMessage)));
 
         final var request = MockMvcRequestBuilders.post("/castmember")
+                .with(ApiTest.CASTMEMBERS_JWT)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(mapper.writeValueAsString(command));
 
@@ -129,6 +133,7 @@ class CastMemberAPITest {
                 .thenReturn(FindCastMemberByIDOutputCommand.from(castMember));
 
         final var request = MockMvcRequestBuilders.get("/castmember/{id}", expectedId)
+                .with(ApiTest.CASTMEMBERS_JWT)
                 .accept(MediaType.APPLICATION_JSON);
 
         final var response = this.mvc.perform(request);
@@ -154,6 +159,7 @@ class CastMemberAPITest {
                 .thenThrow(NotFoundException.with(CastMember.class, expectedId));
 
         final var request = MockMvcRequestBuilders.get("/castmember/{id}", expectedId.getValue())
+                .with(ApiTest.CASTMEMBERS_JWT)
                 .accept(MediaType.APPLICATION_JSON);
 
         final var response = this.mvc.perform(request);
@@ -179,6 +185,7 @@ class CastMemberAPITest {
                 .thenReturn(UpdateCastMemberOutputCommand.from(expectedId));
 
         final var request = MockMvcRequestBuilders.put("/castmember/{id}", expectedId.getValue())
+                .with(ApiTest.CASTMEMBERS_JWT)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(mapper.writeValueAsString(command));
 
@@ -208,6 +215,7 @@ class CastMemberAPITest {
                 .thenThrow(NotificationException.with(new ValidationError(expectedErrorMessage)));
 
         final var request = MockMvcRequestBuilders.put("/castmember/{id}", expectedId.getValue())
+                .with(ApiTest.CASTMEMBERS_JWT)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(mapper.writeValueAsString(command));
 
@@ -238,6 +246,7 @@ class CastMemberAPITest {
                 .thenThrow(NotFoundException.with(CastMember.class, expectedId));
 
         final var request = MockMvcRequestBuilders.put("/castmember/{id}", expectedId.getValue())
+                .with(ApiTest.CASTMEMBERS_JWT)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(mapper.writeValueAsString(command));
 
@@ -261,7 +270,8 @@ class CastMemberAPITest {
 
         Mockito.doNothing().when(this.deleteCastMemberUseCase).execute(Mockito.any());
 
-        final var request = MockMvcRequestBuilders.delete("/castmember/{id}", expectedId);
+        final var request = MockMvcRequestBuilders.delete("/castmember/{id}", expectedId)
+        .with(ApiTest.CASTMEMBERS_JWT);
         final var response = this.mvc.perform(request);
 
         response.andExpect(MockMvcResultMatchers.status().isNoContent());
@@ -286,6 +296,7 @@ class CastMemberAPITest {
                 .thenReturn(new Pagination<>(expectedPage, expectedPerPage, expectedTotal, expectedItems));
 
         final var request = MockMvcRequestBuilders.get("/castmember")
+                .with(ApiTest.CASTMEMBERS_JWT)
                 .queryParam("page", String.valueOf(expectedPage))
                 .queryParam("perPage", String.valueOf(expectedPerPage))
                 .queryParam("search", expectedTerms)
@@ -330,6 +341,7 @@ class CastMemberAPITest {
                 .thenReturn(new Pagination<>(expectedPage, expectedPerPage, expectedTotal, expectedItems));
 
         final var request = MockMvcRequestBuilders.get("/castmember")
+                .with(ApiTest.CASTMEMBERS_JWT)
                 .accept(MediaType.APPLICATION_JSON);
 
         final var response = this.mvc.perform(request);
