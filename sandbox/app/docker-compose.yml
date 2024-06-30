@@ -1,0 +1,22 @@
+#version: '3.7'
+
+services:
+  app:
+    container_name: codeflix_app
+#   image: landucci/codeflix:0.1.6
+    build:
+      context: ../../
+      dockerfile: Dockerfile.dev
+    restart: unless-stopped
+    env_file:
+      - .env
+    ports:
+      - 8090:8090
+    networks:
+      - codeflix_network
+      - codeflix_services
+
+networks:
+  codeflix_network:
+  codeflix_services:
+    external: true

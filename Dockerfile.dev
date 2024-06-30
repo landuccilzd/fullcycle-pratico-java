@@ -1,0 +1,23 @@
+# To build and run:
+# docker build -f Dockerfile.dev -t codeflix .
+# docker run codeflix
+
+# buid stage
+FROM gradle:8.4-jdk17-alpine as builder
+
+WORKDIR /usr/app
+
+COPY . .
+
+RUN gradle bootJar
+
+# build runtime
+FROM eclipse-temurin:17-jre-alpine
+
+COPY --from=builder /usr/app/build/libs/*.jar /opt/app/application.jar
+
+RUN addgroup -S spring && adduser -S spring -G spring
+
+USER spring:spring
+
+CMD java -jar /opt/app/application.jar
