@@ -1,6 +1,6 @@
 package br.landucci.admin.catologo.infrastructure.configuration.security;
 
-import com.nimbusds.jose.shaded.gson.JsonObject;
+import com.nimbusds.jose.shaded.json.JSONObject;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -33,7 +33,7 @@ public class KeycloakAuthoritiesConverter  implements Converter<Jwt, Collection<
         final Function<Map.Entry<String, Object>, Stream<String>> mapResource =
                 resource -> {
                     final var key = resource.getKey();
-                    final var value = (JsonObject) resource.getValue();
+                    final var value = (JSONObject) resource.getValue();
                     final var roles = (Collection<String>) value.get(ROLES);
                     return roles.stream().map(role -> key.concat(SEPARATOR).concat(role));
                 };

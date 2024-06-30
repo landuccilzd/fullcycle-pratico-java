@@ -43,8 +43,6 @@ spring:
     port: ${AMQP_RABBIT_PORT}
     username: ${AMQP_RABBIT_USER}
     password: ${AMQP_RABBIT_PASS}
-#  profiles:
-#    active: dev
   servlet:
     multipart:
       max-file-size: 10GB
@@ -88,16 +86,6 @@ spring:
       ddl-auto: update
   datasource:
     url: jdbc:mysql://${DATABASE_MYSQL_URL}/${DATABASE_MYSQL_DB}_dev
-#amqp:
-#  queues:
-#    video-created:
-#      exchange: video.events.dev
-#      routing-key: video.created.dev
-#      queue: video.created.queue.dev
-#    video-encoded:
-#      exchange: video.events.dev
-#      routing-key: video.encoded.dev
-#      queue: video.encoded.queue.dev
   autoconfigure:
     exclude:
       - org.springframework.boot.autoconfigure.amqp.RabbitAutoConfiguration
@@ -106,23 +94,16 @@ spring:
 storage:
   catalogo-videos:
     local-storage-path: C:\\dev\\storage\\dev
-#keycloak:
-#  realm: hyrule
-#  host: http://localhost:8080
-
 ---
 spring:
   config:
     activate:
       on-profile: tst
-  autoconfigure:
-    exclude:
-      - org.springframework.boot.autoconfigure.amqp.RabbitAutoConfiguration
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
     show-sql: true
     hibernate:
-      ddl-auto: none
+      ddl-auto: create-drop
   datasource:
     driver-class-name: org.h2.Driver
     url: jdbc:h2:mem:adm_videos_tst
@@ -132,35 +113,25 @@ spring:
     console:
       enabled: true
       path: /h2
-amqp:
-  queues:
-    video-created:
-      exchange: video.events.tst
-      routing-key: video.created.tst
-      queue: video.created.queue.tst
-    video-encoded:
-      exchange: video.events.tst
-      routing-key: video.encoded.tst
-      queue: video.created.queue.tst
+  autoconfigure:
+    exclude:
+      - org.springframework.boot.autoconfigure.amqp.RabbitAutoConfiguration
 storage:
   catalogo-videos:
     local-storage-path: C:\\dev\\storage\\tst
 keycloak:
   realm: codeflix
-  host: http://localhost:8080
+  host: http://keycloak:8080
 ---
 spring:
   config:
     activate:
       on-profile: tst-int
-  autoconfigure:
-    exclude:
-      - org.springframework.boot.autoconfigure.amqp.RabbitAutoConfiguration
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
     show-sql: true
     hibernate:
-      ddl-auto: none
+      ddl-auto: create-drpo
   datasource:
     driver-class-name: org.h2.Driver
     url: jdbc:h2:mem:adm_videos_tst
@@ -170,22 +141,15 @@ spring:
     console:
       enabled: true
       path: /h2
-amqp:
-  queues:
-    video-created:
-      exchange: video.events.tst-int
-      routing-key: video.created.tst-int
-      queue: video.created.queue.tst-int
-    video-encoded:
-      exchange: video.events.tst-int
-      routing-key: video.encoded.tst-int
-      queue: video.encoded.queue.tst-int
+  autoconfigure:
+    exclude:
+      - org.springframework.boot.autoconfigure.amqp.RabbitAutoConfiguration
 storage:
   catalogo-videos:
     local-storage-path: C:\\dev\\storage\\tst-int
 keycloak:
   realm: codeflix
-  host: http://localhost:8080
+  host: http://keycloak:8080
 ---
 spring:
   flyway:
@@ -193,31 +157,21 @@ spring:
   config:
     activate:
       on-profile: tst-e2e
-  autoconfigure:
-    exclude:
-      - org.springframework.boot.autoconfigure.amqp.RabbitAutoConfiguration
   jpa:
     show-sql: true
     hibernate:
       ddl-auto: create-drop
   datasource:
     url: jdbc:mysql://localhost:${E2E_MYSQL_PORT}/adm_videos_e2e
-amqp:
-  queues:
-    video-created:
-      exchange: video.events.tst-e2e
-      routing-key: video.created.tst-e2e
-      queue: video.created.queue.tst-e2e
-    video-encoded:
-      exchange: video.events.tst-e2e
-      routing-key: video.encoded.tst-e2e
-      queue: video.encoded.queue.tst-e2e
+  autoconfigure:
+    exclude:
+      - org.springframework.boot.autoconfigure.amqp.RabbitAutoConfiguration
 storage:
   catalogo-videos:
     local-storage-path: C:\\dev\\storage\\tst-e2e
 keycloak:
   realm: codeflix
-  host: http://localhost:8080
+  host: http://keycloak:8080
 ---
 spring:
   config:
@@ -241,10 +195,10 @@ amqp:
       queue: video.encoded.queue.sbx
 storage:
   catalogo-videos:
-    local-storage-path: C:\\dev\\storage\\prd
+    local-storage-path: C:\\dev\\storage\\sbx
 keycloak:
   realm: ${KEYCLOAK_REALM:codeflix}
-  host: ${KEYCLOAK_HOST:http://localhost:8080}
+  host: ${KEYCLOAK_HOST:http://keycloak:8080}
 ---
 spring:
   config:
@@ -256,11 +210,6 @@ spring:
       ddl-auto: none
   datasource:
     url: jdbc:mysql://${DATABASE_MYSQL_URL}/${DATABASE_MYSQL_DB}
-#  rabbitmq:
-#    host: ${AMQP_RABBIT_HOST}
-#    port: ${AMQP_RABBIT_PORT}
-#    username: ${AMQP_RABBIT_USER}
-#    password: ${AMQP_RABBIT_PASS}
 storage:
   catalogo-videos:
     local-storage-path: C:\\dev\\storage\\prd
