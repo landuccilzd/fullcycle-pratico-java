@@ -5,6 +5,7 @@ build/
 !**/src/test/**/build/
 .env
 sandbox/.docker
+FC3-admin-catalogo-de-videos-java-master.zip
 
 ### IntelliJ IDEA ###
 .idea/
