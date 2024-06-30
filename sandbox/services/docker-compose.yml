@@ -28,10 +28,6 @@ services:
     container_name: codeflix_rabbitmq
     image: rabbitmq:3-management
     environment:
-#      - "RABBITMQ_ERLANG_COOKIE=CODEFLIXRMQCOOKIE"
-#      - "RABBITMQ_DEFAULT_USER=codeflix"
-#      - "RABBITMQ_DEFAULT_PASS=C0d3Fl1x"
-#      - "RABBITMQ_DEFAULT_VHOST=/"
       RABBITMQ_ERLANG_COOKIE: CODEFLIXRMQCOOKIE
       RABBITMQ_DEFAULT_USER: codeflix
       RABBITMQ_DEFAULT_PASS: C0d3Fl1x
@@ -43,17 +39,13 @@ services:
       - codeflix_services
 
   keycloak:
-    container_name: codeflix_keycloack
+    container_name: codeflix_keycloak
     image: quay.io/keycloak/keycloak:25.0.1
     volumes:
       - ../.docker/keycloak/import:/opt/keycloak/data/import:rw
-      - ../.docker/keycloak:/opt/keycloak/data/h2:rw
+      - ../.docker/keycloak/h2:/opt/keycloak/data/h2:rw
+      - ../.docker/keycloak/mysql:/var/lib/mysql:rw
     environment:
-#      DB_VENDOR: mysql
-#      DB_ADDR: mysql #Use development db, since this is development docker
-#      DB_DATABASE: keycloak
-#      DB_USER: keycloak
-#      DB_PASSWORD: K3yCl04k
       KEYCLOAK_ADMIN: codeflix
       KEYCLOAK_ADMIN_PASSWORD: C0d3Fl1x
     ports:
