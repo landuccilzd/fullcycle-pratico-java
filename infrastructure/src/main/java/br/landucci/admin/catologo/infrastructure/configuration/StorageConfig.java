@@ -20,14 +20,14 @@ public class StorageConfig {
     }
 
     @Bean(name = "storageService")
-    @Profile({"dev", "prd"})
-    public StorageService localDiskStorageService(final StorageProperties storageProperties) {
-        return new LocalDiskStorageService(storageProperties.getLocalStoragePath());
+    @Profile({"dev", "tst", "tst-int", "tst-e2e"})
+    public StorageService inMemoryStorageService() {
+        return new InMemoryStorageService();
     }
 
     @Bean(name = "storageService")
     @ConditionalOnMissingBean //Se não criou nenhum bean anteriormente chama esse
-    public StorageService inMemoryStorageService() {
-        return new InMemoryStorageService();
+    public StorageService localDiskStorageService(final StorageProperties storageProperties) {
+        return new LocalDiskStorageService(storageProperties.getLocalStoragePath());
     }
 }

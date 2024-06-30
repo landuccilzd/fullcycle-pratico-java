@@ -27,6 +27,7 @@ public class AmqpConfig {
     }
 
     @Configuration
+//    @Profile("!dev & !tst & !tst-int & !tst-e2e")
     static class Admin {
 
         @Bean
